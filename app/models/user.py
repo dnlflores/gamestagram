@@ -11,7 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    images = db.relationship('Image', back_populates="users", cascade="all, delete")
+    images = db.relationship('Image', back_populates="user", cascade="all, delete")
 
     @property
     def password(self):
