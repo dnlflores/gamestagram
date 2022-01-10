@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getImages } from '../../store/image'
+import { getImages, deleteOneImage } from '../../store/image'
 
 function ImagesPage() {
 
@@ -14,6 +14,12 @@ function ImagesPage() {
         dispatch(getImages())
     }, [dispatch])
 
+    const handleDelete = (e) => {
+        e.preventDefault();
+        // console.log('this is the target!!@!@!@!@!!', images[e.target.className])
+        dispatch(deleteOneImage(images[e.target.className]))
+    }
+
     return (
         <ul>
             {
@@ -22,9 +28,11 @@ function ImagesPage() {
                         <li>{image.user_id}</li>
                         <li>{image.caption}</li>
                         <li><img src={`${image.url}`} alt="user-upload"></img></li>
+                        <button className={image.id} onClick={handleDelete}>delete</button>
                     </div>
                 ))
             }
+
         </ul>
     )
 }
