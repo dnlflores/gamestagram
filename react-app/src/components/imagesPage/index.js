@@ -18,10 +18,10 @@ function ImagesPage() {
         <ul>
             {
                 imagesArr.map(image => (
-                    <div>
+                    <div key={`${image.id}`}>
                         <li>{image.user_id}</li>
                         <li>{image.caption}</li>
-                        <li><img src={`${image.url}`}></img></li>
+                        <li><img src={`${image.url}`} alt="user-upload"></img></li>
                     </div>
                 ))
             }
