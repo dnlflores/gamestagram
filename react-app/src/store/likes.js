@@ -1,5 +1,6 @@
 const GET_LIKES = 'likes/GET_LIKES'
 const SET_LIKE = 'likes/SET_LIKE'
+const UN_LIKE = 'likes/UN_LIKE'
 
 const getLike = likes => ({
     type: GET_LIKES,
@@ -8,6 +9,11 @@ const getLike = likes => ({
 
 const setLike = likes => ({
     type: SET_LIKE,
+    payload: likes,
+})
+
+const unLike = likes => ({
+    type: UN_LIKE,
     payload: likes,
 })
 
@@ -21,15 +27,24 @@ export const getTheLikes = () => async dispatch => {
 
 export const setOneLike = (image_id) => async dispatch => {
     const response = await fetch(`/api/likes/${image_id}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(image_id)
+        method: 'POST'
     })
     if (response.ok) {
         const likes = await response.json();
         dispatch(setLike(likes));
+    }
+}
+
+export const unOneLike = image_id => async dispatch => {
+    const response = await fetch(`/api/likes/${image_id}`, {
+        method: 'DELETE'
+    })
+    console.log('response ok', response.ok)
+
+    if (response.ok) {
+        console.log('made it here')
+        const unlike = await response.json();
+        dispatch(unLike(unlike));
     }
 }
 
@@ -41,6 +56,10 @@ export default function likeReducer(state = {}, action) {
             return newState;
         case SET_LIKE:
             return {...state, [action.payload.id]: action.payload};
+        case UN_LIKE:
+            const deleting = {...state}
+            delete deleting[action.payload.id];
+            return deleting;
         default:
             return state;
     }

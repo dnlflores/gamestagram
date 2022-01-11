@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
-import { getTheLikes, setOneLike } from "../../store/likes";
+import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import NavBar from "../Navbar";
 
@@ -29,8 +29,14 @@ function ImagesPage() {
   const handleLike = e => {
     e.preventDefault();
     const image_id = e.target.className;
-    // if statement here
-    dispatch(setOneLike(image_id));
+
+    const x = keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId)
+
+    const y = keys.filter(key => likes[key].image_id === image_id)
+
+    if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
+      dispatch(unOneLike(image_id))
+    } else dispatch(setOneLike(image_id));
   }
 
   return (
