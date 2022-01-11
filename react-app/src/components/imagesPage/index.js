@@ -12,6 +12,7 @@ function ImagesPage() {
   const imagesArr = Object.values(images);
 
   const [buttonPopup, setButtonPopup] = useState(0);
+  const likes = '0'
 
   useEffect(() => {
     dispatch(getImages());
@@ -21,6 +22,12 @@ function ImagesPage() {
     e.preventDefault();
     dispatch(deleteOneImage(images[e.target.className]));
   };
+
+  const handleLike = e => {
+    e.preventDefault();
+    // if statement here
+    dispatch()
+  }
 
   return (
     <>
@@ -47,8 +54,8 @@ function ImagesPage() {
                 />
               </div>
             )}
-            <button className={image.id}>
-              Likes {'0 text'}
+            <button className={image.id} onClick={handleLike}>
+              Likes {likes}
             </button>
           </div>
         ))}
