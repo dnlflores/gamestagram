@@ -11,9 +11,7 @@ function ImagesPage() {
   const images = useSelector((state) => state.images);
   const imagesArr = Object.values(images);
 
-  const [buttonPopup, setButtonPopup] = useState(false);
-
-  console.log("imagesArr", imagesArr);
+  const [buttonPopup, setButtonPopup] = useState(0);
 
   useEffect(() => {
     dispatch(getImages());
@@ -40,7 +38,8 @@ function ImagesPage() {
                 <button className={image.id} onClick={handleDelete}>
                   delete
                 </button>
-                <button onClick={() => setButtonPopup(true)}>Edit</button>
+                <button onClick={() => setButtonPopup(image.id)}
+                  >Edit</button>
                 <EditFormPage
                   trigger={buttonPopup}
                   setTrigger={setButtonPopup}

@@ -23,9 +23,8 @@ const EditFormPage = (props) => {
       caption: newImageCaption
     }
     let updatedImage = await dispatch(editOneImage(payload));
-    console.log('image on edit form page:', image)
     if (updatedImage) {
-      props.setTrigger(false);
+      props.setTrigger(0);
       setCaption('');
     }
   };
@@ -34,7 +33,7 @@ const EditFormPage = (props) => {
     setCaption(e.target.value);
   };
 
-  return (props.trigger) ? (
+  return (props.trigger === image.id) ? (
     <div>
         <form onSubmit={onEditGame} className={props.image.id}>
         <div>
