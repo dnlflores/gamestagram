@@ -1,6 +1,7 @@
 const LOAD_IMAGES = 'images/LOAD_IMAGES';
 const DELETE_IMAGE = 'images/DELETE_IMAGE';
 // const SET_IMAGE = 'images/SET_IMAGE';
+const EDIT_IMAGE = 'images/EDIT_IMAGE';
 
 const loadImages = (images) => ({
     type: LOAD_IMAGES,
@@ -9,6 +10,11 @@ const loadImages = (images) => ({
 
 const deleteImage = (image) => ({
     type: DELETE_IMAGE,
+    payload: image,
+})
+
+const editImage = image => ({
+    type: EDIT_IMAGE,
     payload: image,
 })
 
@@ -36,6 +42,21 @@ export const deleteOneImage = (image) => async (dispatch) => {
     }
 }
 
+export const editOneImage = image => async (dispatch) => {
+    console.log('image is: ', image)
+    const response = await fetch(`/api/games/${image.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(image)
+    })
+    if (response.ok) {
+        const imageToEdit = await response.json();
+        dispatch(editImage(imageToEdit))
+    }
+}
+
 export default function imageReducer(state = {}, action) {
     switch (action.type) {
         case LOAD_IMAGES:
@@ -44,9 +65,12 @@ export default function imageReducer(state = {}, action) {
             return newState
         case DELETE_IMAGE:
             const deleteState = {...state};
-            console.log('action.payload!!!', action.payload)
             delete deleteState[action.payload.id];
             return deleteState;
+        case EDIT_IMAGE:
+            const editState = {...state};
+            editState[action.payload.id] = action.payload;
+            return editState;
         default:
             return state;
     }

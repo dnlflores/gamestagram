@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
+import EditFormPage from '../EditFormPage'
 
 function ImagesPage() {
   const userId = useSelector((state) => state.session.user.id);
@@ -8,6 +9,8 @@ function ImagesPage() {
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const imagesArr = Object.values(images);
+
+  const [buttonPopup, setButtonPopup] = useState(false);
 
   console.log("imagesArr", imagesArr);
 
@@ -30,9 +33,19 @@ function ImagesPage() {
             <img src={`${image.url}`} alt="user-upload"></img>
           </li>
           {userId === image.user_id && (
-            <button className={image.id} onClick={handleDelete}>
-              delete
-            </button>
+            <div>
+              <button className={image.id} onClick={handleDelete}>
+                delete
+              </button>
+              <button onClick={() => setButtonPopup(true)}>
+                Edit 
+              </button>
+              <EditFormPage
+                  trigger={buttonPopup}
+                  setTrigger={setButtonPopup}
+                  image={image}
+                />
+            </div>
           )}
         </div>
       ))}

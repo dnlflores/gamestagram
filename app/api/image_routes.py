@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.s3_helpers import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 from app.models import Image, db
-from app.forms import CreateGameForm
+from app.forms import CreateGameForm, EditGameForm
 
 image_routes = Blueprint('images', __name__)
 
@@ -12,12 +12,34 @@ def images():
     images = Image.query.all()
     return {'images': [image.to_dict() for image in images]}
 
+@image_routes.route('/<int:id>', methods=["PUT"])
+@login_required
+def edit_image(id):
+    url = request.path
+    id = url.split('/')[-1]
+    image = Image.query.get(id)
+
+    form = EditGameForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    image.caption = form.data['editCaption']
+
+    # db.session.update(images).where(images.c.id==id).values(caption=form.data['caption'])
+    # Image.update(images).where(images.c.id==id).values(caption=form.data['caption'])
+
+
+    db.session.commit()
+
+    print('image.to_dict() is', image.to_dict())
+    print('form.data', form.data)
+    return image.to_dict()
+    
+
 @image_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_image(id):
     url = request.path
     id = url.split('/')[-1]
-    print('this is the id from the url', id)
     image = Image.query.get(id)
     result = image.to_dict()
     db.session.query(Image).filter(Image.id == id).delete()
