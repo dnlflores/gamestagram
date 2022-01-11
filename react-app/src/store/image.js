@@ -43,7 +43,6 @@ export const deleteOneImage = (image) => async (dispatch) => {
 }
 
 export const editOneImage = image => async (dispatch) => {
-    console.log('image is: ', image)
     const response = await fetch(`/api/games/${image.id}`, {
         method: 'PUT',
         headers: {
@@ -54,6 +53,7 @@ export const editOneImage = image => async (dispatch) => {
     if (response.ok) {
         const imageToEdit = await response.json();
         dispatch(editImage(imageToEdit))
+        return imageToEdit
     }
 }
 
