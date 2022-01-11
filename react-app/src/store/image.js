@@ -2,31 +2,46 @@ const LOAD_IMAGES = 'images/LOAD_IMAGES';
 const DELETE_IMAGE = 'images/DELETE_IMAGE';
 // const SET_IMAGE = 'images/SET_IMAGE';
 const EDIT_IMAGE = 'images/EDIT_IMAGE';
+const LOAD_IMAGE = 'images/LOAD_IMAGE';
 
 const loadImages = (images) => ({
     type: LOAD_IMAGES,
     payload: images
-})
+});
 
 const deleteImage = (image) => ({
     type: DELETE_IMAGE,
-    payload: image,
-})
+    payload: image
+});
 
 const editImage = image => ({
     type: EDIT_IMAGE,
-    payload: image,
+    payload: image
+});
+
+const loadImage = image => ({
+    type: LOAD_IMAGE,
+    payload: image
 })
+
+export const getImage = imageId => async dispatch => {
+    const response = await fetch(`/api/games/${imageId}`);
+    if (response.ok) {
+        const image = await response.json();
+        dispatch(loadImage(image));
+        return image;
+    }
+}
 
 export const getImages = () => async (dispatch) => {
     const response = await fetch('/api/games')
     if (response.ok) {
         const images = await response.json();
         dispatch(loadImages(images));
-        // return images
+        return images;
 
     } else return;
-}
+};
 
 export const deleteOneImage = (image) => async (dispatch) => {
     const response = await fetch(`/api/games/${image.id}`, {
@@ -38,9 +53,9 @@ export const deleteOneImage = (image) => async (dispatch) => {
     })
     if (response.ok) {
         const imageToDelete = await response.json();
-        dispatch(deleteImage(imageToDelete))
+        dispatch(deleteImage(imageToDelete));
     }
-}
+};
 
 export const editOneImage = image => async (dispatch) => {
     const response = await fetch(`/api/games/${image.id}`, {
@@ -49,20 +64,20 @@ export const editOneImage = image => async (dispatch) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(image)
-    })
+    });
     if (response.ok) {
         const imageToEdit = await response.json();
-        dispatch(editImage(imageToEdit))
-        return imageToEdit
+        dispatch(editImage(imageToEdit));
+        return imageToEdit;
     }
 }
 
 export default function imageReducer(state = {}, action) {
     switch (action.type) {
         case LOAD_IMAGES:
-            const newState = {}
-            action.payload.images?.forEach(image => newState[image.id] = image)
-            return newState
+            const newState = {};
+            action.payload.images?.forEach(image => newState[image.id] = image);
+            return newState;
         case DELETE_IMAGE:
             const deleteState = {...state};
             delete deleteState[action.payload.id];

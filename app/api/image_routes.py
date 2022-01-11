@@ -14,22 +14,21 @@ def images():
     images = Image.query.all()
     return {'images': [image.to_dict() for image in images]}
 
+
+@image_routes.route('/<int:id>')
+def get_image(id):
+    image = Image.query.get(id)
+    return {'image': image.to_dict()}
+
 @image_routes.route('/<int:id>', methods=["PUT"])
 @login_required
 def edit_image(id):
-    url = request.path
-    print(url)
-    id = url.split('/')[-1]
     image = Image.query.get(id)
 
     form = EditGameForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     image.caption = form.data['caption']
-
-    # db.session.update(images).where(images.c.id==id).values(caption=form.data['caption'])
-    # Image.update(images).where(images.c.id==id).values(caption=form.data['caption'])
-
 
     db.session.commit()
 
@@ -41,13 +40,10 @@ def edit_image(id):
 @image_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_image(id):
-    url = request.path
-    id = url.split('/')[-1]
     image = Image.query.get(id)
     result = image.to_dict()
     db.session.query(Image).filter(Image.id == id).delete()
     db.session.commit()
-    # image.delete()
     return result
 
 
