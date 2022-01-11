@@ -47,6 +47,9 @@ function ImagesPage() {
                 />
               </div>
             )}
+            <button className={image.id}>
+              Likes {'0 text'}
+            </button>
           </div>
         ))}
       </ul>
