@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
+import {createComment} from "../../store/comment"
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
@@ -12,8 +13,8 @@ function ImagesPage() {
   const images = useSelector((state) => state.images);
   const imagesArr = Object.values(images);
   const [imageButtonPopup, setImageButtonPopup] = useState(0)
-
   const [editButtonPopup, setEditButtonPopup] = useState(0);
+  const [content, setContent] = useState('')
 
   useEffect(() => {
     dispatch(getImages());
@@ -23,6 +24,14 @@ function ImagesPage() {
     e.preventDefault();
     dispatch(deleteOneImage(images[e.target.className]));
   };
+
+  const onContentSubmit = async (e) => {
+    e.preventDefault();
+    console.log('className!!!!!!', e.target.className)
+    console.log('this is the content', content)
+
+    dispatch(createComment(e.target.className, content))
+  }
 
   return (
     <>
@@ -47,6 +56,10 @@ function ImagesPage() {
                   setTrigger={setEditButtonPopup}
                   image={image}
                 />
+                <form className={image.id} onSubmit={onContentSubmit}>
+                  <input placeholder="Comment" value={content} onChange={(e) => setContent(e.target.value)}/>
+                  <button>comment</button>
+                </form>
               </div>
             )}
           </div>
