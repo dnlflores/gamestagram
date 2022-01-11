@@ -4,7 +4,7 @@ import NavBar from "../Navbar";
 
 const CreateImagePage = () => {
   const history = useHistory(); // so that we can redirect after the image upload is successful
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
   const [caption, setCaption] = useState("");
