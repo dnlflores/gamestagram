@@ -8,15 +8,25 @@ const EditFormPage = (props) => {
   const [caption, setCaption] = useState('');
   const dispatch = useDispatch();
   const images = useSelector(state => state.images);
+  const [image, setImage] = useState(props.image)
 
 
   const onEditGame = async (e) => {
     e.preventDefault();
-    const image = images[e.target.className]
-    const data = await dispatch(editOneImage(image));
-    if (data) {
-        props.setTrigger(false);
-        // setErrors(data);
+    // const image = images[e.target.className]
+    let newImageCaption = image.caption;
+    if (image) {
+      if (caption !== '') newImageCaption = caption;
+    }
+    const payload = {
+      ...image,
+      caption: newImageCaption
+    }
+    let updatedImage = await dispatch(editOneImage(payload));
+    console.log('image on edit form page:', image)
+    if (updatedImage) {
+      props.setTrigger(false);
+      setCaption('');
     }
   };
 
