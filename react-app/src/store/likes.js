@@ -12,6 +12,7 @@ const setLike = likes => ({
 })
 
 export const getTheLikes = () => async dispatch => {
+    console.log('got to: getTheLikes')
     const response = await fetch('/api/likes')
     console.log('getTheLikes response', response)
     if (response.ok) {
@@ -33,10 +34,10 @@ export const setOneLike = () => async dispatch => {
 export default function likeReducer(state = {}, action) {
     switch (action.type) {
         case GET_LIKES:
-            const newState = {};
+            const newStateA = {};
             return state;
         case SET_LIKE:
-            const newState = {};
+            const newStateB = {};
             return state;
             // action.payload.likes?.forEach(like => newState[]);
         default:

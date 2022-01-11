@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
+import { getTheLikes } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import NavBar from "../Navbar";
 
@@ -16,6 +17,7 @@ function ImagesPage() {
 
   useEffect(() => {
     dispatch(getImages());
+    dispatch(getTheLikes());
   }, [dispatch]);
 
   const handleDelete = (e) => {

@@ -1,16 +1,17 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Image, db
+from app.models import db, Image, Like
 
 like_routes = Blueprint('likes', __name__)
 
 @like_routes.route('')
-def images():
+@login_required
+def get_likes():
     likes = Like.query.all()
-    console.log('backend comment: likes is', likes)
-    console.log('backend comment: likes is', likes)
-    console.log('backend comment: likes is', likes)
-    return {'likes': [like.todict() for like in likes]}
+    print('backend comment: likes is', likes)
+    print('backend comment: likes is', likes)
+    print('backend comment: likes is', likes)
+    return {'likes': [like.to_dict() for like in likes]}
     # return {'images': [image.to_dict() for image in images]}
 
 
