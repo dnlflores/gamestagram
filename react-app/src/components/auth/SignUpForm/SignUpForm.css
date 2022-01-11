@@ -1,0 +1,66 @@
+.sign-up-body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 100vh;
+}
+.sign-up-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sign-up-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sign-up-title {
+  font-weight: 300;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.sign-up-image {
+  margin: 1rem;
+  width: 450px;
+  height: 300px;
+}
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sign-up-form > input {
+  margin: .5rem;
+  height: 2.25rem;
+  width: 295px;
+  padding-left: .5rem;
+  border: 1px solid rgba(105, 105, 105, 0.404);
+  border-radius: 3px;
+}
+.sign-up-form > button {
+  margin: 1rem;
+  border: none;
+  padding: .6rem;
+  border-radius: 3px;
+  background-color: #2563eb;
+  color: rgba(255, 255, 255, 0.904);
+  width: 250px;
+  cursor: pointer;
+}
+.sign-up-login-con {
+  margin: 1rem;
+  background-color: rgba(211, 211, 211, 0.171);
+  padding: 1.25rem .5rem;
+  font-weight: 200;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.644);
+  width: 295px;
+  display: flex;
+  justify-content: center;
+}
+.sign-up-login-con > a {
+  font-weight: 200;
+  color: #396ddd;
+  padding-left: .25rem;
+}
