@@ -5,13 +5,16 @@ const addComment = (comment) => ({
   payload: comment,
 });
 
-const createComment = (imageId, comment) => async (dispatch) => {
-  const response = await fetch(`/api/games/${imageId}/comment`, {
+export const createComment = (imageId, content) => async (dispatch) => {
+  console.log('this is the comment =>', content)
+  const response = await fetch(`/api/games/${imageId}/comments`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(comment),
+    body: JSON.stringify({content}),
   });
+  console.log('res', response)
   const newComment = await response.json();
+  console.log('this is the newComment =>', newComment)
   if (response.ok) {
     dispatch(addComment(newComment));
     return newComment;
@@ -21,7 +24,8 @@ const createComment = (imageId, comment) => async (dispatch) => {
 export default function commentReducer(state = {}, action) {
   switch (action.type) {
     case ADD_COMMENT: {
-      const newState = { ...state, [action.comment.id]: action.comment };
+      console.log('payload =>', action.payload)
+      const newState = { ...state, [action.payload.id]: action.payload };
       return newState;
     }
     default: {

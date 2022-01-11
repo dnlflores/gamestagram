@@ -87,16 +87,13 @@ def upload_image():
     return {"error": "There was some error I guess"}
 
 
-@image_routes.route('/<int:id>/comments')
+@image_routes.route('/<int:id>/comments', methods=["POST"])
 @login_required
 def create_comment(id):
-    form = CreateCommentForm
+    print('request.json =>', request.json)
+    form = CreateCommentForm()
+    print('THIS IS THE FORM', form)
     form['csrf_token'].data = request.cookies['csrf_token']
-
-    url = request.path
-    id = url.split('/')[-2]
-    print('this is the id', id)
-    return {'hello': 'hello'}
 
     if form.validate_on_submit():
         content = form.data['content']
