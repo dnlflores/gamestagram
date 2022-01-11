@@ -34,8 +34,9 @@ export const setOneLike = () => async dispatch => {
 export default function likeReducer(state = {}, action) {
     switch (action.type) {
         case GET_LIKES:
-            // const newStateA = {};
-            return state;
+            const newState = {};
+            action.payload.likes?.forEach(like => newState[like.id] = like)
+            return newState;
         case SET_LIKE:
             // const newStateB = {};
             return state;

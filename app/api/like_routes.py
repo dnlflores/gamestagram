@@ -4,15 +4,17 @@ from app.models import db, Image, Like
 
 like_routes = Blueprint('likes', __name__)
 
-@like_routes.route('')
+@like_routes.route("")
 @login_required
 def get_likes():
     likes = Like.query.all()
     print('backend comment: likes is', likes)
     print('backend comment: likes is', likes)
     print('backend comment: likes is', likes)
+    print('********************************')
+    print([like.to_dict() for like in likes])
+    print('********************************')
     return {'likes': [like.to_dict() for like in likes]}
-    # return {'images': [image.to_dict() for image in images]}
 
 
 
