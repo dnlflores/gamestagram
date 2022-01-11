@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
 import EditFormPage from "../EditFormPage";
+import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
 
 function ImagesPage() {
@@ -10,8 +11,9 @@ function ImagesPage() {
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const imagesArr = Object.values(images);
+  const [imageButtonPopup, setImageButtonPopup] = useState(0)
 
-  const [buttonPopup, setButtonPopup] = useState(0);
+  const [editButtonPopup, setEditButtonPopup] = useState(0);
 
   useEffect(() => {
     dispatch(getImages());
@@ -31,18 +33,18 @@ function ImagesPage() {
             <li>{image.user_id}</li>
             <li>{image.caption}</li>
             <li>
-              <img src={`${image.url}`} alt="user-upload"></img>
+              <img src={`${image.url}`} alt="user-upload" onClick={event => setImageButtonPopup(image.id)}></img>
+              <ImagePage trigger={imageButtonPopup} setTrigger={setImageButtonPopup} image={image} />
             </li>
             {userId === image.user_id && (
               <div>
                 <button className={image.id} onClick={handleDelete}>
                   delete
                 </button>
-                <button onClick={() => setButtonPopup(image.id)}
-                  >Edit</button>
+                <button onClick={() => setEditButtonPopup(image.id)}>Edit</button>
                 <EditFormPage
-                  trigger={buttonPopup}
-                  setTrigger={setButtonPopup}
+                  trigger={editButtonPopup}
+                  setTrigger={setEditButtonPopup}
                   image={image}
                 />
               </div>
