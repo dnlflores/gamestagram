@@ -22,21 +22,18 @@ def make_like(image_id):
 @login_required
 def unmake_like(image_id):
 
-# existing = User.query.join(User.spaces).filter(User.username=='Bob', Space.name=='Mainspace').first()
-
-    # exitA = Like.query.join(Like.image_id).filter(Image.user_id == current_user.id Image.id == image_id)
 
     image = Image.query.get(image_id)
-    # print('                 ****hitting this route')
-    # print('                 ****image.user_id', image.user_id)
-    # print('                 ****current_user.id', current_user.id)
-    like = Like.query.where(image.id == image_id).where(Like.user_id == current_user.id).first()
-    # like = Like.query.filter(Like.user_id == current_user.id).first()
 
-    # print('                 ****like', like)
-    # like = Like.query.filter(image.id == image_id).where(image.user_id == current_user.id).first()
-    db.session.query(Like).filter(image.id == image_id).filter(Like.user_id == current_user.id).delete()
-    # unlike = db.session.query(Like).where(Image.id == image_id).where(Image.user_id == current_user.id).delete()
+    likes = Like.query.all()
+
+    user_likes = [like for like in likes if like.user_id == current_user.id]
+
+    for like in user_likes:
+        if like.image_id == image_id:
+            likeToDelete = like
+
+    db.session.query(Like).filter(likeToDelete.id == like.id).delete()
 
     db.session.commit()
-    return like.to_dict()
+    return likeToDelete.to_dict()
