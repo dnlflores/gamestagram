@@ -12,21 +12,23 @@ const setLike = likes => ({
 })
 
 export const getTheLikes = () => async dispatch => {
-    console.log('got to: getTheLikes')
     const response = await fetch('/api/likes')
-    console.log('getTheLikes response', response)
     if (response.ok) {
         const likes = await response.json();
-        console.log('likes in getTheLikes', likes);
         dispatch(getLike(likes));
     }
 }
 
-export const setOneLike = () => async dispatch => {
-    const response = await fetch('/api/likes')
+export const setOneLike = (image_id) => async dispatch => {
+    const response = await fetch(`/api/likes/${image_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(image_id)
+    })
     if (response.ok) {
         const likes = await response.json();
-        console.log('likes in setOneLike', likes);
         dispatch(setLike(likes));
     }
 }
@@ -38,9 +40,7 @@ export default function likeReducer(state = {}, action) {
             action.payload.likes?.forEach(like => newState[like.id] = like)
             return newState;
         case SET_LIKE:
-            // const newStateB = {};
-            return state;
-            // action.payload.likes?.forEach(like => newState[]);
+            return {...state, [action.payload.id]: action.payload};
         default:
             return state;
     }
