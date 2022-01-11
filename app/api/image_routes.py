@@ -22,7 +22,7 @@ def edit_image(id):
     form = EditGameForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    image.caption = form.data['editCaption']
+    image.caption = form.data['caption']
 
     # db.session.update(images).where(images.c.id==id).values(caption=form.data['caption'])
     # Image.update(images).where(images.c.id==id).values(caption=form.data['caption'])
