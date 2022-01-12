@@ -33,7 +33,6 @@ function ImagesPage() {
   const commentsArray = Object.values(comments);
 
   console.log("comment object values => ", Object.values(comments));
-
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -64,11 +63,10 @@ function ImagesPage() {
     
   const onContentSubmit = async (e) => {
     e.preventDefault();
+    setCommentShow(0);
 
-    const comment = await dispatch(createComment(e.target.className, content));
-    if(comment) {
-      setContent('');
-    }
+
+    await dispatch(createComment(e.target.className, content));
   }
 
   const handleEdit = (imageId) => {
@@ -106,7 +104,12 @@ function ImagesPage() {
                 <div className={`like-div ${image.id}`} onClick={handleLike}></div>
                   <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
-                  onClick={() => setCommentShow(image.id)}
+                  onClick={() => {
+                    if (commentShow === image.id) {
+                      setCommentShow(0);
+                    } else setCommentShow(image.id);
+                    setContent("");
+                  }}
                   className="post-footer-icon"
                 />
               </div>
@@ -128,9 +131,12 @@ function ImagesPage() {
               {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
+                    autoFocus name="CommentAutoFocus"
                     placeholder="Comment"
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={(e) => {
+                      setContent(e.target.value)
+                    }}
                   />
                   <button>comment</button>
                 </form>
