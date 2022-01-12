@@ -16,7 +16,6 @@ import "./imagesPage.css";
 
 function ImagesPage() {
   const userId = useSelector((state) => state.session.user.id);
-
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const comments = useSelector(state => state.comments);
@@ -29,6 +28,7 @@ function ImagesPage() {
   const [commentShow, setCommentShow] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [users, setUsers] = useState([]);
+  const [edit, setEdit] = useState(false)
   const commentsArray = Object.values(comments);
 
   // console.log("comment object values => ", Object.values(comments));
@@ -47,7 +47,6 @@ function ImagesPage() {
   
   const handleDelete = (e) => {
     e.preventDefault();
-    // console.log("event target value => ", e.target.className.split(' ')[0])
     dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
   };
 
@@ -60,7 +59,7 @@ function ImagesPage() {
       dispatch(unOneLike(image_id))
     } else dispatch(setOneLike(image_id));
   }
-    
+
   const onContentSubmit = async (e) => {
     e.preventDefault();
     setCommentShow(0);
@@ -71,6 +70,7 @@ function ImagesPage() {
 
   const onEditComment = async e => {
     e.preventDefault();
+    console.log('target value is', e.target.value)
     setCommentShow(0);
 
     await dispatch(editOneComment(e.target.className, content));
@@ -122,6 +122,7 @@ function ImagesPage() {
                       setCommentShow(0);
                     } else setCommentShow(image.id);
                     setContent("");
+                    setEdit(false);
                   }}
                   className="post-footer-icon"
                 />
@@ -130,13 +131,19 @@ function ImagesPage() {
                 <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentsArray?.map(comment => {
+              {commentsArray?.map((comment, index) => {
                 if (comment.image_id === image.id) {
                   return (
                     <>
                       <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p className={canEditComment(comment)}>{comment.content}
-                        <button>Edit</button>
+                      <p id={index + 1} className={canEditComment(comment)}>{comment.content}
+                        <button
+                          onClick={() => {
+                            setEdit(true);
+                            setCommentShow(image.id)
+                            setContent(`${comments[index + 1].content}`);
+                        }}
+                        >Edit</button>
                       </p>
                     </>
                   )
@@ -144,7 +151,7 @@ function ImagesPage() {
                 
                 return '';
               })}
-              {commentShow === image.id && (
+              {commentShow === image.id && !edit && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
                     autoFocus
@@ -153,6 +160,17 @@ function ImagesPage() {
                     onChange={(e) => setContent(e.target.value)}
                   />
                   <button>comment</button>
+                </form>
+              )}
+              {commentShow === image.id && edit && (
+                <form className={image.id} onSubmit={onContentSubmit}>
+                  <input
+                    autoFocus
+                    placeholder="Edit"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
+                  <button>edit</button>
                 </form>
               )}
               {userId === image.user_id && (
