@@ -64,6 +64,7 @@ function ImagesPage() {
     
   const onContentSubmit = async (e) => {
     e.preventDefault();
+    setCommentShow(0);
 
 
     const comment = await dispatch(createComment(e.target.className, content));
