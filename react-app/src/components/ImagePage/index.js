@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImage, deleteOneImage } from "../../store/image";
 import EditFormPage from "../EditFormPage";
-import NavBar from "../Navbar";
 
 const ImagePage = props => {
     const userId = useSelector((state) => state.session.user.id);

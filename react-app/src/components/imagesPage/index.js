@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
+import { getComments } from "../../store/comment";
 import {createComment} from "../../store/comment"
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -11,13 +12,17 @@ function ImagesPage() {
 
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
+  const comments = useSelector(state => state.comments);
   const imagesArr = Object.values(images);
   const [imageButtonPopup, setImageButtonPopup] = useState(0)
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState('')
 
+  console.log("THESE ARE THE COMMENTS", comments)
+
   useEffect(() => {
     dispatch(getImages());
+    dispatch(getComments());
   }, [dispatch]);
 
   const handleDelete = (e) => {
@@ -27,10 +32,11 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    console.log('className!!!!!!', e.target.className)
-    console.log('this is the content', content)
 
-    dispatch(createComment(e.target.className, content))
+    const comment = await dispatch(createComment(e.target.className, content));
+    if(comment) {
+      setContent('');
+    }
   }
 
   return (
@@ -56,12 +62,13 @@ function ImagesPage() {
                   setTrigger={setEditButtonPopup}
                   image={image}
                 />
-                <form className={image.id} onSubmit={onContentSubmit}>
-                  <input placeholder="Comment" value={content} onChange={(e) => setContent(e.target.value)}/>
-                  <button>comment</button>
-                </form>
               </div>
             )}
+            <form className={image.id} onSubmit={onContentSubmit}>
+              <input placeholder="Comment" value={content} onChange={(e) => setContent(e.target.value)}/>
+              <button>comment</button>
+            </form>
+            {}
           </div>
         ))}
       </ul>

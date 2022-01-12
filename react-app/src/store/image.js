@@ -1,6 +1,5 @@
 const LOAD_IMAGES = 'images/LOAD_IMAGES';
 const DELETE_IMAGE = 'images/DELETE_IMAGE';
-// const SET_IMAGE = 'images/SET_IMAGE';
 const EDIT_IMAGE = 'images/EDIT_IMAGE';
 const LOAD_IMAGE = 'images/LOAD_IMAGE';
 
