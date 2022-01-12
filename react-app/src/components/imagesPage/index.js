@@ -30,6 +30,9 @@ function ImagesPage() {
   const [commentShow, setCommentShow] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [users, setUsers] = useState([]);
+  const commentsArray = Object.values(comments);
+
+  console.log("comment object values => ", Object.values(comments));
 
   useEffect(() => {
     dispatch(getImages());
@@ -111,6 +114,17 @@ function ImagesPage() {
                 <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
+              {commentsArray?.map(comment => {
+                if(comment.image_id === image.id) {
+                  return (
+                    <>
+                      <h3>{getUser(comment.user_id)?.username}</h3>
+                      <p>{comment.content}</p>
+                    </>
+                  )
+                }
+                return '';
+              })}
               {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
