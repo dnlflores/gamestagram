@@ -86,3 +86,12 @@
 .post-option-delete {
   color: rgb(255, 71, 71);
 }
+
+.like-div {
+  z-index: 100;
+  background-color: transparent;
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  cursor: pointer;
+}

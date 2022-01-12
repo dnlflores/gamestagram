@@ -40,11 +40,8 @@ function ImagesPage() {
 
   const handleLike = e => {
     e.preventDefault();
-    const image_id = e.target.className;
-
-    const x = keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId)
-
-    const y = keys.filter(key => likes[key].image_id === image_id)
+    console.log("this is the e.target", e.target)
+    const image_id = e.target.className.split(' ')[1]
 
     if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
       dispatch(unOneLike(image_id))
@@ -53,8 +50,6 @@ function ImagesPage() {
     
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    console.log("className!!!!!!", e.target.className);
-    console.log("this is the content", content);
 
     dispatch(createComment(e.target.className, content));
   };
@@ -89,7 +84,8 @@ function ImagesPage() {
                 />
               </li>
               <div className="post-footer-icon-container">
-                <HeartIcon className="post-footer-icon ${image.id}" onClick={handleLike}/>
+                <div className={`like-div ${image.id}`} onClick={handleLike}></div>
+                  <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
                   onClick={() => setCommentShow(!commentShow)}
                   className="post-footer-icon"
