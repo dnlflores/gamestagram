@@ -46,7 +46,7 @@ const SignUpForm = () => {
   return (
     <div className="sign-up-body">
       <div className="sign-up-left">
-        <img className="sign-up-image" src=""></img>
+        <img className="sign-up-image" alt="" src=""></img>
       </div>
       <div className="sign-up-right">
         <h1 className="sign-up-title">Gamestagram</h1>

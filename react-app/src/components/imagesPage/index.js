@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
 import { createComment } from "../../store/comment";
+import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
@@ -19,22 +20,37 @@ function ImagesPage() {
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const imagesArr = Object.values(images);
+  const likes = useSelector((state) => state.likes);
+  const keys = Object.keys(likes)
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState("");
 
   const [commentShow, setCommentShow] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-
   useEffect(() => {
     dispatch(getImages());
+    dispatch(getTheLikes());
   }, [dispatch]);
-
+  
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(deleteOneImage(images[e.target.className]));
   };
 
+  const handleLike = e => {
+    e.preventDefault();
+    const image_id = e.target.className;
+
+    const x = keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId)
+
+    const y = keys.filter(key => likes[key].image_id === image_id)
+
+    if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
+      dispatch(unOneLike(image_id))
+    } else dispatch(setOneLike(image_id));
+  }
+    
   const onContentSubmit = async (e) => {
     e.preventDefault();
     console.log("className!!!!!!", e.target.className);
@@ -73,7 +89,7 @@ function ImagesPage() {
                 />
               </li>
               <div className="post-footer-icon-container">
-                <HeartIcon className="post-footer-icon" />
+                <HeartIcon className="post-footer-icon ${image.id}" onClick={handleLike}/>
                 <ChatIcon
                   onClick={() => setCommentShow(!commentShow)}
                   className="post-footer-icon"
