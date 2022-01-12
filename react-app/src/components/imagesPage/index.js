@@ -40,6 +40,7 @@ function ImagesPage() {
     if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
       dispatch(unOneLike(image_id))
     } else dispatch(setOneLike(image_id));
+  }
     
   const onContentSubmit = async (e) => {
     e.preventDefault();
