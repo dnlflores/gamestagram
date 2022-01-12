@@ -25,12 +25,19 @@ function ImagesPage() {
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState("");
-
   const [commentShow, setCommentShow] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
+    async function fetchData() {
+      const response = await fetch('/api/users/');
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
   }, [dispatch]);
   
   const handleDelete = (e) => {
@@ -60,6 +67,8 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
+  const getUser = userId => users.filter(user => user.id === userId)[0];
+
   return (
     <div>
       <NavBar />
@@ -69,7 +78,7 @@ function ImagesPage() {
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <UserCircleIcon className="game-post-avatar" />
-                <li>username{image.user_id}</li>
+                <li>{getUser(image.user_id)?.username}</li>     
               </div>
               <li>
                 <img
