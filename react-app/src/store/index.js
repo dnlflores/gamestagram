@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import session from './session'
 import imageReducer from './image'
 import likeReducer from './likes';
-import imageReducer from './image';
 import commentReducer from './comment';
 
 const rootReducer = combineReducers({
