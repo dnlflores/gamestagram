@@ -65,6 +65,7 @@ function ImagesPage() {
   const onContentSubmit = async (e) => {
     e.preventDefault();
 
+
     const comment = await dispatch(createComment(e.target.className, content));
     if(comment) {
       setContent('');
@@ -106,7 +107,10 @@ function ImagesPage() {
                 <div className={`like-div ${image.id}`} onClick={handleLike}></div>
                   <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
-                  onClick={() => setCommentShow(image.id)}
+                  onClick={() => {
+                    if (commentShow === image.id) setCommentShow(0);
+                    else setCommentShow(image.id);
+                  }}
                   className="post-footer-icon"
                 />
               </div>
