@@ -32,7 +32,7 @@ function ImagesPage() {
   const commentsArray = Object.values(comments);
 
   console.log("comment object values => ", Object.values(comments));
-  
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -111,7 +111,12 @@ function ImagesPage() {
                 <div className={`like-div ${image.id}`} onClick={handleLike}></div>
                   <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
-                  onClick={() => setCommentShow(image.id)}
+                  onClick={() => {
+                    if (commentShow === image.id) {
+                      setCommentShow(0);
+                    } else setCommentShow(image.id);
+                    setContent("");
+                  }}
                   className="post-footer-icon"
                 />
               </div>
