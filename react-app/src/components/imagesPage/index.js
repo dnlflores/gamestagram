@@ -31,11 +31,8 @@ function ImagesPage() {
   const [showOptions, setShowOptions] = useState(false);
   const [users, setUsers] = useState([]);
   const commentsArray = Object.values(comments);
-
   const body = document.body;
-
-  console.log("comment object values => ", Object.values(comments));
-
+  
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -56,8 +53,8 @@ function ImagesPage() {
 
   const handleLike = (e) => {
     e.preventDefault();
-    console.log("this is the e.target", e.target);
-    const image_id = e.target.className.split(" ")[1];
+    
+    const image_id = e.target.className.split(' ')[1]
 
     if (
       keys.filter(
@@ -71,7 +68,8 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-
+    setCommentShow(0);
+    
     const comment = await dispatch(createComment(e.target.className, content));
 
     if (comment) {
@@ -121,7 +119,12 @@ function ImagesPage() {
                 ></div>
                 <HeartIcon className="post-footer-icon" />
                 <ChatIcon
-                  onClick={() => setCommentShow(image.id)}
+                  onClick={() => {
+                    if (commentShow === image.id) {
+                      setCommentShow(0);
+                    } else setCommentShow(image.id);
+                    setContent("");
+                  }}
                   className="post-footer-icon"
                 />
               </div>
@@ -145,9 +148,12 @@ function ImagesPage() {
               {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
+                    autoFocus name="CommentAutoFocus"
                     placeholder="Comment"
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={(e) => {
+                      setContent(e.target.value)
+                    }}
                   />
                   <button>comment</button>
                 </form>
