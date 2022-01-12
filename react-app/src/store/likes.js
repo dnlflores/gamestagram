@@ -18,7 +18,7 @@ const unLike = likes => ({
 })
 
 export const getTheLikes = () => async dispatch => {
-    const response = await fetch('/api/likes')
+    const response = await fetch('/api/likes');
     if (response.ok) {
         const likes = await response.json();
         dispatch(getLike(likes));

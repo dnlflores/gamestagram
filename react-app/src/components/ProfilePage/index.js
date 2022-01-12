@@ -6,6 +6,7 @@ import EditFormPage from "../EditFormPage";
 import { getImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import { getComments } from "../../store/comment";
+import { getFollows } from "../../store/follow";
 
 const ProfilePage = props => {
     const user = useSelector(state => state.session.user);
@@ -13,18 +14,21 @@ const ProfilePage = props => {
     const images = useSelector(state => state.images);
     const likes = useSelector(state => state.likes);
     const comments = useSelector(state => state.comments);
+    const follows = useSelector(state => state.follows);
 
     const [imageButtonPopup, setImageButtonPopup] = useState(0);
     const [editButtonPopup, setEditButtonPopup] = useState(0);
 
     const userImages = Object.values(images).filter(image => image.user_id === user.id);
 
+    console.log("this is the follows from state => ", follows);
 
     useEffect(() => {
         dispatch(getImages());
         dispatch(getTheLikes());
         dispatch(getComments());
-    }, [dispatch]);
+        dispatch(getFollows(user.id));
+    }, [dispatch, user.id]);
 
     const handleDelete = event => {
         event.preventDefault();
