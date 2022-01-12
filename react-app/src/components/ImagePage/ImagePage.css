@@ -1,0 +1,133 @@
+.image-page-body {
+  position: absolute !important;
+  z-index: 1000;
+  top: 50px;
+  left: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: animate .2s;
+  padding-bottom: 2rem;
+}
+@keyframes animate {
+  from {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 100%;
+  }
+}
+
+.image-page-con {
+  display: flex;
+  flex-direction: row;
+  width: 1100px;
+  height: 650px;
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.226);
+}
+.image-page-left {
+  background-color: black;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-page-image {
+  width: 100%;
+}
+.image-page-close {
+  width: 40px;
+  color: white;
+  cursor: pointer;
+}
+.x-button-wrap {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  right: -5rem;
+  top: -2rem;
+}
+.image-page-right {
+  position: relative;
+  width: 40%;
+}
+.image-page-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid rgba(117, 117, 117, 0.219);
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+}
+.image-page-header > p {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.image-page-avatar {
+  width: 40px;
+  margin-right: 0.5rem;
+}
+.image-page-comment-container {
+  max-height: 450px;
+  overflow: scroll;
+  padding: 1rem 0.5rem;
+}
+.image-page-comment-header {
+  display: flex;
+  align-items: flex-start;
+  margin: 0.5rem 0rem;
+}
+.image-page-username {
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding-left: 0.8rem;
+  margin-top: 3px;
+}
+.image-page-comment-avatar {
+  width: 35px;
+}
+.image-page-comment {
+  font-size: 0.925rem;
+  padding-left: 0.35rem;
+  margin-top: 3px;
+}
+.image-page-footer {
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid rgba(117, 117, 117, 0.219);
+  width: 100%;
+}
+.image-page-options-container {
+  display: flex;
+  padding: 1rem;
+}
+.image-page-options-icon {
+  width: 32px;
+  margin: 0rem 0.5rem;
+}
+#form-comment-con {
+  border-top: 1px solid rgba(117, 117, 117, 0.219);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.image-page-comment-input {
+  border: none;
+  font-size: 0.95rem;
+  padding: 1rem;
+  outline: none;
+}
+.image-page-comment-submit {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  font-size: 0.9rem;
+  padding-right: 1rem;
+  color: #3670eed2;
+}
