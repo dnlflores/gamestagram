@@ -66,10 +66,7 @@ function ImagesPage() {
     setCommentShow(0);
 
 
-    const comment = await dispatch(createComment(e.target.className, content));
-    if(comment) {
-      setContent('');
-    }
+    await dispatch(createComment(e.target.className, content));
   }
 
   const handleEdit = (imageId) => {
@@ -108,8 +105,10 @@ function ImagesPage() {
                   <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
                   onClick={() => {
-                    if (commentShow === image.id) setCommentShow(0);
-                    else setCommentShow(image.id);
+                    if (commentShow === image.id) {
+                      setCommentShow(0);
+                    } else setCommentShow(image.id);
+                    setContent("");
                   }}
                   className="post-footer-icon"
                 />
