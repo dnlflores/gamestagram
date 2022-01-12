@@ -27,7 +27,7 @@ function ImagesPage() {
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState("");
-  const [commentShow, setCommentShow] = useState(false);
+  const [commentShow, setCommentShow] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -103,7 +103,7 @@ function ImagesPage() {
                 <div className={`like-div ${image.id}`} onClick={handleLike}></div>
                   <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
-                  onClick={() => setCommentShow(!commentShow)}
+                  onClick={() => setCommentShow(image.id)}
                   className="post-footer-icon"
                 />
               </div>
@@ -111,7 +111,7 @@ function ImagesPage() {
                 <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentShow && (
+              {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
                     placeholder="Comment"
