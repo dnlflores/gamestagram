@@ -32,7 +32,7 @@ const CreateImagePage = () => {
       setImageLoading(false);
       // a real app would probably use more advanced
       // error handling
-      console.log("error");
+      console.log("there was an error here is some info", res, res.formData, res.status);
     }
   };
 

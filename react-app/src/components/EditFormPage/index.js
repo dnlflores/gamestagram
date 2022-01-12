@@ -7,7 +7,6 @@ const EditFormPage = (props) => {
   const [errors, setErrors] = useState([]);
   const [caption, setCaption] = useState('');
   const dispatch = useDispatch();
-  const images = useSelector(state => state.images);
   const [image, setImage] = useState(props.image)
 
   //delete these
@@ -20,7 +19,6 @@ const EditFormPage = (props) => {
 
   const onEditGame = async (e) => {
     e.preventDefault();
-    // const image = images[e.target.className]
     let newImageCaption = image.caption;
     if (image) {
       if (caption !== '') newImageCaption = caption;

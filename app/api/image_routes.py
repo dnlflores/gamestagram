@@ -2,21 +2,27 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.s3_helpers import (
     upload_file_to_s3, allowed_file, get_unique_filename)
-from app.models import Image, db
-from app.forms import CreateGameForm, EditGameForm
+from app.models import Image,Comment, db
+from app.forms import CreateGameForm, EditGameForm, CreateCommentForm
 
 image_routes = Blueprint('images', __name__)
+
+
 
 @image_routes.route('')
 def images():
     images = Image.query.all()
     return {'images': [image.to_dict() for image in images]}
 
+
+@image_routes.route('/<int:id>')
+def get_image(id):
+    image = Image.query.get(id)
+    return {'image': image.to_dict()}
+
 @image_routes.route('/<int:id>', methods=["PUT"])
 @login_required
 def edit_image(id):
-    url = request.path
-    id = url.split('/')[-1]
     image = Image.query.get(id)
 
     form = EditGameForm()
@@ -24,27 +30,20 @@ def edit_image(id):
 
     image.caption = form.data['caption']
 
-    # db.session.update(images).where(images.c.id==id).values(caption=form.data['caption'])
-    # Image.update(images).where(images.c.id==id).values(caption=form.data['caption'])
-
-
     db.session.commit()
 
     print('image.to_dict() is', image.to_dict())
     print('form.data', form.data)
     return image.to_dict()
-    
+
 
 @image_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_image(id):
-    url = request.path
-    id = url.split('/')[-1]
     image = Image.query.get(id)
     result = image.to_dict()
     db.session.query(Image).filter(Image.id == id).delete()
     db.session.commit()
-    # image.delete()
     return result
 
 
@@ -82,3 +81,24 @@ def upload_image():
         db.session.commit()
         return new_image.to_dict()
     return {"error": "There was some error I guess"}
+
+
+@image_routes.route('/<int:id>/comments', methods=["POST"])
+@login_required
+def create_comment(id):
+    print('request.json =>', request.json)
+    form = CreateCommentForm()
+    print('THIS IS THE FORM', form)
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        content = form.data['content']
+        new_comment = Comment(
+            content=content,
+            user_id=current_user.id,
+            image_id=id
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return new_comment.to_dict()
+    return {"error": "There was an error creating your comment."}
