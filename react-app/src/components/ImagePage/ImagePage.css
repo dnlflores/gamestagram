@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   animation: animate .2s;
+  padding-bottom: 2rem;
 }
 @keyframes animate {
   from {

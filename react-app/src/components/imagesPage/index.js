@@ -135,8 +135,8 @@ function ImagesPage() {
                 if (comment.image_id === image.id) {
                   return (
                     <>
-                      <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p>{comment.content}</p>
+                      {/* <h3>{getUser(comment.user_id)?.username}</h3>
+                      <p>{comment.content}</p> */}
                     </>
                   );
                 }
