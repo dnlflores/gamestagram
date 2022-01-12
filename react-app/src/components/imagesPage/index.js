@@ -85,10 +85,8 @@ function ImagesPage() {
   
   const getUser = userId => users.filter(user => user.id === userId)[0];
   
-  const canEditComment = (comment, text = null) => {
-    if (text == "isClass") return "editCom".concat(String(comment.user_id === userId).toUpperCase())
-    // else if (comment.user_id === userId) return {visibility: 'hidden'}
-    // else return {visibility: 'hidden'}
+  const canEditComment = (comment) => {
+    return "editCom".concat(String(comment.user_id === userId).toUpperCase())
   }
   
   return (
@@ -137,7 +135,7 @@ function ImagesPage() {
                   return (
                     <>
                       <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p className={canEditComment(comment, 'isClass')}>{comment.content}
+                      <p className={canEditComment(comment)}>{comment.content}
                         <button>Edit</button>
                       </p>
                     </>
