@@ -31,7 +31,7 @@ function ImagesPage() {
   const [users, setUsers] = useState([]);
   const commentsArray = Object.values(comments);
 
-  console.log("comment object values => ", Object.values(comments));
+  // console.log("comment object values => ", Object.values(comments));
 
   useEffect(() => {
     dispatch(getImages());
@@ -71,18 +71,26 @@ function ImagesPage() {
 
   const onEditComment = async e => {
     e.preventDefault();
+    setCommentShow(0);
 
-    const comment = await dispatch(editOneComment(e.target.className, content));
+    await dispatch(editOneComment(e.target.className, content));
     
   }
 
+  
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-
+  
   const getUser = userId => users.filter(user => user.id === userId)[0];
-
+  
+  const canEditComment = (comment, text = null) => {
+    if (text == "isClass") return "editCom".concat(String(comment.user_id === userId).toUpperCase())
+    else if (comment.user_id === userId) return {visibility: 'visible'}
+    else return {visibility: 'hidden'}
+  }
+  
   return (
     <div>
       <NavBar />
@@ -125,20 +133,23 @@ function ImagesPage() {
                 <div className="caption">{image.caption}</div>
               </li>
               {commentsArray?.map(comment => {
-                if(comment.image_id === image.id) {
+                if (comment.image_id === image.id) {
                   return (
                     <>
                       <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p>{comment.content}</p>
+                      <p className={canEditComment(comment, 'isClass')}>{comment.content}
+                        <button style={canEditComment(comment)}>AA</button>
+                      </p>
                     </>
                   )
                 }
+                
                 return '';
               })}
               {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
-                    autoFocus name="CommentAutoFocus"
+                    autoFocus
                     placeholder="Comment"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
