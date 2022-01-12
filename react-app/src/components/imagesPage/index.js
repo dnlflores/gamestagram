@@ -29,18 +29,24 @@ function ImagesPage() {
   const [content, setContent] = useState("");
   const [commentShow, setCommentShow] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-
-  console.log("these are the comments => ", comments);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
     dispatch(getComments());
+    async function fetchData() {
+      const response = await fetch('/api/users/');
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
   }, [dispatch]);
   
   const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(deleteOneImage(images[e.target.className]));
+    // console.log("event target value => ", e.target.className.split(' ')[0])
+    dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
   };
 
   const handleLike = e => {
@@ -67,6 +73,8 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
+  const getUser = userId => users.filter(user => user.id === userId)[0];
+
   return (
     <div>
       <NavBar />
@@ -76,7 +84,7 @@ function ImagesPage() {
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <UserCircleIcon className="game-post-avatar" />
-                <li>username{image.user_id}</li>
+                <li>{getUser(image.user_id)?.username}</li>     
               </div>
               <li>
                 <img
@@ -100,7 +108,7 @@ function ImagesPage() {
                 />
               </div>
               <li className="caption-container">
-                <div className="caption-username">username{image.user_id}</div>
+                <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
               {commentShow && (
