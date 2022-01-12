@@ -33,7 +33,6 @@ function ImagesPage() {
   const commentsArray = Object.values(comments);
 
   console.log("comment object values => ", Object.values(comments));
-
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -133,9 +132,12 @@ function ImagesPage() {
               {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
+                    autoFocus name="CommentAutoFocus"
                     placeholder="Comment"
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={(e) => {
+                      setContent(e.target.value)
+                    }}
                   />
                   <button>comment</button>
                 </form>
