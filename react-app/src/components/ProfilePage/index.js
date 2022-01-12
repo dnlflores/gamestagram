@@ -14,14 +14,15 @@ const ProfilePage = props => {
     const images = useSelector(state => state.images);
     const likes = useSelector(state => state.likes);
     const comments = useSelector(state => state.comments);
-    const follows = useSelector(state => state.follows);
+    const followers = useSelector(state => state.followers);
+    const followersArr = Object.values(followers);
 
     const [imageButtonPopup, setImageButtonPopup] = useState(0);
     const [editButtonPopup, setEditButtonPopup] = useState(0);
 
     const userImages = Object.values(images).filter(image => image.user_id === user.id);
 
-    console.log("this is the follows from state => ", follows);
+    console.log("this is the follows from state => ", followers);
 
     useEffect(() => {
         dispatch(getImages());
@@ -40,7 +41,7 @@ const ProfilePage = props => {
         <div>
             <NavBar />
             <h2>Posts: { userImages.length }</h2>
-            <h2>Follows: 0</h2>
+            <h2>Followers: {followersArr.length}</h2>
             <h2>Following: 0</h2>
             {userImages.map(image => (
                 <img src={ image.url } alt="user_upload"></img>
