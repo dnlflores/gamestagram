@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
-import { createComment } from "../../store/comment";
+import { getComments } from "../../store/comment";
+import {createComment} from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -19,23 +20,36 @@ function ImagesPage() {
 
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
+  const comments = useSelector(state => state.comments);
   const imagesArr = Object.values(images);
   const likes = useSelector((state) => state.likes);
   const keys = Object.keys(likes)
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState("");
-
-  const [commentShow, setCommentShow] = useState(false);
+  const [commentShow, setCommentShow] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
+  const [users, setUsers] = useState([]);
+  const commentsArray = Object.values(comments);
+
+  console.log("comment object values => ", Object.values(comments));
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
+    dispatch(getComments());
+    async function fetchData() {
+      const response = await fetch('/api/users/');
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
   }, [dispatch]);
   
   const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(deleteOneImage(images[e.target.className]));
+    // console.log("event target value => ", e.target.className.split(' ')[0])
+    dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
   };
 
   const handleLike = e => {
@@ -51,13 +65,18 @@ function ImagesPage() {
   const onContentSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(createComment(e.target.className, content));
-  };
+    const comment = await dispatch(createComment(e.target.className, content));
+    if(comment) {
+      setContent('');
+    }
+  }
 
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
+
+  const getUser = userId => users.filter(user => user.id === userId)[0];
 
   return (
     <div>
@@ -68,7 +87,7 @@ function ImagesPage() {
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <UserCircleIcon className="game-post-avatar" />
-                <li>username{image.user_id}</li>
+                <li>{getUser(image.user_id)?.username}</li>     
               </div>
               <li>
                 <img
@@ -87,15 +106,26 @@ function ImagesPage() {
                 <div className={`like-div ${image.id}`} onClick={handleLike}></div>
                   <HeartIcon className="post-footer-icon"/>
                 <ChatIcon
-                  onClick={() => setCommentShow(!commentShow)}
+                  onClick={() => setCommentShow(image.id)}
                   className="post-footer-icon"
                 />
               </div>
               <li className="caption-container">
-                <div className="caption-username">username{image.user_id}</div>
+                <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentShow && (
+              {commentsArray?.map(comment => {
+                if(comment.image_id === image.id) {
+                  return (
+                    <>
+                      <h3>{getUser(comment.user_id)?.username}</h3>
+                      <p>{comment.content}</p>
+                    </>
+                  )
+                }
+                return '';
+              })}
+              {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
                     placeholder="Comment"
