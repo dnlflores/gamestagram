@@ -33,7 +33,8 @@ def unmake_like(image_id):
         if like.image_id == image_id:
             likeToDelete = like
 
-    db.session.query(Like).filter(likeToDelete.id == like.id).delete()
+    # db.session.query(Like).get(likeToDelete.id).delete()
+    Like.query.filter_by(id = likeToDelete.id).delete()
 
     db.session.commit()
     return likeToDelete.to_dict()
