@@ -15,6 +15,7 @@
 .game-post-image {
   cursor: pointer;
   width: 100%;
+  z-index: -1;
 }
 .game-post-header {
   display: flex;
