@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import LogoutButton from "../auth/LogOutButton";
 import {
   HomeIcon,
@@ -11,8 +11,13 @@ import "./Navbar.css";
 import { useSelector } from "react-redux";
 
 const NavBar = () => {
+  const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const [userDrop, setUserDrop] = useState(false);
+
+  const goToProfile = userId => {
+    history.push(`/users/${userId}`);
+  };
 
   return (
     <nav className="nav-bar">
@@ -44,12 +49,14 @@ const NavBar = () => {
         {userDrop && (
           <li className="user-dropdown">
             <div className="user-info">
-              <UserCircleIcon className="nav-avatar" />
               {user && (
-                <div>
-                  <div className="dropdown-username">{user.username}</div>
-                  <div className="dropdown-email">{user.email}</div>
-                </div>
+                <>
+                  <UserCircleIcon className="nav-avatar" onClick={event => goToProfile(user.id)}/>
+                  <div onClick={event => goToProfile(user.id)}>
+                    <div className="dropdown-username">{user.username}</div>
+                    <div className="dropdown-email">{user.email}</div>
+                  </div>
+                </>
               )}
             </div>
             <LogoutButton />

@@ -32,7 +32,6 @@ function ImagesPage() {
   const [users, setUsers] = useState([]);
   const commentsArray = Object.values(comments);
 
-  console.log("comment object values => ", Object.values(comments));
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -53,7 +52,7 @@ function ImagesPage() {
 
   const handleLike = e => {
     e.preventDefault();
-    console.log("this is the e.target", e.target)
+    
     const image_id = e.target.className.split(' ')[1]
 
     if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
