@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
 import { getComments } from "../../store/comment";
-import {createComment} from "../../store/comment";
+import { createComment } from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -20,10 +20,10 @@ function ImagesPage() {
 
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
-  const comments = useSelector(state => state.comments);
+  const comments = useSelector((state) => state.comments);
   const imagesArr = Object.values(images);
   const likes = useSelector((state) => state.likes);
-  const keys = Object.keys(likes)
+  const keys = Object.keys(likes);
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState("");
@@ -32,6 +32,8 @@ function ImagesPage() {
   const [users, setUsers] = useState([]);
   const commentsArray = Object.values(comments);
 
+  const body = document.body;
+
   console.log("comment object values => ", Object.values(comments));
 
   useEffect(() => {
@@ -39,44 +41,49 @@ function ImagesPage() {
     dispatch(getTheLikes());
     dispatch(getComments());
     async function fetchData() {
-      const response = await fetch('/api/users/');
+      const response = await fetch("/api/users/");
       const responseData = await response.json();
       setUsers(responseData.users);
     }
     fetchData();
   }, [dispatch]);
-  
+
   const handleDelete = (e) => {
     e.preventDefault();
     // console.log("event target value => ", e.target.className.split(' ')[0])
-    dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
+    dispatch(deleteOneImage(images[e.target.className.split(" ")[0]]));
   };
 
-  const handleLike = e => {
+  const handleLike = (e) => {
     e.preventDefault();
-    console.log("this is the e.target", e.target)
-    const image_id = e.target.className.split(' ')[1]
+    console.log("this is the e.target", e.target);
+    const image_id = e.target.className.split(" ")[1];
 
-    if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
-      dispatch(unOneLike(image_id))
+    if (
+      keys.filter(
+        (key) =>
+          likes[key].image_id === +image_id && likes[key].user_id === userId
+      ).length
+    ) {
+      dispatch(unOneLike(image_id));
     } else dispatch(setOneLike(image_id));
-  }
-    
+  };
+
   const onContentSubmit = async (e) => {
     e.preventDefault();
 
     const comment = await dispatch(createComment(e.target.className, content));
-    if(comment) {
-      setContent('');
+
+    if (comment) {
+      setContent("");
     }
-  }
+  };
 
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-
-  const getUser = userId => users.filter(user => user.id === userId)[0];
+  const getUser = (userId) => users.filter((user) => user.id === userId)[0];
 
   return (
     <div>
@@ -87,43 +94,53 @@ function ImagesPage() {
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <UserCircleIcon className="game-post-avatar" />
-                <li>{getUser(image.user_id)?.username}</li>     
+                <li>{getUser(image.user_id)?.username}</li>
               </div>
               <li>
                 <img
                   className="game-post-image"
                   src={`${image.url}`}
                   alt="user-upload"
-                  onClick={(event) => setImageButtonPopup(image.id)}
+                  onClick={(event) => {
+                    setImageButtonPopup(image.id);
+                    body.style.backgroundColor = "rgba(0, 0, 0, .7)";
+                  }}
                 ></img>
                 <ImagePage
                   trigger={imageButtonPopup}
                   setTrigger={setImageButtonPopup}
                   image={image}
+                  commentsArray={commentsArray}
+                  users={users}
                 />
               </li>
               <div className="post-footer-icon-container">
-                <div className={`like-div ${image.id}`} onClick={handleLike}></div>
-                  <HeartIcon className="post-footer-icon"/>
+                <div
+                  className={`like-div ${image.id}`}
+                  onClick={handleLike}
+                ></div>
+                <HeartIcon className="post-footer-icon" />
                 <ChatIcon
                   onClick={() => setCommentShow(image.id)}
                   className="post-footer-icon"
                 />
               </div>
               <li className="caption-container">
-                <div className="caption-username">{getUser(image.user_id)?.username}</div>
+                <div className="caption-username">
+                  {getUser(image.user_id)?.username}
+                </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentsArray?.map(comment => {
-                if(comment.image_id === image.id) {
+              {commentsArray?.map((comment) => {
+                if (comment.image_id === image.id) {
                   return (
                     <>
                       <h3>{getUser(comment.user_id)?.username}</h3>
                       <p>{comment.content}</p>
                     </>
-                  )
+                  );
                 }
-                return '';
+                return "";
               })}
               {commentShow === image.id && (
                 <form className={image.id} onSubmit={onContentSubmit}>
@@ -148,12 +165,13 @@ function ImagesPage() {
                   />
                   {showOptions && (
                     <div className="post-options">
-                      <button className={`${image.id} post-option-delete`} onClick={handleDelete}>
+                      <button
+                        className={`${image.id} post-option-delete`}
+                        onClick={handleDelete}
+                      >
                         Delete
                       </button>
-                      <button onClick={() => handleEdit(image.id)}>
-                        Edit
-                      </button>
+                      <button onClick={() => handleEdit(image.id)}>Edit</button>
                       <button>Go to post</button>
                       <button onClick={() => setShowOptions(false)}>
                         Cancel
