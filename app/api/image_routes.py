@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.s3_helpers import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 from app.models import Image, Comment, db
-from app.forms import CreateGameForm, EditGameForm, CreateCommentForm
+from app.forms import CreateGameForm, EditGameForm, CreateCommentForm, EditCommentForm
 
 image_routes = Blueprint('images', __name__)
 
@@ -105,7 +105,15 @@ def create_comment(id):
         return new_comment.to_dict()
     return {"error": form.errors}
 
-# @image_routes.route('/<int:comment_id>/comments', methods=["PUT"])
-# @login_required
-# def edit_comment(comment_id):
+@image_routes.route('/<int:image_id>/comments/<int:comment_id>', methods=["PUT"])
+@login_required
+def edit_comment(image_id, comment_id):
+    comment = Comment.query.get(comment_id)
+    form = EditCommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
 
+    comment.content = form.data['content']
+
+    db.session.commit()
+
+    return comment.to_dict()

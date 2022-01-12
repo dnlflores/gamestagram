@@ -40,17 +40,22 @@ export const getComments = () => async dispatch => {
   }
 }
 
-export const editOneComment = (image_id, content) => async dispatch => {
-  const response = await fetch(`/api/games/comments${image_id}`, {
+export const editOneComment = (image_id, comment_id, content) => async dispatch => {
+  console.log('image_id backend is', image_id)
+  console.log('comment_id backend is', comment_id)
+  const response = await fetch(`/api/games/${image_id}/comments/${comment_id}`, {
     method: "PUT",
     headers: {"Content-Type": "application/json" },
     body: JSON.stringify({ content })
   })
   if (response.ok) {
+    console.log('response was ok')
     const newComment = await response.json();
-    dispatch(editOneComment(newComment));
+    dispatch(editComment(newComment));
     return newComment;
   }
+  console.log('response was NOT ok')
+
 }
 
 export default function commentReducer(state = {}, action) {
@@ -64,7 +69,7 @@ export default function commentReducer(state = {}, action) {
       return loadState
     case EDIT_COMMENT:
       const editState = {...state};
-      editState[action.payload.id] = action.payload.comment;
+      editState[action.payload.id] = action.payload;
       return editState
     default: {
       return state;

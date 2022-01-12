@@ -28,10 +28,9 @@ function ImagesPage() {
   const [commentShow, setCommentShow] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [users, setUsers] = useState([]);
-  const [edit, setEdit] = useState(false)
+  const [edit, setEdit] = useState(false);
+  const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
-
-  // console.log("comment object values => ", Object.values(comments));
 
   useEffect(() => {
     dispatch(getImages());
@@ -70,14 +69,18 @@ function ImagesPage() {
 
   const onEditComment = async e => {
     e.preventDefault();
-    console.log('target value is', e.target.value)
     setCommentShow(0);
+    const str = e.target.className.split(':')
+    console.log('str is', str);
+    const image_id=str[0]
+    const comment_id=str[1]
+    console.log('image_id is', +image_id);
+    console.log('comment_id is', +comment_id);
 
-    await dispatch(editOneComment(e.target.className, content));
+    await dispatch(editOneComment(+image_id, +comment_id, content));
     
   }
 
-  
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
@@ -140,7 +143,8 @@ function ImagesPage() {
                         <button
                           onClick={() => {
                             setEdit(true);
-                            setCommentShow(image.id)
+                            setCommentShow(image.id);
+                            setCommentId(index + 1);
                             setContent(`${comments[index + 1].content}`);
                         }}
                         >Edit</button>
@@ -163,14 +167,14 @@ function ImagesPage() {
                 </form>
               )}
               {commentShow === image.id && edit && (
-                <form className={image.id} onSubmit={onContentSubmit}>
+                <form className={`${image.id}:${commentId}`} onSubmit={onEditComment}>
                   <input
                     autoFocus
                     placeholder="Edit"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                   />
-                  <button>edit</button>
+                  <button>submit edit</button>
                 </form>
               )}
               {userId === image.user_id && (
