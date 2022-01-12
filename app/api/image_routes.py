@@ -104,3 +104,8 @@ def create_comment(id):
         db.session.commit()
         return new_comment.to_dict()
     return {"error": form.errors}
+
+# @image_routes.route('/<int:comment_id>/comments', methods=["PUT"])
+# @login_required
+# def edit_comment(comment_id):
+

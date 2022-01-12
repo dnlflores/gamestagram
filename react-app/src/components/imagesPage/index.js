@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
-import { getComments } from "../../store/comment";
-import {createComment} from "../../store/comment";
+import { getComments, createComment, editOneComment } from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -69,6 +68,13 @@ function ImagesPage() {
     if(comment) {
       setContent('');
     }
+  }
+
+  const onEditComment = async e => {
+    e.preventDefault();
+
+    const comment = await dispatch(editOneComment(e.target.className, content));
+    
   }
 
   const handleEdit = (imageId) => {
