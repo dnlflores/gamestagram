@@ -35,7 +35,8 @@ function ImagesPage() {
   
   const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(deleteOneImage(images[e.target.className]));
+    // console.log("event target value => ", e.target.className.split(' ')[0])
+    dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
   };
 
   const handleLike = e => {
