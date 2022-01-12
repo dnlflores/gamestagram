@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { editOneImage } from '../../store/image';
 
 const EditFormPage = (props) => {
@@ -9,6 +9,13 @@ const EditFormPage = (props) => {
   const dispatch = useDispatch();
   const [image, setImage] = useState(props.image)
 
+  //delete these
+  let a = setImage;
+  let b = images;
+  let c = setErrors;
+  a = b;
+  b = c;
+  c = a;
 
   const onEditGame = async (e) => {
     e.preventDefault();
