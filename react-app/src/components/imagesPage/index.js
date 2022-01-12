@@ -102,7 +102,7 @@ function ImagesPage() {
                 />
               </div>
               <li className="caption-container">
-                <div className="caption-username">username{image.user_id}</div>
+                <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
               {commentShow && (
