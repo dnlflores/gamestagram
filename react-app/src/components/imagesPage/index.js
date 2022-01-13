@@ -44,7 +44,7 @@ function ImagesPage() {
   
   //for ImagePage file ***
   // const props = null
-  function setContentB(arg) {};
+  // function setContentB(arg) {};
 
 
 
@@ -88,7 +88,7 @@ function ImagesPage() {
     }
     else {
       await dispatch(createComment(e.target.className, e.target['0'].value));
-      setContentB("");
+      e.target['0'].value='';
     }
   };
 
@@ -114,7 +114,7 @@ function ImagesPage() {
     setShowOptions(false);
   };
   
-  const submitCommentForm = (image_id, submitFn, contentSetter) => (
+  const postCommentForm = (image_id, submitFn, content, setContent) => (
     <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
         autoFocus
@@ -122,7 +122,7 @@ function ImagesPage() {
         placeholder="Comment"
         value={content}
         onChange={(e) => {
-          contentSetter(e.target.value);
+          setContent(e.target.value);
         }}
       />
     <button>comment</button>
@@ -173,7 +173,7 @@ function ImagesPage() {
 
                   //new props
                   onContentSubmit={onContentSubmit}
-                  submitCommentForm={submitCommentForm}
+                  postCommentForm={postCommentForm}
                 />
               </li>
               <div className="post-footer-icon-container">
@@ -248,7 +248,7 @@ function ImagesPage() {
               })}
 
               {commentShow === image.id && edit === false &&
-                        submitCommentForm(image.id, onContentSubmit, setContent)}
+                        postCommentForm(image.id, onContentSubmit, content, setContent)}
               {commentShow === image.id && edit === true && (
                 <form
                   className={`${image.id}:${commentId}`}

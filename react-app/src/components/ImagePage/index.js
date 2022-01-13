@@ -16,19 +16,20 @@ const ImagePage = (props) => {
   const dispatch = useDispatch();
 
   const [buttonPopup, setButtonPopup] = useState(0);
-  
+
   const body = document.body;
 
-  
+
   // working with imagesPage file
   const [contentB, setContentB] = useState("");
   const [editB, setEditB] = useState(false)
+  const [commentShowB, setCommentShowB] = useState(false)
 
-  
+
   useEffect(() => {
     dispatch(getImage(props.image.id));
   }, [dispatch, props.image.id]);
-  
+
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
@@ -98,9 +99,17 @@ const ImagePage = (props) => {
           <div className="image-page-footer">
             <div className="image-page-options-container">
               <HeartIcon className="image-page-options-icon" />
-              <ChatIcon className="image-page-options-icon" />
+              <ChatIcon className="image-page-options-icon"
+                onClick={() => {
+                  if (commentShowB === [props.image.id]) {
+                    setCommentShowB(0);
+                  } else setCommentShowB([props.image.id]);
+                  setContentB("");
+                  setEditB(false);
+                }}
+              />
             </div>
-            <form
+            {/* <form
               className={props.image.id}
               id="form-comment-con"
               onSubmit={props.onContentSubmit}
@@ -112,7 +121,8 @@ const ImagePage = (props) => {
                 onChange={(e) => setContentB(e.target.value)}
               />
               <button className="image-page-comment-submit">Post</button>
-            </form>
+            </form> */}
+            {props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
           </div>
           {userId === props.image.user_id && (
             <div>
