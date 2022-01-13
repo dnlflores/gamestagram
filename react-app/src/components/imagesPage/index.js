@@ -129,7 +129,7 @@ function ImagesPage() {
                   onClick={handleLike}
                 ></div>
                 {checkIfLiked(image.id) ? (
-                  <HeartIconFilled className="post-footer-icon" />
+                  <HeartIconFilled className="post-footer-icon liked-icon" />
                   ) : (
                     <HeartIcon className="post-footer-icon" />
                 )}
