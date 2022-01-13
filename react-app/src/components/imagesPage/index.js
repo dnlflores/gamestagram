@@ -123,7 +123,9 @@ function ImagesPage() {
         placeholder="Comment"
         value={content}
         onChange={(e) => {
-          setContent(e.target.value);
+          if(image_id ) {
+            setContent(e.target.value);
+          }
         }}
       />
       <button className="comment-submit-button">Post</button>
@@ -214,11 +216,8 @@ function ImagesPage() {
                 )}
                 <ChatIcon
                   onClick={() => {
-                    if (commentShow === image.id) {
-                      setCommentShow(0);
-                    } else setCommentShow(image.id);
-                    setContent("");
-                    setEdit(false);
+                    setImageButtonPopup(image.id);
+                    body.style.overflow = "hidden";
                   }}
                   className="post-footer-icon"
                 />
@@ -229,16 +228,8 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              <p
-                className="games-view-comments"
-                onClick={() => {
-                  setImageButtonPopup(image.id);
-                  body.style.overflow = "hidden";
-                }}
-              >
-                View all comments...
-              </p>
-              {commentsArray.filter(comment => image.id === comment.image_id).slice(-3).map(comment => {
+                  
+              {commentsArray.filter(comment => image.id === comment.image_id).slice(-2).map(comment => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
@@ -272,6 +263,16 @@ function ImagesPage() {
                 }
                 return "";
               })}
+              {commentsArray.filter(comment => image.id === comment.image_id).length > 2 &&
+                <p
+                className="games-view-comments"
+                onClick={() => {
+                  setImageButtonPopup(image.id);
+                  body.style.overflow = "hidden";
+                }}
+              >
+                View all comments...
+              </p>}
               <div className="comment-container-div">
                 {postCommentForm(image.id, onContentSubmit, content, setContent)}
                 {commentShow === image.id && edit === true &&
