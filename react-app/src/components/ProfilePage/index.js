@@ -91,12 +91,20 @@ const ProfilePage = (props) => {
             )}
           </div>
           <div className="profile-middle-row">
-            <p>{userImages.length} posts</p>
-            <p>{followersArr.length} followers</p>
-            <p>{followingsArr.length} following</p>
+            <p>
+              <span className="post-number">{userImages.length}</span> posts
+            </p>
+            <p className="followers">
+              <span className="followers-number">{followersArr.length} </span>
+              followers
+            </p>
+            <p>
+              <span className="following-number">{followingsArr.length} </span>
+              following
+            </p>
           </div>
           <div className="profile-bottom-row">
-            <h1>{user.email}</h1>
+            <h3>{user.email}</h3>
             <p>Description coming soon...</p>
           </div>
         </div>
