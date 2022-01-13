@@ -60,7 +60,7 @@ const ProfilePage = props => {
             ))}
             {(+profileId !== user.id) ? (
                 <div>
-                    {followingsArr.filter( profileUser => +profileUser.id === +user.id).length === 0 ? (
+                    {followersArr.filter( profileUser => +profileUser.id === +user.id).length === 0 ? (
                         <button onClick={event => followProfileUser(profileId)}>Follow</button>
                     ) : (
                         <button>Unfollow</button>
