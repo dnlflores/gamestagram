@@ -43,6 +43,7 @@ const ProfilePage = props => {
 
     const followProfileUser = profileId => {
         dispatch(followUser(user.id, +profileId));
+
     };
 
     const unfollowProfileUser = profileId => {
