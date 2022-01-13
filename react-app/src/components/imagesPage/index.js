@@ -183,7 +183,7 @@ function ImagesPage() {
               >
                 View all comments...
               </p>
-              {commentsArray?.slice(0, 3).map((comment, index) => {
+              {commentsArray?.splice(-3, 3).map((comment, index) => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
