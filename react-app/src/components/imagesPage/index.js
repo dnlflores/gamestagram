@@ -121,7 +121,6 @@ function ImagesPage() {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
 
-
   return (
     <div>
       <NavBar />
@@ -129,9 +128,14 @@ function ImagesPage() {
         <ul className="game-post-container">
           {imagesArr.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
-              <div className="game-post-header" >
-                <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)}/>
-                <li>{getUser(image.user_id)?.username}</li>
+              <div className="game-post-header">
+                <div
+                  className="game-post-ava-name"
+                  onClick={(event) => history.push(`/users/${image.user_id}`)}
+                >
+                  <UserCircleIcon className="game-post-avatar" />
+                  <li>{getUser(image.user_id)?.username}</li>
+                </div>
               </div>
               <li>
                 <img
@@ -179,7 +183,7 @@ function ImagesPage() {
                 <div className="caption">{image.caption}</div>
               </li>
               <p
-              className="games-view-comments"
+                className="games-view-comments"
                 onClick={() => {
                   setImageButtonPopup(image.id);
                   body.style.overflow = "hidden";

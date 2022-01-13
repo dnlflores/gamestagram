@@ -29,12 +29,17 @@
   width: 100%;
   z-index: -1;
 }
+.game-post-ava-name {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 .game-post-header {
   display: flex;
   align-items: center;
   padding: 1rem;
 }
-.game-post-header > li {
+.game-post-ava-name > li {
   list-style: none;
   padding-left: .6rem;
   font-size: .9rem;
