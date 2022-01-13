@@ -12,6 +12,7 @@ import {
   ChatIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
+import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import "./imagesPage.css";
 
 function ImagesPage() {
@@ -21,6 +22,7 @@ function ImagesPage() {
   const comments = useSelector((state) => state.comments);
   const imagesArr = Object.values(images);
   const likes = useSelector((state) => state.likes);
+  const likesArr = Object.values(likes);
   const keys = Object.keys(likes);
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
@@ -32,7 +34,9 @@ function ImagesPage() {
   const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
   const body = document.body;
-  
+
+  const likedImages = likesArr.filter(like => like.user_id === userId)
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -52,8 +56,8 @@ function ImagesPage() {
 
   const handleLike = (e) => {
     e.preventDefault();
-    const image_id = e.target.className.split(' ')[1]
-
+    const image_id = e.target.className.split(' ')[1];
+    
     if (
       keys.filter(
         (key) =>
@@ -67,7 +71,7 @@ function ImagesPage() {
   const onContentSubmit = async (e) => {
     e.preventDefault();
     setCommentShow(0);
-    
+
     const comment = await dispatch(createComment(e.target.className, content));
 
     if (comment) {
@@ -101,16 +105,22 @@ function ImagesPage() {
   
   const getUser = userId => users.filter(user => user.id === userId)[0];
   
+  const checkIfLiked = (imageId) => {
+    for (let i = 0; i < likedImages.length; i++) {
+      if (+likedImages[i].image_id === +imageId) return true
+    }
+    return false;
+  }
+  
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase())
   }
-  
   return (
     <div>
       <NavBar />
       <div className="games-page-body">
         <ul className="game-post-container">
-          {imagesArr.map((image) => (
+          {imagesArr.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <UserCircleIcon className="game-post-avatar" />
@@ -139,7 +149,11 @@ function ImagesPage() {
                   className={`like-div ${image.id}`}
                   onClick={handleLike}
                 ></div>
-                <HeartIcon className="post-footer-icon" />
+                {checkIfLiked(image.id) ? (
+                  <HeartIconFilled className="post-footer-icon liked-icon" />
+                  ) : (
+                    <HeartIcon className="post-footer-icon" />
+                )}
                 <ChatIcon
                   onClick={() => {
                     if (commentShow === image.id) {
@@ -187,9 +201,12 @@ function ImagesPage() {
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
                     autoFocus
+                    name="CommentAutoFocus"
                     placeholder="Comment"
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={(e) => {
+                      setContent(e.target.value);
+                    }}
                   />
                   <button>comment</button>
                 </form>

@@ -98,6 +98,19 @@
   cursor: pointer;
 }
 
+.liked-icon {
+  color: rgb(255, 67, 67);
+  animation: liked .3s;
+}
+@keyframes liked {
+  from {
+    transform: scale(1.2);
+  }
+
+  to {
+    transform: scale(1);
+  }
+
 .editComFALSE > button {
   display: none;
 }
