@@ -64,6 +64,26 @@
 .caption {
   font-size: .9rem;
 }
+.games-view-comments {
+  padding-left: .5rem;
+  padding-bottom: .5rem;
+  font-size: .9rem;
+  cursor: pointer;
+  color: rgba(44, 44, 44, 0.726);
+}
+.games-comment-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0rem .5rem .5rem .5rem;
+}
+.games-username {
+  font-weight: bold;
+  font-size: .9rem;
+  padding-right: .6rem;
+}
+.games-comment-container > p {
+  font-size: .9rem;
+}
 .post-options-icon {
   width: 24px;
   position: absolute;
