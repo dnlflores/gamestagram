@@ -16,28 +16,21 @@ const ImagePage = (props) => {
   const dispatch = useDispatch();
 
   const [buttonPopup, setButtonPopup] = useState(0);
-  const [content, setContent] = useState("");
 
   const body = document.body;
+
+
+  // working with imagesPage file
+  const [contentB, setContentB] = useState("");
+  const [editB, setEditB] = useState(false)
+  const [commentShowB, setCommentShowB] = useState(0)
+  const [commentIdB, setCommentIdB] = useState(-6)
+
 
   useEffect(() => {
     dispatch(getImage(props.image.id));
   }, [dispatch, props.image.id]);
 
-  const handleDelete = (event) => {
-    event.preventDefault();
-    dispatch(deleteOneImage(props.image));
-  };
-
-  const onContentSubmit = async (e) => {
-    e.preventDefault();
-
-    const comment = await dispatch(createComment(e.target.className, content));
-
-    if (comment) {
-      setContent("");
-    }
-  };
 
   const handleClick = (e) => {
     const imagePage = document.querySelector(".image-page-body")
@@ -79,7 +72,29 @@ const ImagePage = (props) => {
                       <p className="image-page-username">
                         {getUser(comment.user_id)?.username}
                       </p>
-                      <p className="image-page-comment">{comment.content}</p>
+                      <div className="commentPDiv">
+                        <p className={props.canEditComment(comment)}>
+                          {comment.content}
+                          <button
+                            onClick={() => {
+                              setEditB(true);
+                              props.setEditB(true);
+                              setCommentShowB(props.image.id);
+                              setCommentIdB(comment.id);
+                              setContentB(`${props.comments[comment.id].content}`);
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              props.onDeleteComment(props.image.id, comment.id, setContentB);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </p>
+                      </div>
                     </div>
                   );
                 }
@@ -90,25 +105,36 @@ const ImagePage = (props) => {
           <div className="image-page-footer">
             <div className="image-page-options-container">
               <HeartIcon className="image-page-options-icon" />
-              <ChatIcon className="image-page-options-icon" />
+              <ChatIcon className="image-page-options-icon"
+                onClick={() => {
+                  if (commentShowB === props.image.id) {
+                    setCommentShowB(0);
+                  } else setCommentShowB(props.image.id);
+                  setContentB("");
+                }}
+              />
             </div>
-            <form
+            {/* <form
               className={props.image.id}
               id="form-comment-con"
-              onSubmit={onContentSubmit}
+              onSubmit={props.onContentSubmit}
             >
               <input
-                className="image-page-comment-input"
+                className={props.image.id}
                 placeholder="Add a comment..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
+                value={contentB}
+                onChange={(e) => setContentB(e.target.value)}
               />
               <button className="image-page-comment-submit">Post</button>
-            </form>
+            </form> */}
+            {editB === false
+              && props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
+            {editB === true && props.editB
+              && props.editCommentForm(props.image.id, commentIdB, props.onEditComment, contentB, setContentB)}
           </div>
           {userId === props.image.user_id && (
             <div>
-              <button className={props.image.id} onClick={handleDelete}>
+              <button className={props.image.id} onClick={props.handleDelete}>
                 delete
               </button>
               <button onClick={() => setButtonPopup(props.image.id)}>

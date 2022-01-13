@@ -41,8 +41,17 @@ function ImagesPage() {
   const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
   const body = document.body;
-
   const likedImages = likesArr.filter((like) => like.user_id === userId);
+
+
+  //for ImagePage file ***
+  // const props = null
+  // function setContentB(arg) {};
+  const [editB, setEditB] = useState(false);
+  // function setEditB(arg) {};
+
+
+
 
   useEffect(() => {
     dispatch(getImages());
@@ -77,12 +86,12 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    setCommentShow(0);
-
-    const comment = await dispatch(createComment(e.target.className, content));
-
-    if (comment) {
+    if (content) {
+      await dispatch(createComment(e.target.className, content));
       setContent("");
+    } else {
+      await dispatch(createComment(e.target.className, e.target['0'].value));
+      e.target['0'].value = '';
     }
   };
 
@@ -90,16 +99,20 @@ function ImagesPage() {
     e.preventDefault();
     setCommentShow(0);
     const str = e.target.className.split(":");
-
     const image_id = str[0];
     const comment_id = str[1];
-
-    await dispatch(editOneComment(+image_id, +comment_id, content));
+    if (content) {
+      await dispatch(editOneComment(+image_id, +comment_id, content));
+      setContent("");
+    } else {
+      await dispatch(editOneComment(+image_id, +comment_id, e.target['0'].value));
+      e.target['0'].value = '';
+      setEditB(false);
+    }
   };
 
-  const onDeleteComment = async (image_id, comment_id) => {
-    // e.preventDefault();
-    setCommentShow(0);
+  const onDeleteComment = async (image_id, comment_id, setContentB = null) => {
+    if (setContentB) setContentB('');
     await dispatch(deleteOneComment(image_id, comment_id));
   };
 
@@ -107,6 +120,36 @@ function ImagesPage() {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
+
+  const postCommentForm = (image_id, submitFn, content, setContent) => (
+    <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
+      <input
+        autoFocus
+        name="CommentAutoFocus"
+        placeholder="Comment"
+        value={content}
+        onChange={(e) => {
+          setContent(e.target.value);
+        }}
+      />
+      <button>comment</button>
+    </form>
+  )
+
+  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
+    <form
+      className={`${image_id}:${commentId}`}
+      onSubmit={editFn} // onEditComment
+    >
+      <input
+        autoFocus
+        placeholder="Edit"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <button>submit edit</button>
+    </form>
+  )
 
   const getUser = (userId) => users.filter((user) => user.id === userId)[0];
 
@@ -148,7 +191,21 @@ function ImagesPage() {
                   setTrigger={setImageButtonPopup}
                   image={image}
                   commentsArray={commentsArray}
+                  comments={comments}
                   users={users}
+                  content={content}
+
+                  //new props
+                  edit={edit}
+                  onContentSubmit={onContentSubmit}
+                  postCommentForm={postCommentForm}
+                  editCommentForm={editCommentForm}
+                  onEditComment={onEditComment}
+                  onDeleteComment={onDeleteComment}
+                  canEditComment={canEditComment}
+                  editB={editB}
+                  setEditB={setEditB}
+                  handleDelete={handleDelete}
                 />
               </li>
               <div className="post-footer-icon-container">
@@ -179,7 +236,7 @@ function ImagesPage() {
                 <div className="caption">{image.caption}</div>
               </li>
               <p
-              className="games-view-comments"
+                className="games-view-comments"
                 onClick={() => {
                   setImageButtonPopup(image.id);
                   body.style.overflow = "hidden";
@@ -187,66 +244,45 @@ function ImagesPage() {
               >
                 View all comments...
               </p>
-              {commentsArray?.splice(-3, 3).map((comment, index) => {
+              {commentsArray.filter(comment => image.id === comment.image_id).slice(-3).map(comment => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
                       <div className="games-username">
                         {getUser(comment.user_id)?.username}
                       </div>
-                      <p id={comment.id} className={canEditComment(comment)}>
-                        {comment.content}
-                        <button
-                          onClick={() => {
-                            setEdit(true);
-                            setCommentShow(image.id);
-                            setCommentId(comment.id);
-                            setContent(`${comments[comment.id].content}`);
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => {
-                            onDeleteComment(image.id, comment.id);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </p>
+                      <div className='commentPDiv'>
+                        <p id={comment.id} className={canEditComment(comment)}>
+                          {comment.content}
+                          <button
+                            onClick={() => {
+                              setEdit(true);
+                              setCommentShow(image.id);
+                              setCommentId(comment.id);
+                              setContent(`${comments[comment.id].content}`);
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => {
+                              onDeleteComment(image.id, comment.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </p>
+                      </div>
                     </div>
                   );
                 }
                 return "";
               })}
-              {commentShow === image.id && edit === false && (
-                <form className={image.id} onSubmit={onContentSubmit}>
-                  <input
-                    autoFocus
-                    name="CommentAutoFocus"
-                    placeholder="Comment"
-                    value={content}
-                    onChange={(e) => {
-                      setContent(e.target.value);
-                    }}
-                  />
-                  <button>comment</button>
-                </form>
-              )}
-              {commentShow === image.id && edit === true && (
-                <form
-                  className={`${image.id}:${commentId}`}
-                  onSubmit={onEditComment}
-                >
-                  <input
-                    autoFocus
-                    placeholder="Edit"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                  />
-                  <button>submit edit</button>
-                </form>
-              )}
+
+              {commentShow === image.id && edit === false &&
+                postCommentForm(image.id, onContentSubmit, content, setContent)}
+              {commentShow === image.id && edit === true &&
+                            editCommentForm(image.id, commentId, onEditComment, content, setContent)}
               {userId === image.user_id && (
                 <div>
                   <DotsHorizontalIcon
@@ -282,5 +318,6 @@ function ImagesPage() {
     </div>
   );
 }
+
 
 export default ImagesPage;
