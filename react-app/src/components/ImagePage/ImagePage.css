@@ -27,7 +27,8 @@
 .image-page-con {
   display: flex;
   flex-direction: row;
-  width: 1150px;
+  flex: 1;
+  max-width: 80%;
   height: 650px;
   background-color: white;
   border-radius: 0.25rem;
