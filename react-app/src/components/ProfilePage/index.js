@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../Navbar";
 import ImagePage from "../ImagePage";
 import EditFormPage from "../EditFormPage";
-import { getImages } from "../../store/image";
+import { getImages, getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import { getComments } from "../../store/comment";
 import { getFollowers, getFollowings } from "../../store/follow";
+import { useParams } from "react-router-dom";
 
 const ProfilePage = props => {
     const user = useSelector(state => state.session.user);
@@ -18,18 +19,21 @@ const ProfilePage = props => {
     const followers = useSelector(state => state.follows.followers);
     const [imageButtonPopup, setImageButtonPopup] = useState(0);
     const [editButtonPopup, setEditButtonPopup] = useState(0);
+    const { userId: profileId } = useParams();
 
-    const userImages = Object.values(images).filter(image => image.user_id === user.id);
+    const userImages = Object.values(images).filter(image => image.user_id === +profileId)
     const followingsArr = Object.values(followings || []);
     const followersArr = Object.values(followers || []);
 
+    console.log("this is the users images", userImages);
+
     useEffect(() => {
-        dispatch(getImages());
+        dispatch(getUserImages(profileId));
         dispatch(getTheLikes());
         dispatch(getComments());
-        dispatch(getFollowings(user.id));
-        dispatch(getFollowers(user.id));
-    }, [dispatch, user]);
+        dispatch(getFollowings(profileId));
+        dispatch(getFollowers(profileId));
+    }, [dispatch, user, profileId]);
 
     const handleDelete = event => {
         event.preventDefault();

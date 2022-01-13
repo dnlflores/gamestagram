@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage } from "../../store/image";
 import { getComments } from "../../store/comment";
 import { createComment } from "../../store/comment";
@@ -17,7 +18,7 @@ import "./imagesPage.css";
 
 function ImagesPage() {
   const userId = useSelector((state) => state.session.user.id);
-
+  const history = useHistory();
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const comments = useSelector((state) => state.comments);
@@ -81,6 +82,7 @@ function ImagesPage() {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
+
   const getUser = (userId) => users.filter((user) => user.id === userId)[0];
 
   return (
@@ -90,8 +92,8 @@ function ImagesPage() {
         <ul className="game-post-container">
           {imagesArr.map((image) => (
             <div className="ind-post-container" key={`${image.id}`}>
-              <div className="game-post-header">
-                <UserCircleIcon className="game-post-avatar" />
+              <div className="game-post-header" >
+                <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)}/>
                 <li>{getUser(image.user_id)?.username}</li>
               </div>
               <li>

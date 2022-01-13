@@ -2,6 +2,7 @@ const LOAD_IMAGES = 'images/LOAD_IMAGES';
 const DELETE_IMAGE = 'images/DELETE_IMAGE';
 const EDIT_IMAGE = 'images/EDIT_IMAGE';
 const LOAD_IMAGE = 'images/LOAD_IMAGE';
+const LOAD_USER_IMAGES = 'images/LOAD_USER_IMAGES';
 
 const loadImages = (images) => ({
     type: LOAD_IMAGES,
@@ -21,6 +22,11 @@ const editImage = image => ({
 const loadImage = image => ({
     type: LOAD_IMAGE,
     payload: image
+});
+
+const loadUserImages = images => ({
+    type: LOAD_USER_IMAGES,
+    payload: images
 })
 
 export const getImage = imageId => async dispatch => {
@@ -69,7 +75,18 @@ export const editOneImage = image => async (dispatch) => {
         dispatch(editImage(imageToEdit));
         return imageToEdit;
     }
-}
+};
+
+export const getUserImages = userId => async dispatch => {
+    const response = await fetch(`/api/users/${userId}/games`);
+
+    if(response.ok){
+        const userImages = await response.json();
+        console.log("THESE ARE THE USER IMAGES => ", {...userImages}.user_images);
+        dispatch(loadUserImages(userImages));
+        return userImages;
+    }
+};
 
 export default function imageReducer(state = {}, action) {
     switch (action.type) {
@@ -85,6 +102,10 @@ export default function imageReducer(state = {}, action) {
             const editState = {...state};
             editState[action.payload.id] = action.payload;
             return editState;
+        case LOAD_USER_IMAGES:
+            const loadState = {...state};
+            action.payload.user_images?.forEach(image => loadState[image.id] = image);
+            return loadState;
         default:
             return state;
     }

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import User
+from app.models import User, Image
 
 user_routes = Blueprint('users', __name__)
 
@@ -33,3 +33,12 @@ def get_followers(id):
     followers = user.following.all()
 
     return {"followers": [user.to_dict() for user in followers]}
+
+
+@user_routes.route('/<int:id>/games')
+def get_user_images(id):
+    images = list(Image.query.filter(Image.user_id == id))
+
+    print("         THESES ARE THE IMAGES => ", images)
+
+    return {"user_images": [image.to_dict() for image in images]}
