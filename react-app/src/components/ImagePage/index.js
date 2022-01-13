@@ -16,28 +16,33 @@ const ImagePage = (props) => {
   const dispatch = useDispatch();
 
   const [buttonPopup, setButtonPopup] = useState(0);
-  const [content, setContent] = useState("");
+  const [contentB, setContentB] = useState("");
 
   const body = document.body;
 
+  
   useEffect(() => {
     dispatch(getImage(props.image.id));
   }, [dispatch, props.image.id]);
+  
+  const canEditComment = (comment) => {
+    return "editCom".concat(String(comment.user_id === userId).toUpperCase());
+  };
 
   const handleDelete = (event) => {
     event.preventDefault();
     dispatch(deleteOneImage(props.image));
   };
 
-  const onContentSubmit = async (e) => {
-    e.preventDefault();
+  // const onContentSubmit = async (e) => {
+  //   e.preventDefault();
 
-    const comment = await dispatch(createComment(e.target.className, content));
+  //   const comment = await dispatch(createComment(e.target.className, content));
 
-    if (comment) {
-      setContent("");
-    }
-  };
+  //   if (comment) {
+  //     setContent("");
+  //   }
+  // };
 
   const getUser = (userId) =>
     props.users.filter((user) => user.id === userId)[0];
@@ -67,7 +72,28 @@ const ImagePage = (props) => {
                       <p className="image-page-username">
                         {getUser(comment.user_id)?.username}
                       </p>
-                      <p className="image-page-comment">{comment.content}</p>
+                      <div className="commentPDiv">
+                        <p className={canEditComment(comment)}>
+                          {comment.content}
+                          {/* <button
+                            onClick={() => {
+                              setEdit(true);
+                              setCommentShow(image.id);
+                              setCommentId(comment.id);
+                              setContent(`${props.comments[comment.id].content}`);
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => {
+                              onDeleteComment(image.id, comment.id);
+                            }}
+                          >
+                            Delete
+                          </button> */}
+                        </p>
+                      </div>
                     </div>
                   );
                 }
@@ -83,13 +109,17 @@ const ImagePage = (props) => {
             <form
               className={props.image.id}
               id="form-comment-con"
-              onSubmit={onContentSubmit}
+              onSubmit={props.onContentSubmit}
             >
               <input
-                className="image-page-comment-input"
+                className={props.image.id}
                 placeholder="Add a comment..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
+                value={contentB}
+                onChange={(e) => {
+                  setContentB(e.target.value)
+                  console.log('setting')
+                  console.log('onset, contentB is', contentB)
+                }}
               />
               <button className="image-page-comment-submit">Post</button>
             </form>

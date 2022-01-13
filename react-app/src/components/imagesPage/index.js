@@ -21,6 +21,7 @@ import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import "./imagesPage.css";
 
 function ImagesPage() {
+  const props = null
   const userId = useSelector((state) => state.session.user.id);
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
@@ -39,7 +40,7 @@ function ImagesPage() {
   const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
   const body = document.body;
-
+  let contentB;
   const likedImages = likesArr.filter((like) => like.user_id === userId);
 
   useEffect(() => {
@@ -75,10 +76,18 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    setCommentShow(0);
+    let comment;
+    if (content) comment = await dispatch(createComment(e.target.className, contentB));
+    else {
+      console.log('classname is', e.target.className);
+      console.log('target value is', e.target.value);
+      console.log('target  is', e.target);
+      const keys = Object.keys(e.target);
+      console.log('e.target[0].value is', e.target[keys[0]].value);
+      const val = e.target[keys[0]].value;
+      comment = await dispatch(createComment(e.target.className, val));
 
-    const comment = await dispatch(createComment(e.target.className, content));
-
+    }
     if (comment) {
       setContent("");
     }
@@ -144,7 +153,10 @@ function ImagesPage() {
                   setTrigger={setImageButtonPopup}
                   image={image}
                   commentsArray={commentsArray}
+                  comments={comments}
                   users={users}
+                  content={content}
+                  onContentSubmit={onContentSubmit}
                 />
               </li>
               <div className="post-footer-icon-container">
@@ -280,5 +292,6 @@ function ImagesPage() {
     </div>
   );
 }
+
 
 export default ImagesPage;
