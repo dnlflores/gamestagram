@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
-import { getComments, createComment, editOneComment, deleteOneComment } from "../../store/comment";
+import {
+  getComments,
+  createComment,
+  editOneComment,
+  deleteOneComment,
+} from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -35,7 +40,7 @@ function ImagesPage() {
   const commentsArray = Object.values(comments);
   const body = document.body;
 
-  const likedImages = likesArr.filter(like => like.user_id === userId)
+  const likedImages = likesArr.filter((like) => like.user_id === userId);
 
   useEffect(() => {
     dispatch(getImages());
@@ -51,13 +56,13 @@ function ImagesPage() {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
+    dispatch(deleteOneImage(images[e.target.className.split(" ")[0]]));
   };
 
   const handleLike = (e) => {
     e.preventDefault();
-    const image_id = e.target.className.split(' ')[1];
-    
+    const image_id = e.target.className.split(" ")[1];
+
     if (
       keys.filter(
         (key) =>
@@ -66,7 +71,7 @@ function ImagesPage() {
     ) {
       dispatch(unOneLike(image_id));
     } else dispatch(setOneLike(image_id));
-  }
+  };
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
@@ -79,42 +84,40 @@ function ImagesPage() {
     }
   };
 
-  const onEditComment = async e => {
+  const onEditComment = async (e) => {
     e.preventDefault();
     setCommentShow(0);
-    const str = e.target.className.split(':')
+    const str = e.target.className.split(":");
 
-    const image_id=str[0]
-    const comment_id=str[1]
-
+    const image_id = str[0];
+    const comment_id = str[1];
 
     await dispatch(editOneComment(+image_id, +comment_id, content));
-    
-  }
+  };
 
   const onDeleteComment = async (image_id, comment_id) => {
     // e.preventDefault();
     setCommentShow(0);
-    await dispatch(deleteOneComment(image_id, comment_id))
-  }
+    await dispatch(deleteOneComment(image_id, comment_id));
+  };
 
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-  
-  const getUser = userId => users.filter(user => user.id === userId)[0];
-  
+
+  const getUser = (userId) => users.filter((user) => user.id === userId)[0];
+
   const checkIfLiked = (imageId) => {
     for (let i = 0; i < likedImages.length; i++) {
-      if (+likedImages[i].image_id === +imageId) return true
+      if (+likedImages[i].image_id === +imageId) return true;
     }
     return false;
-  }
-  
+  };
+
   const canEditComment = (comment) => {
-    return "editCom".concat(String(comment.user_id === userId).toUpperCase())
-  }
+    return "editCom".concat(String(comment.user_id === userId).toUpperCase());
+  };
   return (
     <div>
       <NavBar />
@@ -133,7 +136,7 @@ function ImagesPage() {
                   alt="user-upload"
                   onClick={(event) => {
                     setImageButtonPopup(image.id);
-                    body.style.backgroundColor = "rgba(0, 0, 0, .7)";
+                    body.style.overflow = "hidden";
                   }}
                 ></img>
                 <ImagePage
@@ -151,8 +154,8 @@ function ImagesPage() {
                 ></div>
                 {checkIfLiked(image.id) ? (
                   <HeartIconFilled className="post-footer-icon liked-icon" />
-                  ) : (
-                    <HeartIcon className="post-footer-icon" />
+                ) : (
+                  <HeartIcon className="post-footer-icon" />
                 )}
                 <ChatIcon
                   onClick={() => {
@@ -171,31 +174,46 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentsArray?.map((comment) => {
+              <p
+              className="games-view-comments"
+                onClick={() => {
+                  setImageButtonPopup(image.id);
+                  body.style.overflow = "hidden";
+                }}
+              >
+                View all comments...
+              </p>
+              {commentsArray?.splice(-3, 3).map((comment, index) => {
                 if (comment.image_id === image.id) {
                   return (
-                    <>
-                      <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p id={comment.id} className={canEditComment(comment)}>{comment.content}
+                    <div className="games-comment-container">
+                      <div className="games-username">
+                        {getUser(comment.user_id)?.username}
+                      </div>
+                      <p id={comment.id} className={canEditComment(comment)}>
+                        {comment.content}
                         <button
                           onClick={() => {
                             setEdit(true);
                             setCommentShow(image.id);
                             setCommentId(comment.id);
                             setContent(`${comments[comment.id].content}`);
-                        }}
-                        >Edit</button>
+                          }}
+                        >
+                          Edit
+                        </button>
                         <button
                           onClick={() => {
-                            onDeleteComment(image.id, comment.id)
-                        }}
-                        >Delete</button>
+                            onDeleteComment(image.id, comment.id);
+                          }}
+                        >
+                          Delete
+                        </button>
                       </p>
-                    </>
+                    </div>
                   );
                 }
-                
-                return '';
+                return "";
               })}
               {commentShow === image.id && edit === false && (
                 <form className={image.id} onSubmit={onContentSubmit}>
@@ -212,7 +230,10 @@ function ImagesPage() {
                 </form>
               )}
               {commentShow === image.id && edit === true && (
-                <form className={`${image.id}:${commentId}`} onSubmit={onEditComment}>
+                <form
+                  className={`${image.id}:${commentId}`}
+                  onSubmit={onEditComment}
+                >
                   <input
                     autoFocus
                     placeholder="Edit"

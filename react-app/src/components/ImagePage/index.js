@@ -17,9 +17,8 @@ const ImagePage = (props) => {
 
   const [buttonPopup, setButtonPopup] = useState(0);
   const [content, setContent] = useState("");
-  
-  const body = document.body;
 
+  const body = document.body;
 
   useEffect(() => {
     dispatch(getImage(props.image.id));
@@ -112,7 +111,9 @@ const ImagePage = (props) => {
           )}
           <button className="x-button-wrap" onClick={() => props.setTrigger(0)}>
             <XIcon
-              onClick={() => (body.style.backgroundColor = "white")}
+              onClick={() => {
+                body.style.overflow = "visible";
+              }}
               className="image-page-close"
             />
           </button>
