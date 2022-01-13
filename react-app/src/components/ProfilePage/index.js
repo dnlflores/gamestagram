@@ -25,7 +25,8 @@ const ProfilePage = props => {
     const followingsArr = Object.values(followings || []);
     const followersArr = Object.values(followers || []);
 
-    console.log("this is the users images", userImages);
+    console.log("this the user id", user.id);
+    console.log("this is the profile id", +profileId);
 
     useEffect(() => {
         dispatch(getUserImages(profileId));
@@ -41,6 +42,10 @@ const ProfilePage = props => {
 
     };
 
+    const isFollowing = (userId, followId) => {
+
+    };
+
     return (
         <div>
             <NavBar />
@@ -50,6 +55,15 @@ const ProfilePage = props => {
             {userImages.map(image => (
                 <img src={image.url} alt="user_upload"></img>
             ))}
+            {(+profileId !== user.id) ? (
+                <div>
+                    {followingsArr.filter( user => user.id === profileId) ? (
+                        <button>Follow</button>
+                    ) : (
+                        <button>Unfollow</button>
+                    )}
+                </div>
+            ) : ''}
         </div>
     )
 };
