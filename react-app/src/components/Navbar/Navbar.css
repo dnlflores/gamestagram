@@ -4,6 +4,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
   position: sticky;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
 }
