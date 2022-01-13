@@ -141,23 +141,23 @@ function ImagesPage() {
                 <div className="caption-username">{getUser(image.user_id)?.username}</div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentsArray?.map((comment, index) => {
+              {commentsArray?.map((comment) => {
                 if (comment.image_id === image.id) {
                   return (
                     <>
                       <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p id={index + 1} className={canEditComment(comment)}>{comment.content}
+                      <p id={comment.id} className={canEditComment(comment)}>{comment.content}
                         <button
                           onClick={() => {
                             setEdit(true);
                             setCommentShow(image.id);
-                            setCommentId(index + 1);
-                            setContent(`${comments[index + 1].content}`);
+                            setCommentId(comment.id);
+                            setContent(`${comments[comment.id].content}`);
                         }}
                         >Edit</button>
                         <button
                           onClick={() => {
-                            onDeleteComment(image.id, index + 1)
+                            onDeleteComment(image.id, comment.id)
                         }}
                         >Delete</button>
                       </p>
