@@ -40,8 +40,8 @@ function ImagesPage() {
   const commentsArray = Object.values(comments);
   const body = document.body;
   const likedImages = likesArr.filter((like) => like.user_id === userId);
-  
-  
+
+
   //for ImagePage file ***
   // const props = null
   // function setContentB(arg) {};
@@ -85,10 +85,9 @@ function ImagesPage() {
     if (content) {
       await dispatch(createComment(e.target.className, content));
       setContent("");
-    }
-    else {
+    } else {
       await dispatch(createComment(e.target.className, e.target['0'].value));
-      e.target['0'].value='';
+      e.target['0'].value = '';
     }
   };
 
@@ -96,16 +95,19 @@ function ImagesPage() {
     e.preventDefault();
     setCommentShow(0);
     const str = e.target.className.split(":");
-
     const image_id = str[0];
     const comment_id = str[1];
-
-    await dispatch(editOneComment(+image_id, +comment_id, content));
+    if (content) {
+      await dispatch(editOneComment(+image_id, +comment_id, content));
+      setContent("");
+    } else {
+      await dispatch(editOneComment(+image_id, +comment_id, e.target['0'].value));
+      e.target['0'].value = '';
+    }
   };
 
-  const onDeleteComment = async (image_id, comment_id) => {
-    // e.preventDefault();
-    setCommentShow(0);
+  const onDeleteComment = async (image_id, comment_id, setContentB = null) => {
+    if (setContentB) setContentB('');
     await dispatch(deleteOneComment(image_id, comment_id));
   };
 
@@ -113,7 +115,7 @@ function ImagesPage() {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-  
+
   const postCommentForm = (image_id, submitFn, content, setContent) => (
     <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
@@ -125,8 +127,23 @@ function ImagesPage() {
           setContent(e.target.value);
         }}
       />
-    <button>comment</button>
-  </form>
+      <button>comment</button>
+    </form>
+  )
+
+  const editCommentForm = (image_id, commentId, fn, content, setContent) => (
+    <form
+      className={`${image_id}:${commentId}`}
+      onSubmit={onEditComment}
+    >
+      <input
+        autoFocus
+        placeholder="Edit"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <button>submit edit</button>
+    </form>
   )
 
   const getUser = (userId) => users.filter((user) => user.id === userId)[0];
@@ -174,6 +191,8 @@ function ImagesPage() {
                   //new props
                   onContentSubmit={onContentSubmit}
                   postCommentForm={postCommentForm}
+                  editCommentForm={editCommentForm}
+                  onDeleteComment={onDeleteComment}
                 />
               </li>
               <div className="post-footer-icon-container">
@@ -204,7 +223,7 @@ function ImagesPage() {
                 <div className="caption">{image.caption}</div>
               </li>
               <p
-              className="games-view-comments"
+                className="games-view-comments"
                 onClick={() => {
                   setImageButtonPopup(image.id);
                   body.style.overflow = "hidden";
@@ -248,21 +267,9 @@ function ImagesPage() {
               })}
 
               {commentShow === image.id && edit === false &&
-                        postCommentForm(image.id, onContentSubmit, content, setContent)}
-              {commentShow === image.id && edit === true && (
-                <form
-                  className={`${image.id}:${commentId}`}
-                  onSubmit={onEditComment}
-                >
-                  <input
-                    autoFocus
-                    placeholder="Edit"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                  />
-                  <button>submit edit</button>
-                </form>
-              )}
+                postCommentForm(image.id, onContentSubmit, content, setContent)}
+              {commentShow === image.id && edit === true &&
+                            editCommentForm(image.id, commentId, onEditComment, content, setContent)}
               {userId === image.user_id && (
                 <div>
                   <DotsHorizontalIcon

@@ -23,7 +23,8 @@ const ImagePage = (props) => {
   // working with imagesPage file
   const [contentB, setContentB] = useState("");
   const [editB, setEditB] = useState(false)
-  const [commentShowB, setCommentShowB] = useState(false)
+  const [commentShowB, setCommentShowB] = useState(0)
+  const [commentIdB, setCommentIdB] = useState(-6)
 
 
   useEffect(() => {
@@ -70,23 +71,23 @@ const ImagePage = (props) => {
                       <div className="commentPDiv">
                         <p className={canEditComment(comment)}>
                           {comment.content}
-                          {/* <button
+                          <button
                             onClick={() => {
                               setEditB(true);
-                              setCommentShow(image.id);
-                              setCommentId(comment.id);
-                              setContent(`${props.comments[comment.id].content}`);
+                              setCommentShowB(props.image.id);
+                              setCommentIdB(comment.id);
+                              setContentB(`${props.comments[comment.id].content}`);
                             }}
                           >
                             Edit
                           </button>
                           <button
-                            onClick={() => {
-                              onDeleteComment(image.id, comment.id);
+                            onClick={(e) => {
+                              props.onDeleteComment(props.image.id, comment.id, setContentB);
                             }}
                           >
                             Delete
-                          </button> */}
+                          </button>
                         </p>
                       </div>
                     </div>
@@ -101,9 +102,9 @@ const ImagePage = (props) => {
               <HeartIcon className="image-page-options-icon" />
               <ChatIcon className="image-page-options-icon"
                 onClick={() => {
-                  if (commentShowB === [props.image.id]) {
+                  if (commentShowB === props.image.id) {
                     setCommentShowB(0);
-                  } else setCommentShowB([props.image.id]);
+                  } else setCommentShowB(props.image.id);
                   setContentB("");
                   setEditB(false);
                 }}
@@ -122,7 +123,8 @@ const ImagePage = (props) => {
               />
               <button className="image-page-comment-submit">Post</button>
             </form> */}
-            {props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
+            {editB === false && props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
+            {editB === true && props.editCommentForm(props.image.id, commentIdB, props.onEditComment, contentB, setContentB)}
           </div>
           {userId === props.image.user_id && (
             <div>
