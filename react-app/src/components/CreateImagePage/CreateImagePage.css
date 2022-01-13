@@ -1,0 +1,13 @@
+html {
+    background-color: gray;
+}
+
+/* .modal-outer {
+    z-index: 95;
+    background-color: gray;
+} */
+
+.modal-inner {
+    z-index: 100;
+    background-color: red;
+}

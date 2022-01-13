@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import NavBar from "../Navbar";
+import SelectImagePage from "../SelectImagePage"
+import './CreateImagePage.css'
 
 const CreateImagePage = () => {
   const history = useHistory(); // so that we can redirect after the image upload is successful
@@ -8,6 +10,7 @@ const CreateImagePage = () => {
   const [image, setImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
   const [caption, setCaption] = useState("");
+  const [imageSelectPopup, setImageSelectPopup] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +51,27 @@ const CreateImagePage = () => {
   return (
     <>
       <NavBar />
-      <form onSubmit={handleSubmit}>
+      <header className="new-image-header-container">
+        <div className="choose-image-label-area">
+
+        </div>
+        <div className="contains-modal-button">
+          <button
+            className="modal-button"
+            onClick={e => {
+              setImageSelectPopup(true)
+              // body.style.overflow = "hidden";
+            }}
+          >
+            +
+          </button>
+          <SelectImagePage
+            trigger={imageSelectPopup}
+            setTrigger={setImageSelectPopup}
+          />
+        </div>
+      </header>
+      {/* <form onSubmit={handleSubmit}>
         <div>
           <label>Caption</label>
           <input
@@ -61,8 +84,9 @@ const CreateImagePage = () => {
         <input type="file" accept="image/*" onChange={updateImage} />
         <button type="submit">Submit</button>
         {imageLoading && <p>Loading...</p>}
-      </form>
-    </>
+      </form> */}
+      
+    </ >
   );
 };
 
