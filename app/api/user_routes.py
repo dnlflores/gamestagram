@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request, Request
 from flask_login import login_required
-from app.models import User, Image
+from app.models import User, Image, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -39,6 +39,22 @@ def get_followers(id):
 def get_user_images(id):
     images = list(Image.query.filter(Image.user_id == id))
 
-    print("         THESES ARE THE IMAGES => ", images)
-
     return {"user_images": [image.to_dict() for image in images]}
+
+
+@user_routes.route('/<int:id>/follow', methods=["POST"])
+@login_required
+def follow_user(id):
+    follower_id = request.get_json()['follower_id']
+    user_to_follow = User.query.get(id)
+    user_that_follows = User.query.get(follower_id)
+    print("             user that is following page user ", user_that_follows)
+    print("             this is the request => ", request.get_json())
+    print("             page user is => ", id)
+    user_to_follow.following.append(user_that_follows)
+
+    db.session.commit()
+
+    # db.session.add(request.get_json())
+    # db.session.commit()
+    return user_that_follows.to_dict()

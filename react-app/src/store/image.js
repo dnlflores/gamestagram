@@ -82,7 +82,6 @@ export const getUserImages = userId => async dispatch => {
 
     if(response.ok){
         const userImages = await response.json();
-        console.log("THESE ARE THE USER IMAGES => ", {...userImages}.user_images);
         dispatch(loadUserImages(userImages));
         return userImages;
     }

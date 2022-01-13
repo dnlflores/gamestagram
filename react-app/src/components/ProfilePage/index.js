@@ -6,7 +6,7 @@ import EditFormPage from "../EditFormPage";
 import { getImages, getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import { getComments } from "../../store/comment";
-import { getFollowers, getFollowings } from "../../store/follow";
+import { getFollowers, getFollowings, followUser } from "../../store/follow";
 import { useParams } from "react-router-dom";
 
 const ProfilePage = props => {
@@ -24,9 +24,8 @@ const ProfilePage = props => {
     const userImages = Object.values(images).filter(image => image.user_id === +profileId)
     const followingsArr = Object.values(followings || []);
     const followersArr = Object.values(followers || []);
-
-    console.log("this the user id", user.id);
-    console.log("this is the profile id", +profileId);
+    
+    console.log("FOLLOWINGS ARRAY => ", followingsArr);
 
     useEffect(() => {
         dispatch(getUserImages(profileId));
@@ -42,9 +41,13 @@ const ProfilePage = props => {
 
     };
 
-    const isFollowing = (userId, followId) => {
-
+    const followProfileUser = profileId => {
+        dispatch(followUser(user.id, +profileId));
     };
+
+    const unfollowProfileUser = profileId => {
+
+    }
 
     return (
         <div>
@@ -57,8 +60,8 @@ const ProfilePage = props => {
             ))}
             {(+profileId !== user.id) ? (
                 <div>
-                    {followingsArr.filter( user => user.id === profileId) ? (
-                        <button>Follow</button>
+                    {followingsArr.filter( profileUser => +profileUser.id === +user.id).length === 0 ? (
+                        <button onClick={event => followProfileUser(profileId)}>Follow</button>
                     ) : (
                         <button>Unfollow</button>
                     )}

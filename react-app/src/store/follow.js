@@ -1,5 +1,7 @@
 const LOAD_FOLLOWINGS = 'follows/LOAD_FOLLOWINGS';
 const LOAD_FOLLOWERS = 'follows/LOAD_FOLLOWERS';
+const CREATE_FOLLOW = 'follows/CREATE_FOLLOW';
+const DELETE_FOLLOW = 'follows/DELETE_FOLLOW';
 
 const loadFollowings = followings => ({
     type: LOAD_FOLLOWINGS,
@@ -9,6 +11,16 @@ const loadFollowings = followings => ({
 const loadFollowers = followers => ({
     type: LOAD_FOLLOWERS,
     payload: followers
+});
+
+const createFollow = follow => ({
+    type: CREATE_FOLLOW,
+    payload: follow
+});
+
+const deleteFollow = follow => ({
+    type: DELETE_FOLLOW,
+    payload: follow
 })
 
 export const getFollowings = userId => async dispatch => {
@@ -29,7 +41,23 @@ export const getFollowers = userId => async dispatch => {
         dispatch(loadFollowers(followers));
         return followers;
     }
-}
+};
+
+export const followUser = (followId, userId) => async dispatch => {
+    const response = await fetch(`/api/users/${userId}/follow`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"user_id": userId, "follower_id": followId})
+    });
+
+    if(response.ok) {
+        const follow = await response.json();
+        dispatch(createFollow(follow));
+        return follow;
+    }
+};
 
 export default function followReducer(state = {}, action) {
     switch (action.type) {
@@ -41,6 +69,12 @@ export default function followReducer(state = {}, action) {
             const loaderState = {...state, followers: {}};
             action.payload.followers?.forEach(user => loaderState.followers[user.id] = user);
             return loaderState;
+        case CREATE_FOLLOW:
+            const createState = {...state};
+            console.log("THIS IS THE CREATE STATE => ", createState);
+            console.log("THIS IS THE ACTION PAYLOAD => ", action.payload);
+            createState.followers[action.payload.id] = action.payload;
+            return createState;
         default:
             return state;
     }
