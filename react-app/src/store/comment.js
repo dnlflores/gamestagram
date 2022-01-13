@@ -1,6 +1,7 @@
 const ADD_COMMENT = "comment/ADD_COMMENT";
 const LOAD_COMMENTS = "comment/LOAD_COMMENTS";
 const EDIT_COMMENT = "comment/EDIT_COMMENT";
+const DELETE_COMMENT = "comment/DELETE_COMMENT";
 
 const addComment = (comment) => ({
   type: ADD_COMMENT,
@@ -14,6 +15,11 @@ const loadComments = comments => ({
 
 const editComment = comment => ({
   type: EDIT_COMMENT,
+  payload: comment,
+})
+
+const deleteComment = comment => ({
+  type: DELETE_COMMENT,
   payload: comment,
 })
 
@@ -41,8 +47,6 @@ export const getComments = () => async dispatch => {
 }
 
 export const editOneComment = (image_id, comment_id, content) => async dispatch => {
-  console.log('image_id backend is', image_id)
-  console.log('comment_id backend is', comment_id)
   const response = await fetch(`/api/games/${image_id}/comments/${comment_id}`, {
     method: "PUT",
     headers: {"Content-Type": "application/json" },
@@ -54,8 +58,18 @@ export const editOneComment = (image_id, comment_id, content) => async dispatch 
     dispatch(editComment(newComment));
     return newComment;
   }
-  console.log('response was NOT ok')
 
+}
+
+export const deleteOneComment = (image_id, comment_id) => async dispatch => {
+  const response = await fetch(`/api/games/${image_id}/comments/${comment_id}`, {
+    method: "DELETE"
+  })
+  if (response.ok) {
+    const deletedComment = await response.json();
+    dispatch(deleteComment(deletedComment));
+    return deletedComment
+  }
 }
 
 export default function commentReducer(state = {}, action) {
@@ -71,6 +85,10 @@ export default function commentReducer(state = {}, action) {
       const editState = {...state};
       editState[action.payload.id] = action.payload;
       return editState
+    case DELETE_COMMENT:
+      const deleteState = {...state};
+      delete deleteState[action.payload.id];
+      return deleteState;
     default: {
       return state;
     }

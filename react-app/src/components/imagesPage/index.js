@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages, deleteOneImage } from "../../store/image";
-import { getComments, createComment, editOneComment } from "../../store/comment";
+import { getComments, createComment, editOneComment, deleteOneComment } from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -71,14 +71,21 @@ function ImagesPage() {
     e.preventDefault();
     setCommentShow(0);
     const str = e.target.className.split(':')
-    console.log('str is', str);
+
     const image_id=str[0]
     const comment_id=str[1]
-    console.log('image_id is', +image_id);
-    console.log('comment_id is', +comment_id);
+
 
     await dispatch(editOneComment(+image_id, +comment_id, content));
     
+  }
+
+  const onDeleteComment = async (image_id, comment_id) => {
+    // e.preventDefault();
+    setCommentShow(0);
+
+    console.log('comment_id is', comment_id)
+    await dispatch(deleteOneComment(image_id, comment_id))
   }
 
   const handleEdit = (imageId) => {
@@ -148,6 +155,11 @@ function ImagesPage() {
                             setContent(`${comments[index + 1].content}`);
                         }}
                         >Edit</button>
+                        <button
+                          onClick={() => {
+                            onDeleteComment(image.id, index + 1)
+                        }}
+                        >Delete</button>
                       </p>
                     </>
                   )
@@ -155,7 +167,7 @@ function ImagesPage() {
                 
                 return '';
               })}
-              {commentShow === image.id && !edit && (
+              {commentShow === image.id && edit === false && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
                     autoFocus
@@ -166,7 +178,7 @@ function ImagesPage() {
                   <button>comment</button>
                 </form>
               )}
-              {commentShow === image.id && edit && (
+              {commentShow === image.id && edit === true && (
                 <form className={`${image.id}:${commentId}`} onSubmit={onEditComment}>
                   <input
                     autoFocus

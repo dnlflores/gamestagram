@@ -117,3 +117,13 @@ def edit_comment(image_id, comment_id):
     db.session.commit()
 
     return comment.to_dict()
+
+@image_routes.route('/<int:image_id>/comments/<int:comment_id>', methods=["DELETE"])
+@login_required
+def delete_comment(image_id, comment_id):
+    comment = Comment.query.get(comment_id)
+    result = comment.to_dict()
+    db.session.query(Comment).filter(Comment.id == comment_id).delete()
+
+    db.session.commit()
+    return result
