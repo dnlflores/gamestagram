@@ -115,11 +115,7 @@ const ImagePage = (props) => {
                 className={props.image.id}
                 placeholder="Add a comment..."
                 value={contentB}
-                onChange={(e) => {
-                  setContentB(e.target.value)
-                  console.log('setting')
-                  console.log('onset, contentB is', contentB)
-                }}
+                onChange={(e) => setContentB(e.target.value)}
               />
               <button className="image-page-comment-submit">Post</button>
             </form>

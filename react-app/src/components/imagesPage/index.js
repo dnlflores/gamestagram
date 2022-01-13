@@ -40,7 +40,7 @@ function ImagesPage() {
   const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
   const body = document.body;
-  let contentB;
+  function setContentB(string) {};
   const likedImages = likesArr.filter((like) => like.user_id === userId);
 
   useEffect(() => {
@@ -76,20 +76,13 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    let comment;
-    if (content) comment = await dispatch(createComment(e.target.className, contentB));
-    else {
-      console.log('classname is', e.target.className);
-      console.log('target value is', e.target.value);
-      console.log('target  is', e.target);
-      const keys = Object.keys(e.target);
-      console.log('e.target[0].value is', e.target[keys[0]].value);
-      const val = e.target[keys[0]].value;
-      comment = await dispatch(createComment(e.target.className, val));
-
-    }
-    if (comment) {
+    if (content) {
+      await dispatch(createComment(e.target.className, content));
       setContent("");
+    }
+    else {
+      await dispatch(createComment(e.target.className, e.target['0'].value));
+      setContentB("");
     }
   };
 
