@@ -10,6 +10,7 @@ import User from "./components/User";
 import ImagesPage from "./components/imagesPage";
 import CreateImagePage from "./components/CreateImagePage";
 import { authenticate } from "./store/session";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -42,7 +43,7 @@ function App() {
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true}>
-          <User />
+          <ProfilePage />
         </ProtectedRoute>
         <ProtectedRoute path="/games" exact={true}>
           <ImagesPage />

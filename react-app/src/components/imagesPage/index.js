@@ -18,10 +18,10 @@ function ImagesPage() {
   const userId = useSelector((state) => state.session.user.id);
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
-  const comments = useSelector(state => state.comments);
+  const comments = useSelector((state) => state.comments);
   const imagesArr = Object.values(images);
   const likes = useSelector((state) => state.likes);
-  const keys = Object.keys(likes)
+  const keys = Object.keys(likes);
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
   const [content, setContent] = useState("");
@@ -31,40 +31,49 @@ function ImagesPage() {
   const [edit, setEdit] = useState(false);
   const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
-
+  const body = document.body;
+  
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
     dispatch(getComments());
     async function fetchData() {
-      const response = await fetch('/api/users/');
+      const response = await fetch("/api/users/");
       const responseData = await response.json();
       setUsers(responseData.users);
     }
     fetchData();
   }, [dispatch]);
-  
+
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
   };
 
-  const handleLike = e => {
+  const handleLike = (e) => {
     e.preventDefault();
     const image_id = e.target.className.split(' ')[1]
 
-    if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
-      dispatch(unOneLike(image_id))
+    if (
+      keys.filter(
+        (key) =>
+          likes[key].image_id === +image_id && likes[key].user_id === userId
+      ).length
+    ) {
+      dispatch(unOneLike(image_id));
     } else dispatch(setOneLike(image_id));
   }
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
     setCommentShow(0);
+    
+    const comment = await dispatch(createComment(e.target.className, content));
 
-
-    await dispatch(createComment(e.target.className, content));
-  }
+    if (comment) {
+      setContent("");
+    }
+  };
 
   const onEditComment = async e => {
     e.preventDefault();
@@ -105,24 +114,32 @@ function ImagesPage() {
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <UserCircleIcon className="game-post-avatar" />
-                <li>{getUser(image.user_id)?.username}</li>     
+                <li>{getUser(image.user_id)?.username}</li>
               </div>
               <li>
                 <img
                   className="game-post-image"
                   src={`${image.url}`}
                   alt="user-upload"
-                  onClick={(event) => setImageButtonPopup(image.id)}
+                  onClick={(event) => {
+                    setImageButtonPopup(image.id);
+                    body.style.backgroundColor = "rgba(0, 0, 0, .7)";
+                  }}
                 ></img>
                 <ImagePage
                   trigger={imageButtonPopup}
                   setTrigger={setImageButtonPopup}
                   image={image}
+                  commentsArray={commentsArray}
+                  users={users}
                 />
               </li>
               <div className="post-footer-icon-container">
-                <div className={`like-div ${image.id}`} onClick={handleLike}></div>
-                  <HeartIcon className="post-footer-icon"/>
+                <div
+                  className={`like-div ${image.id}`}
+                  onClick={handleLike}
+                ></div>
+                <HeartIcon className="post-footer-icon" />
                 <ChatIcon
                   onClick={() => {
                     if (commentShow === image.id) {
@@ -135,7 +152,9 @@ function ImagesPage() {
                 />
               </div>
               <li className="caption-container">
-                <div className="caption-username">{getUser(image.user_id)?.username}</div>
+                <div className="caption-username">
+                  {getUser(image.user_id)?.username}
+                </div>
                 <div className="caption">{image.caption}</div>
               </li>
               {commentsArray?.map((comment) => {
@@ -159,7 +178,7 @@ function ImagesPage() {
                         >Delete</button>
                       </p>
                     </>
-                  )
+                  );
                 }
                 
                 return '';
@@ -199,12 +218,13 @@ function ImagesPage() {
                   />
                   {showOptions && (
                     <div className="post-options">
-                      <button className={`${image.id} post-option-delete`} onClick={handleDelete}>
+                      <button
+                        className={`${image.id} post-option-delete`}
+                        onClick={handleDelete}
+                      >
                         Delete
                       </button>
-                      <button onClick={() => handleEdit(image.id)}>
-                        Edit
-                      </button>
+                      <button onClick={() => handleEdit(image.id)}>Edit</button>
                       <button>Go to post</button>
                       <button onClick={() => setShowOptions(false)}>
                         Cancel
