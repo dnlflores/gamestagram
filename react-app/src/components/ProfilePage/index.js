@@ -1,31 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../Navbar";
-import ImagePage from "../ImagePage";
-import EditFormPage from "../EditFormPage";
-import { getImages, getUserImages } from "../../store/image";
+// import ImagePage from "../ImagePage";
+// import EditFormPage from "../EditFormPage";
+import { getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import { getComments } from "../../store/comment";
-import { getFollowers, getFollowings, followUser } from "../../store/follow";
+import { getFollowers, getFollowings, followUser, unfollowUser } from "../../store/follow";
 import { useParams } from "react-router-dom";
 
 const ProfilePage = props => {
     const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const images = useSelector(state => state.images);
-    const likes = useSelector(state => state.likes);
-    const comments = useSelector(state => state.comments);
+    // const likes = useSelector(state => state.likes);
+    // const comments = useSelector(state => state.comments);
     const followings = useSelector(state => state.follows.followings);
     const followers = useSelector(state => state.follows.followers);
-    const [imageButtonPopup, setImageButtonPopup] = useState(0);
-    const [editButtonPopup, setEditButtonPopup] = useState(0);
+    // const [imageButtonPopup, setImageButtonPopup] = useState(0);
+    // const [editButtonPopup, setEditButtonPopup] = useState(0);
     const { userId: profileId } = useParams();
 
-    const userImages = Object.values(images).filter(image => image.user_id === +profileId)
-    const followingsArr = Object.values(followings || []);
-    const followersArr = Object.values(followers || []);
-    
-    console.log("FOLLOWINGS ARRAY => ", followingsArr);
+    const userImages = Object.values(images).filter(image => image.user_id === +profileId);
+    const followingsArr = Object.values(followings || {});
+    const followersArr = Object.values(followers || {});
 
     useEffect(() => {
         dispatch(getUserImages(profileId));
@@ -35,18 +33,18 @@ const ProfilePage = props => {
         dispatch(getFollowers(profileId));
     }, [dispatch, user, profileId]);
 
-    const handleDelete = event => {
-        event.preventDefault();
+    // const handleDelete = event => {
+    //     event.preventDefault();
 
 
-    };
+    // };
 
     const followProfileUser = profileId => {
         dispatch(followUser(user.id, +profileId));
     };
 
     const unfollowProfileUser = profileId => {
-
+        dispatch(unfollowUser(user.id, +profileId));
     }
 
     return (
@@ -63,7 +61,7 @@ const ProfilePage = props => {
                     {followersArr.filter( profileUser => +profileUser.id === +user.id).length === 0 ? (
                         <button onClick={event => followProfileUser(profileId)}>Follow</button>
                     ) : (
-                        <button>Unfollow</button>
+                        <button onClick={event => unfollowProfileUser(profileId)}>Unfollow</button>
                     )}
                 </div>
             ) : ''}

@@ -59,6 +59,22 @@ export const followUser = (followId, userId) => async dispatch => {
     }
 };
 
+export const unfollowUser = (followId, userId) => async dispatch => {
+    const response = await fetch(`/api/users/${userId}/follow`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"user_id": userId, "follower_id": followId})
+    });
+
+    if(response.ok) {
+        const unfollow = await response.json();
+        dispatch(deleteFollow(unfollow));
+        return unfollow
+    }
+}
+
 export default function followReducer(state = {}, action) {
     switch (action.type) {
         case LOAD_FOLLOWINGS:
@@ -70,11 +86,13 @@ export default function followReducer(state = {}, action) {
             action.payload.followers?.forEach(user => loaderState.followers[user.id] = user);
             return loaderState;
         case CREATE_FOLLOW:
-            const createState = {...state};
-            console.log("THIS IS THE CREATE STATE => ", createState);
-            console.log("THIS IS THE ACTION PAYLOAD => ", action.payload);
+            const createState = JSON.parse(JSON.stringify(state));
             createState.followers[action.payload.id] = action.payload;
             return createState;
+        case DELETE_FOLLOW:
+            const deleteState = JSON.parse(JSON.stringify(state));
+            delete deleteState.followers[action.payload.id];
+            return deleteState;
         default:
             return state;
     }

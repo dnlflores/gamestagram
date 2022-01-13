@@ -48,13 +48,21 @@ def follow_user(id):
     follower_id = request.get_json()['follower_id']
     user_to_follow = User.query.get(id)
     user_that_follows = User.query.get(follower_id)
-    print("             user that is following page user ", user_that_follows)
-    print("             this is the request => ", request.get_json())
-    print("             page user is => ", id)
     user_to_follow.following.append(user_that_follows)
 
     db.session.commit()
 
-    # db.session.add(request.get_json())
-    # db.session.commit()
     return user_that_follows.to_dict()
+
+
+@user_routes.route('/<int:id>/follow', methods=["DELETE"])
+@login_required
+def unfollow_user(id):
+    follower_id = request.get_json()['follower_id']
+    user_to_unfollow = User.query.get(id)
+    user_that_unfollows = User.query.get(follower_id)
+    user_to_unfollow.following.remove(user_that_unfollows)
+
+    db.session.commit()
+
+    return user_that_unfollows.to_dict()
