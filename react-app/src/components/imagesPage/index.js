@@ -57,7 +57,7 @@ function ImagesPage() {
   const handleLike = (e) => {
     e.preventDefault();
     const image_id = e.target.className.split(' ')[1];
-    
+
     if (
       keys.filter(
         (key) =>
@@ -89,7 +89,7 @@ function ImagesPage() {
 
 
     await dispatch(editOneComment(+image_id, +comment_id, content));
-    
+
   }
 
   const onDeleteComment = async (image_id, comment_id) => {
@@ -102,16 +102,16 @@ function ImagesPage() {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-  
+
   const getUser = userId => users.filter(user => user.id === userId)[0];
-  
+
   const checkIfLiked = (imageId) => {
     for (let i = 0; i < likedImages.length; i++) {
       if (+likedImages[i].image_id === +imageId) return true
     }
     return false;
   }
-  
+
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase())
   }
@@ -133,7 +133,7 @@ function ImagesPage() {
                   alt="user-upload"
                   onClick={(event) => {
                     setImageButtonPopup(image.id);
-                    body.style.backgroundColor = "rgba(0, 0, 0, .7)";
+                    body.style.overflow = "hidden";
                   }}
                 ></img>
                 <ImagePage
@@ -194,7 +194,7 @@ function ImagesPage() {
                     </>
                   );
                 }
-                
+
                 return '';
               })}
               {commentShow === image.id && edit === false && (
