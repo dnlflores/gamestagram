@@ -34,6 +34,35 @@
   border-radius: 0.25rem;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.226);
 }
+@media screen and (max-width: 755px) {
+  .image-page-con {
+    max-width: 90%;
+    height: 450px;
+  }
+  .image-page-comment-container {
+    height: 243px;
+    overflow: scroll;
+  }
+  .image-page-image {
+    width: 100%;
+    height: 100%;
+  }
+  .image-page-left {
+    width: 100%;
+    height: 100%;
+  }
+  .image-page-right {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 555px) {
+  .image-page-con {
+    max-width: 100%;
+    height: 450px;
+  }
+}
 .image-page-left {
   background-color: black;
   width: 60%;
