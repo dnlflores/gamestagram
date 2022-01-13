@@ -21,7 +21,6 @@ import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import "./imagesPage.css";
 
 function ImagesPage() {
-  const props = null
   const userId = useSelector((state) => state.session.user.id);
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
@@ -40,8 +39,15 @@ function ImagesPage() {
   const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
   const body = document.body;
-  function setContentB(string) {};
   const likedImages = likesArr.filter((like) => like.user_id === userId);
+  
+  
+  //for ImagePage file ***
+  // const props = null
+  function setContentB(arg) {};
+
+
+
 
   useEffect(() => {
     dispatch(getImages());
@@ -107,6 +113,21 @@ function ImagesPage() {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
+  
+  const submitCommentForm = (image_id, submitFn, contentSetter) => (
+    <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
+      <input
+        autoFocus
+        name="CommentAutoFocus"
+        placeholder="Comment"
+        value={content}
+        onChange={(e) => {
+          contentSetter(e.target.value);
+        }}
+      />
+    <button>comment</button>
+  </form>
+  )
 
   const getUser = (userId) => users.filter((user) => user.id === userId)[0];
 
@@ -149,7 +170,10 @@ function ImagesPage() {
                   comments={comments}
                   users={users}
                   content={content}
+
+                  //new props
                   onContentSubmit={onContentSubmit}
+                  submitCommentForm={submitCommentForm}
                 />
               </li>
               <div className="post-footer-icon-container">
@@ -222,20 +246,9 @@ function ImagesPage() {
                 }
                 return "";
               })}
-              {commentShow === image.id && edit === false && (
-                <form className={image.id} onSubmit={onContentSubmit}>
-                  <input
-                    autoFocus
-                    name="CommentAutoFocus"
-                    placeholder="Comment"
-                    value={content}
-                    onChange={(e) => {
-                      setContent(e.target.value);
-                    }}
-                  />
-                  <button>comment</button>
-                </form>
-              )}
+
+              {commentShow === image.id && edit === false &&
+                        submitCommentForm(image.id, onContentSubmit, setContent)}
               {commentShow === image.id && edit === true && (
                 <form
                   className={`${image.id}:${commentId}`}

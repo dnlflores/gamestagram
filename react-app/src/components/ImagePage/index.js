@@ -16,9 +16,13 @@ const ImagePage = (props) => {
   const dispatch = useDispatch();
 
   const [buttonPopup, setButtonPopup] = useState(0);
-  const [contentB, setContentB] = useState("");
-
+  
   const body = document.body;
+
+  
+  // working with imagesPage file
+  const [contentB, setContentB] = useState("");
+  const [editB, setEditB] = useState(false)
 
   
   useEffect(() => {
@@ -33,16 +37,6 @@ const ImagePage = (props) => {
     event.preventDefault();
     dispatch(deleteOneImage(props.image));
   };
-
-  // const onContentSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const comment = await dispatch(createComment(e.target.className, content));
-
-  //   if (comment) {
-  //     setContent("");
-  //   }
-  // };
 
   const getUser = (userId) =>
     props.users.filter((user) => user.id === userId)[0];
@@ -77,7 +71,7 @@ const ImagePage = (props) => {
                           {comment.content}
                           {/* <button
                             onClick={() => {
-                              setEdit(true);
+                              setEditB(true);
                               setCommentShow(image.id);
                               setCommentId(comment.id);
                               setContent(`${props.comments[comment.id].content}`);
