@@ -43,15 +43,7 @@ function ImagesPage() {
   const body = document.body;
   const likedImages = likesArr.filter((like) => like.user_id === userId);
 
-
-  //for ImagePage file ***
-  // const props = null
-  // function setContentB(arg) {};
   const [editB, setEditB] = useState(false);
-  // function setEditB(arg) {};
-
-
-
 
   useEffect(() => {
     dispatch(getImages());
@@ -124,6 +116,8 @@ function ImagesPage() {
   const postCommentForm = (image_id, submitFn, content, setContent) => (
     <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
+        required="true"
+        className={`input-comment`}
         autoFocus
         name="CommentAutoFocus"
         placeholder="Comment"
@@ -132,7 +126,7 @@ function ImagesPage() {
           setContent(e.target.value);
         }}
       />
-      <button>comment</button>
+      <button className="comment-submit-button">Post</button>
     </form>
   )
 
@@ -278,11 +272,11 @@ function ImagesPage() {
                 }
                 return "";
               })}
-
-              {commentShow === image.id && edit === false &&
-                postCommentForm(image.id, onContentSubmit, content, setContent)}
-              {commentShow === image.id && edit === true &&
-                            editCommentForm(image.id, commentId, onEditComment, content, setContent)}
+              <div className="comment-container-div">
+                {postCommentForm(image.id, onContentSubmit, content, setContent)}
+                {commentShow === image.id && edit === true &&
+                              editCommentForm(image.id, commentId, onEditComment, content, setContent)}
+              </div>
               {userId === image.user_id && (
                 <div>
                   <DotsHorizontalIcon
