@@ -118,6 +118,8 @@ function ImagesPage() {
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
+
+
   return (
     <div>
       <NavBar />
