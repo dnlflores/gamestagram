@@ -32,6 +32,18 @@ const ImagePage = (props) => {
   }, [dispatch, props.image.id]);
 
 
+  const handleClick = (e) => {
+    const imagePage = document.querySelector(".image-page-body")
+    if (e.target === imagePage) {
+      body.style.overflow = "visible";
+      props.setTrigger(0)
+      // imagePage.style.display = "flex";
+    }
+  };
+  useEffect(() => {
+    document.body.addEventListener("click", handleClick);
+  }, [handleClick]);
+
   const getUser = (userId) =>
     props.users.filter((user) => user.id === userId)[0];
 

@@ -40,7 +40,6 @@ export const getComments = () => async dispatch => {
   const response = await fetch(`/api/games/comments`);
   if(response.ok) {
     const loadedComments = await response.json();
-    console.log("THIS IS THE LOADED COMMENTS", loadedComments)
     dispatch(loadComments(loadedComments));
     return loadedComments;
   }
