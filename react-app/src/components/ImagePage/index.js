@@ -99,7 +99,6 @@ const ImagePage = (props) => {
                     setCommentShowB(0);
                   } else setCommentShowB(props.image.id);
                   setContentB("");
-                  setEditB(false);
                 }}
               />
             </div>

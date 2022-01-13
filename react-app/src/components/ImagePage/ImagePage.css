@@ -113,6 +113,9 @@
   width: 32px;
   margin: 0rem 0.5rem;
 }
+.image-page-options-icon:hover {
+  cursor: pointer;
+}
 #form-comment-con {
   border-top: 1px solid rgba(117, 117, 117, 0.219);
   position: relative;
