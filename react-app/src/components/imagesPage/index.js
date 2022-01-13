@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage } from "../../store/image";
 import {
   getComments,
@@ -22,6 +23,7 @@ import "./imagesPage.css";
 
 function ImagesPage() {
   const userId = useSelector((state) => state.session.user.id);
+  const history = useHistory();
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const comments = useSelector((state) => state.comments);
@@ -125,8 +127,8 @@ function ImagesPage() {
         <ul className="game-post-container">
           {imagesArr.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
-              <div className="game-post-header">
-                <UserCircleIcon className="game-post-avatar" />
+              <div className="game-post-header" >
+                <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)}/>
                 <li>{getUser(image.user_id)?.username}</li>
               </div>
               <li>
