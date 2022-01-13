@@ -31,15 +31,6 @@ const ImagePage = (props) => {
     dispatch(getImage(props.image.id));
   }, [dispatch, props.image.id]);
 
-  const canEditComment = (comment) => {
-    return "editCom".concat(String(comment.user_id === userId).toUpperCase());
-  };
-
-  const handleDelete = (event) => {
-    event.preventDefault();
-    dispatch(deleteOneImage(props.image));
-  };
-
 
   const getUser = (userId) =>
     props.users.filter((user) => user.id === userId)[0];
@@ -70,7 +61,7 @@ const ImagePage = (props) => {
                         {getUser(comment.user_id)?.username}
                       </p>
                       <div className="commentPDiv">
-                        <p className={canEditComment(comment)}>
+                        <p className={props.canEditComment(comment)}>
                           {comment.content}
                           <button
                             onClick={() => {
@@ -132,7 +123,7 @@ const ImagePage = (props) => {
           </div>
           {userId === props.image.user_id && (
             <div>
-              <button className={props.image.id} onClick={handleDelete}>
+              <button className={props.image.id} onClick={props.handleDelete}>
                 delete
               </button>
               <button onClick={() => setButtonPopup(props.image.id)}>

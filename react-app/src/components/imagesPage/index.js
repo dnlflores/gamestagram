@@ -198,8 +198,10 @@ function ImagesPage() {
                   editCommentForm={editCommentForm}
                   onEditComment={onEditComment}
                   onDeleteComment={onDeleteComment}
+                  canEditComment={canEditComment}
                   editB={editB}
                   setEditB={setEditB}
+                  handleDelete={handleDelete}
                 />
               </li>
               <div className="post-footer-icon-container">
