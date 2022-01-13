@@ -19,14 +19,17 @@ def user(id):
     return user.to_dict()
 
 
-@user_routes.route('/<int:id>/follows')
-def get_follows(id):
-    # follows = User.query.filter(User.followers.user_id == id)
+@user_routes.route('/<int:id>/followings')
+def get_followings(id):
     user = User.query.get(id)
-    print("         ANOTHER ATTEMPT AT USER FOLLOWERS => ", user.followers.all())
+    followings = user.followers.all()
 
-    followers = user.followers.all()
+    return {"followings": [user.to_dict() for user in followings]}
 
-    print("         THIS IS THE COMPREHENSION => ", [user.to_dict() for user in followers])
 
-    return {"follows": [user.to_dict() for user in followers]}
+@user_routes.route('/<int:id>/followers')
+def get_followers(id):
+    user = User.query.get(id)
+    followers = user.following.all()
+
+    return {"followers": [user.to_dict() for user in followers]}
