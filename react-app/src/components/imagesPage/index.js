@@ -51,7 +51,6 @@ function ImagesPage() {
 
   const handleLike = e => {
     e.preventDefault();
-    console.log("this is the e.target", e.target)
     const image_id = e.target.className.split(' ')[1]
 
     if (keys.filter(key => likes[key].image_id === +image_id && likes[key].user_id === userId).length) {
@@ -83,8 +82,6 @@ function ImagesPage() {
   const onDeleteComment = async (image_id, comment_id) => {
     // e.preventDefault();
     setCommentShow(0);
-
-    console.log('comment_id is', comment_id)
     await dispatch(deleteOneComment(image_id, comment_id))
   }
 
