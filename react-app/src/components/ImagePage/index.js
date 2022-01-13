@@ -37,7 +37,6 @@ const ImagePage = (props) => {
     if (e.target === imagePage) {
       body.style.overflow = "visible";
       props.setTrigger(0)
-      // imagePage.style.display = "flex";
     }
   };
   useEffect(() => {
