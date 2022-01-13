@@ -157,3 +157,8 @@
   display: inline;
   margin-left: 10px;
 }
+
+.commentPDiv {
+  width: 100%;
+  font-size: .9rem;
+}

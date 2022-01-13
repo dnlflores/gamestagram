@@ -190,26 +190,28 @@ function ImagesPage() {
                       <div className="games-username">
                         {getUser(comment.user_id)?.username}
                       </div>
-                      <p id={comment.id} className={canEditComment(comment)}>
-                        {comment.content}
-                        <button
-                          onClick={() => {
-                            setEdit(true);
-                            setCommentShow(image.id);
-                            setCommentId(comment.id);
-                            setContent(`${comments[comment.id].content}`);
-                          }}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => {
-                            onDeleteComment(image.id, comment.id);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </p>
+                      <div className='commentPDiv'>
+                        <p id={comment.id} className={canEditComment(comment)}>
+                          {comment.content}
+                          <button
+                            onClick={() => {
+                              setEdit(true);
+                              setCommentShow(image.id);
+                              setCommentId(comment.id);
+                              setContent(`${comments[comment.id].content}`);
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => {
+                              onDeleteComment(image.id, comment.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </p>
+                      </div>
                     </div>
                   );
                 }
