@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage } from "../../store/image";
-import { getComments } from "../../store/comment";
-import { createComment } from "../../store/comment";
+import { getComments, createComment, editOneComment, deleteOneComment } from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
@@ -14,6 +13,7 @@ import {
   ChatIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
+import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import "./imagesPage.css";
 
 function ImagesPage() {
@@ -24,6 +24,7 @@ function ImagesPage() {
   const comments = useSelector((state) => state.comments);
   const imagesArr = Object.values(images);
   const likes = useSelector((state) => state.likes);
+  const likesArr = Object.values(likes);
   const keys = Object.keys(likes);
   const [imageButtonPopup, setImageButtonPopup] = useState(0);
   const [editButtonPopup, setEditButtonPopup] = useState(0);
@@ -31,9 +32,13 @@ function ImagesPage() {
   const [commentShow, setCommentShow] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [users, setUsers] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [commentId, setCommentId] = useState(-2);
   const commentsArray = Object.values(comments);
   const body = document.body;
-  
+
+  const likedImages = likesArr.filter(like => like.user_id === userId)
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -48,15 +53,13 @@ function ImagesPage() {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    // console.log("event target value => ", e.target.className.split(' ')[0])
-    dispatch(deleteOneImage(images[e.target.className.split(" ")[0]]));
+    dispatch(deleteOneImage(images[e.target.className.split(' ')[0]]));
   };
 
   const handleLike = (e) => {
     e.preventDefault();
+    const image_id = e.target.className.split(' ')[1];
     
-    const image_id = e.target.className.split(' ')[1]
-
     if (
       keys.filter(
         (key) =>
@@ -65,12 +68,12 @@ function ImagesPage() {
     ) {
       dispatch(unOneLike(image_id));
     } else dispatch(setOneLike(image_id));
-  };
+  }
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
     setCommentShow(0);
-    
+
     const comment = await dispatch(createComment(e.target.className, content));
 
     if (comment) {
@@ -78,19 +81,48 @@ function ImagesPage() {
     }
   };
 
+  const onEditComment = async e => {
+    e.preventDefault();
+    setCommentShow(0);
+    const str = e.target.className.split(':')
+
+    const image_id=str[0]
+    const comment_id=str[1]
+
+
+    await dispatch(editOneComment(+image_id, +comment_id, content));
+    
+  }
+
+  const onDeleteComment = async (image_id, comment_id) => {
+    // e.preventDefault();
+    setCommentShow(0);
+    await dispatch(deleteOneComment(image_id, comment_id))
+  }
+
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-
-  const getUser = (userId) => users.filter((user) => user.id === userId)[0];
-
+  
+  const getUser = userId => users.filter(user => user.id === userId)[0];
+  
+  const checkIfLiked = (imageId) => {
+    for (let i = 0; i < likedImages.length; i++) {
+      if (+likedImages[i].image_id === +imageId) return true
+    }
+    return false;
+  }
+  
+  const canEditComment = (comment) => {
+    return "editCom".concat(String(comment.user_id === userId).toUpperCase())
+  }
   return (
     <div>
       <NavBar />
       <div className="games-page-body">
         <ul className="game-post-container">
-          {imagesArr.map((image) => (
+          {imagesArr.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header" >
                 <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)}/>
@@ -119,13 +151,18 @@ function ImagesPage() {
                   className={`like-div ${image.id}`}
                   onClick={handleLike}
                 ></div>
-                <HeartIcon className="post-footer-icon" />
+                {checkIfLiked(image.id) ? (
+                  <HeartIconFilled className="post-footer-icon liked-icon" />
+                  ) : (
+                    <HeartIcon className="post-footer-icon" />
+                )}
                 <ChatIcon
                   onClick={() => {
                     if (commentShow === image.id) {
                       setCommentShow(0);
                     } else setCommentShow(image.id);
                     setContent("");
+                    setEdit(false);
                   }}
                   className="post-footer-icon"
                 />
@@ -140,24 +177,51 @@ function ImagesPage() {
                 if (comment.image_id === image.id) {
                   return (
                     <>
-                      {/* <h3>{getUser(comment.user_id)?.username}</h3>
-                      <p>{comment.content}</p> */}
+                      <h3>{getUser(comment.user_id)?.username}</h3>
+                      <p id={comment.id} className={canEditComment(comment)}>{comment.content}
+                        <button
+                          onClick={() => {
+                            setEdit(true);
+                            setCommentShow(image.id);
+                            setCommentId(comment.id);
+                            setContent(`${comments[comment.id].content}`);
+                        }}
+                        >Edit</button>
+                        <button
+                          onClick={() => {
+                            onDeleteComment(image.id, comment.id)
+                        }}
+                        >Delete</button>
+                      </p>
                     </>
                   );
                 }
-                return "";
+                
+                return '';
               })}
-              {commentShow === image.id && (
+              {commentShow === image.id && edit === false && (
                 <form className={image.id} onSubmit={onContentSubmit}>
                   <input
-                    autoFocus name="CommentAutoFocus"
+                    autoFocus
+                    name="CommentAutoFocus"
                     placeholder="Comment"
                     value={content}
                     onChange={(e) => {
-                      setContent(e.target.value)
+                      setContent(e.target.value);
                     }}
                   />
                   <button>comment</button>
+                </form>
+              )}
+              {commentShow === image.id && edit === true && (
+                <form className={`${image.id}:${commentId}`} onSubmit={onEditComment}>
+                  <input
+                    autoFocus
+                    placeholder="Edit"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
+                  <button>submit edit</button>
                 </form>
               )}
               {userId === image.user_id && (
