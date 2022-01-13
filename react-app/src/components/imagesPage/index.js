@@ -45,6 +45,8 @@ function ImagesPage() {
   //for ImagePage file ***
   // const props = null
   // function setContentB(arg) {};
+  const [editB, setEditB] = useState(false);
+  // function setEditB(arg) {};
 
 
 
@@ -103,6 +105,7 @@ function ImagesPage() {
     } else {
       await dispatch(editOneComment(+image_id, +comment_id, e.target['0'].value));
       e.target['0'].value = '';
+      setEditB(false);
     }
   };
 
@@ -131,10 +134,10 @@ function ImagesPage() {
     </form>
   )
 
-  const editCommentForm = (image_id, commentId, fn, content, setContent) => (
+  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
     <form
       className={`${image_id}:${commentId}`}
-      onSubmit={onEditComment}
+      onSubmit={editFn} // onEditComment
     >
       <input
         autoFocus
@@ -189,10 +192,14 @@ function ImagesPage() {
                   content={content}
 
                   //new props
+                  edit={edit}
                   onContentSubmit={onContentSubmit}
                   postCommentForm={postCommentForm}
                   editCommentForm={editCommentForm}
+                  onEditComment={onEditComment}
                   onDeleteComment={onDeleteComment}
+                  editB={editB}
+                  setEditB={setEditB}
                 />
               </li>
               <div className="post-footer-icon-container">

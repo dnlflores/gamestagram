@@ -40,6 +40,7 @@ const ImagePage = (props) => {
     dispatch(deleteOneImage(props.image));
   };
 
+
   const getUser = (userId) =>
     props.users.filter((user) => user.id === userId)[0];
 
@@ -74,6 +75,7 @@ const ImagePage = (props) => {
                           <button
                             onClick={() => {
                               setEditB(true);
+                              props.setEditB(true);
                               setCommentShowB(props.image.id);
                               setCommentIdB(comment.id);
                               setContentB(`${props.comments[comment.id].content}`);
@@ -123,8 +125,10 @@ const ImagePage = (props) => {
               />
               <button className="image-page-comment-submit">Post</button>
             </form> */}
-            {editB === false && props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
-            {editB === true && props.editCommentForm(props.image.id, commentIdB, props.onEditComment, contentB, setContentB)}
+            {editB === false
+              && props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
+            {editB === true && props.editB
+              && props.editCommentForm(props.image.id, commentIdB, props.onEditComment, contentB, setContentB)}
           </div>
           {userId === props.image.user_id && (
             <div>
