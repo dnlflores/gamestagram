@@ -13,6 +13,7 @@ import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
+import SideBar from "../SideBar";
 import {
     UserCircleIcon,
     HeartIcon,
@@ -353,6 +354,9 @@ function HomePage() {
                         </div>
                     ))}
                 </ul>
+                <div>
+                <SideBar users={users} userId={userId}/>
+                </div>
             </div>
         </div>
     );
