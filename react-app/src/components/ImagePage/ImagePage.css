@@ -29,7 +29,7 @@
   flex-direction: row;
   flex: 1;
   max-width: 80%;
-  height: 650px;
+  height: 550px;
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.226);
@@ -111,14 +111,14 @@
   align-items: flex-start;
   margin: 0.5rem 0rem;
 }
-.image-page-username {
-  font-size: 0.9rem;
+.image-page-comment-username {
+  font-size: 1.11rem;
   font-weight: bold;
-  padding-left: 0.8rem;
-  margin-top: 3px;
+  padding-left: 0.5rem;
+  margin-top: 8px;
 }
 .image-page-comment-avatar {
-  width: 35px;
+  width: 50px;
 }
 .image-page-comment-header > p {
   font-size: 0.925rem;
@@ -177,7 +177,22 @@
   margin-left: 10px;
 }
 
-.commentPDiv {
+.commentPDivPage {
   width: 100%;
   font-size: .9rem;
+  position: relative;
+  left: 10px;
+  top: 11px;
+}
+
+.image-page-username {
+    font-weight: bold;
+    position: relative;
+    bottom: 13px;
+}
+
+.image-page-caption {
+    position: relative;
+    left: 10px;
+    bottom: 12px;
 }

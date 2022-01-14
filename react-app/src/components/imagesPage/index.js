@@ -161,6 +161,19 @@ function ImagesPage() {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
 
+  const getImageComments = image_id => {
+    const comments = [];
+    let counter = 0;
+    for(let i = commentsArray.length - 1; i >= 0; i--) {
+      const comment = commentsArray[i];
+      if(comment.image_id === image_id && counter < 3) {
+        comments.unshift(comment);
+        counter++;
+      }
+    }
+    return comments;
+  }
+
   return (
     <div>
       <NavBar />
@@ -233,7 +246,8 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentsArray?.slice(-3).map((comment, index) => {
+              {getImageComments(image.id)?.map((comment, index) => {
+
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
@@ -267,7 +281,7 @@ function ImagesPage() {
                 }
                 return "";
               })}
-              {commentsArray.filter(comment => image.id === comment.image_id).length > 2 &&
+              {commentsArray.filter(comment => image.id === comment.image_id).length > 3 &&
                 <p
                 className="games-view-comments"
                 onClick={() => {

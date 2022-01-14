@@ -17,6 +17,7 @@
 }
 .game-post-container {
   grid-column: span 2;
+  list-style-type: none;
 }
 .ind-post-container {
   border: 1px solid rgba(0, 0, 0, 0.103);
