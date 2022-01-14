@@ -1,13 +1,45 @@
-.near-top {
-    background-color: gray;
+.grid {
+    display: grid;
+    grid-template-areas: 'A B C';
+    height: 250px;
 }
 
-/* .modal-outer {
-    z-index: 95;
+.grid-mid {
+    grid-area: B;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: gray;
-} */
+    /* height: 166px; */
+}
+
+.modal-button {
+    font-size: 100px;
+    width: 100px;
+    background-color: lime;
+}
+
+.modal-button:hover {
+    animation-duration: .3s;
+    background-color: green;
+    animation-name: colorChange;
+}
+
+@keyframes colorChange {
+    from {background-color: lime;}
+    to {background-color: green;}
+}
 
 .modal-inner {
-    z-index: 100;
+    position: fixed;
     background-color: red;
+}
+
+.modal-grid {
+    position: fixed;
+    width: 100vw;
+    height: 10px;
+    background-color: blue;
 }
