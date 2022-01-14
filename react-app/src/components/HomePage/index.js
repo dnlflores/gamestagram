@@ -59,8 +59,6 @@ function HomePage() {
     }
   }
 
-  console.log("THIS IS THE FOLLOWED IMAGES => ", followedImages);
-
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -188,11 +186,13 @@ function HomePage() {
           {followedImages.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
-                <UserCircleIcon
-                  className="game-post-avatar"
+                <div
+                  className="game-post-ava-name"
                   onClick={(event) => history.push(`/users/${image.user_id}`)}
-                />
-                <li>{getUser(image.user_id)?.username}</li>
+                >
+                  <UserCircleIcon className="game-post-avatar" />
+                  <li>{getUser(image.user_id)?.username}</li>
+                </div>
               </div>
               <li>
                 <img
@@ -356,7 +356,7 @@ function HomePage() {
           ))}
         </ul>
         <div>
-          <SideBar users={users} userId={userId}/>
+          <SideBar users={users} userId={userId} />
         </div>
       </div>
     </div>
