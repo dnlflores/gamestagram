@@ -87,7 +87,7 @@ export default function followReducer(state = {}, action) {
             return loaderState;
         case CREATE_FOLLOW:
             const createState = JSON.parse(JSON.stringify(state));
-            createState.followers[action.payload.id] = action.payload;
+            createState.followers[action?.payload.id] = action?.payload;
             return createState;
         case DELETE_FOLLOW:
             const deleteState = JSON.parse(JSON.stringify(state));
