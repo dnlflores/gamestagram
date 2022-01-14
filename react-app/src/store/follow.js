@@ -1,6 +1,7 @@
 const LOAD_FOLLOWINGS = 'follows/LOAD_FOLLOWINGS';
 const LOAD_FOLLOWERS = 'follows/LOAD_FOLLOWERS';
 const CREATE_FOLLOW = 'follows/CREATE_FOLLOW';
+const CREATE_FOLLOWING = 'follows/CREATE_FOLLOWING';
 const DELETE_FOLLOW = 'follows/DELETE_FOLLOW';
 
 const loadFollowings = followings => ({
@@ -22,6 +23,11 @@ const deleteFollow = follow => ({
     type: DELETE_FOLLOW,
     payload: follow
 })
+
+const createFollowing = follow => ({
+    type: CREATE_FOLLOWING,
+    payload: follow
+});
 
 export const getFollowings = userId => async dispatch => {
     const response = await fetch(`/api/users/${userId}/followings`);
@@ -59,6 +65,22 @@ export const followUser = (followId, userId) => async dispatch => {
     }
 };
 
+export const addToFollowing = (followId, userId) => async dispatch => {
+    const response = await fetch(`/api/users/${userId}/follow`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"user_id": userId, "follower_id": followId})
+    });
+
+    if(response.ok) {
+        const follow = await response.json();
+        dispatch(createFollowing(follow));
+        return follow;
+    }
+};
+
 export const unfollowUser = (followId, userId) => async dispatch => {
     const response = await fetch(`/api/users/${userId}/follow`, {
         method: 'DELETE',
@@ -87,8 +109,12 @@ export default function followReducer(state = {}, action) {
             return loaderState;
         case CREATE_FOLLOW:
             const createState = JSON.parse(JSON.stringify(state));
-            createState.followers[action.payload.id] = action.payload;
+            createState.followers[action?.payload.id] = action?.payload;
             return createState;
+        case CREATE_FOLLOWING:
+            const creatingState = JSON.parse(JSON.stringify(state));
+            creatingState.followings[action?.payload.id] = action?.payload;
+            return creatingState;
         case DELETE_FOLLOW:
             const deleteState = JSON.parse(JSON.stringify(state));
             delete deleteState.followers[action.payload.id];
