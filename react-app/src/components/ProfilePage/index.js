@@ -1,8 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../Navbar";
-// import ImagePage from "../ImagePage";
-// import EditFormPage from "../EditFormPage";
 import { getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import { getComments } from "../../store/comment";
@@ -30,9 +28,8 @@ const ProfilePage = (props) => {
   const commentsArr = Object.values(comments);
   const followings = useSelector((state) => state.follows.followings);
   const followers = useSelector((state) => state.follows.followers);
-  // const [imageButtonPopup, setImageButtonPopup] = useState(0);
-  // const [editButtonPopup, setEditButtonPopup] = useState(0);
   const { userId: profileId } = useParams();
+  const [users, setUsers] = useState([]);
 
   const userImages = Object.values(images).filter(
     (image) => image.user_id === +profileId
@@ -45,13 +42,13 @@ const ProfilePage = (props) => {
     dispatch(getTheLikes());
     dispatch(getComments());
     dispatch(getFollowings(profileId));
-    dispatch(getFollowers(profileId));
+    dispatch(getFollowers(profileId));async function fetchData() {
+      const response = await fetch("/api/users/");
+      const responseData = await response.json();
+      setUsers(responseData.users);
+    }
+    fetchData();
   }, [dispatch, user, profileId]);
-
-  // const handleDelete = event => {
-  //     event.preventDefault();
-
-  // };
 
   const followProfileUser = (profileId) => {
     dispatch(followUser(user.id, +profileId));
@@ -69,6 +66,8 @@ const ProfilePage = (props) => {
     return comments.length;
   };
 
+  const getUser = (userId) => users.filter((user) => user.id === +userId)[0];
+
   return (
     <div>
       <NavBar />
@@ -78,7 +77,7 @@ const ProfilePage = (props) => {
         </div>
         <div className="column">
           <div className="profile-top-row">
-            <p>{user.username}</p>
+            <p>{getUser(profileId)?.username}</p>
             {+profileId !== user.id ? (
               <div>
                 {followersArr.filter(
@@ -117,7 +116,7 @@ const ProfilePage = (props) => {
             </p>
           </div>
           <div className="profile-bottom-row">
-            <h4>{user.email}</h4>
+            <h4>{getUser(profileId)?.email}</h4>
             <p>Description coming soon...</p>
           </div>
         </div>

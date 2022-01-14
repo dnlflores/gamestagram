@@ -13,6 +13,7 @@ import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
+import SideBar from "../SideBar";
 import {
     UserCircleIcon,
     HeartIcon,
@@ -43,6 +44,7 @@ function HomePage() {
     const commentsArray = Object.values(comments);
     const body = document.body;
     const likedImages = likesArr.filter((like) => like.user_id === userId);
+    const [chosenKey, setChosenKey] = useState({})
 
     const [editB, setEditB] = useState(false);
 
@@ -55,8 +57,6 @@ function HomePage() {
             if (user.id === image.user_id) followedImages.push(image);
         }
     }
-
-    console.log("THIS IS THE FOLLOWED IMAGES => ", followedImages);
 
     useEffect(() => {
         dispatch(getImages());
@@ -127,18 +127,17 @@ function HomePage() {
         setShowOptions(false);
     };
 
-    const postCommentForm = (image_id, submitFn, content) => {
+    const postCommentForm = (image_id, submitFn, content, setContent) => {
         return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
             <input
+                autoFocus
                 required="true"
                 className={`input-comment`}
                 name="CommentAutoFocus"
                 placeholder="Comment"
                 value={content}
                 onChange={(e) => {
-                    if (image_id === e.target.className.split('-')[2]) {
-                        setContent(e.target.value);
-                    }
+                    setContent(e.target.value);
                 }}
             />
             <button className="comment-submit-button">Post</button>
@@ -146,7 +145,7 @@ function HomePage() {
         )
     }
 
-    const editCommentForm = (image_id, commentId, editFn, content) => (
+    const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
         <form
             className={`${image_id}:${commentId}`}
             onSubmit={editFn} // onEditComment
@@ -174,6 +173,18 @@ function HomePage() {
         return "editCom".concat(String(comment.user_id === userId).toUpperCase());
     };
 
+    const getImageComments = image_id => {
+        const comments = [];
+        let counter = 0;
+        for(let i = commentsArray.length - 1; i >= 0; i--) {
+          const comment = commentsArray[i];
+          if(comment.image_id === image_id && counter < 3) {
+            comments.unshift(comment);
+            counter++;
+          }
+        }
+        return comments;
+      }
 
     return (
         <div>
@@ -183,8 +194,13 @@ function HomePage() {
                     {followedImages.map((image, i) => (
                         <div className="ind-post-container" key={`${image.id}`}>
                             <div className="game-post-header" >
-                                <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)} />
-                                <li>{getUser(image.user_id)?.username}</li>
+                            <div
+                                className="game-post-ava-name"
+                                onClick={(event) => history.push(`/users/${image.user_id}`)}
+                                >
+                                    <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)} />
+                                    <li>{getUser(image.user_id)?.username}</li>
+                                </div>
                             </div>
                             <li>
                                 <img
@@ -243,7 +259,7 @@ function HomePage() {
                                 <div className="caption">{image.caption}</div>
                             </li>
 
-                            {commentsArray.filter(comment => image.id === comment.image_id).slice(-2).map(comment => {
+                            {getImageComments(image.id)?.map(comment => {
                                 if (comment.image_id === image.id) {
                                     return (
                                         <div className="games-comment-container">
@@ -294,10 +310,12 @@ function HomePage() {
                                         className={`input-comment`}
                                         name="CommentAutoFocus"
                                         placeholder="Comment"
-                                        value={content}
+                                        value={chosenKey[image.id]}
                                         onChange={(e) => {
-                                            setContent(e.target.value);
-                                        }}
+                                            const imageId = image.id;
+                                            const eVal = e.target.value
+                                            setChosenKey({imageId: eVal});
+                                          }}
                                     />
                                     <button className="comment-submit-button">Post</button>
                                 </form>
@@ -335,6 +353,9 @@ function HomePage() {
                         </div>
                     ))}
                 </ul>
+                <div>
+                <SideBar users={users} userId={userId}/>
+                </div>
             </div>
         </div>
     );
