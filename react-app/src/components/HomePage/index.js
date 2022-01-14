@@ -56,8 +56,6 @@ function HomePage() {
         }
     }
 
-    console.log("THESE ARE THE COMMENTS => ", commentsArray);
-
     useEffect(() => {
         dispatch(getImages());
         dispatch(getTheLikes());
@@ -183,8 +181,13 @@ function HomePage() {
                     {followedImages.map((image, i) => (
                         <div className="ind-post-container" key={`${image.id}`}>
                             <div className="game-post-header" >
-                                <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)} />
-                                <li id="username-li">{getUser(image.user_id)?.username}</li>
+                            <div
+                                className="game-post-ava-name"
+                                onClick={(event) => history.push(`/users/${image.user_id}`)}
+                                >
+                                    <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)} />
+                                    <li>{getUser(image.user_id)?.username}</li>
+                                </div>
                             </div>
                             <li>
                                 <img
