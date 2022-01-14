@@ -118,7 +118,9 @@ function ImagesPage() {
   const postCommentForm = (image_id, submitFn, content, setContent) => {
     return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
+        autoFocus
         required="true"
+        id={`icId`}
         className={`input-comment`}
         name="CommentAutoFocus"
         placeholder="Comment"

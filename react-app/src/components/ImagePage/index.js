@@ -165,8 +165,12 @@ const ImagePage = (props) => {
                 onClick={() => {
                   if (commentShowB === props.image.id) {
                     setCommentShowB(0);
-                  } else setCommentShowB(props.image.id);
+                  } else {
+                    setCommentShowB(props.image.id);
+                    // body.getElementById
+                  }
                   setContentB("");
+                  setEditB(false);
                 }}
               />
             </div>
