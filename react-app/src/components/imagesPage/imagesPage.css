@@ -67,7 +67,7 @@
 .games-view-comments {
   padding-left: .5rem;
   padding-bottom: .5rem;
-  font-size: .9rem;
+  font-size: .85rem;
   cursor: pointer;
   color: rgba(44, 44, 44, 0.726);
 }
@@ -81,9 +81,7 @@
   font-size: .9rem;
   padding-right: .6rem;
 }
-.games-comment-container > p {
-  font-size: .9rem;
-}
+
 .post-options-icon {
   width: 24px;
   position: absolute;
@@ -160,5 +158,41 @@
 
 .commentPDiv {
   width: 100%;
-  font-size: .9rem;
+  font-size: .85rem;
+}
+
+
+.input-comment {
+  border-style: none;
+  border: none;
+  height: 2.5rem;
+  font-size: .9em;
+  width: 35rem;
+}
+
+.input-comment:focus {
+  outline: none;
+}
+
+.comment-submit-button {
+	background: none;
+	color: lightblue;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  font-weight: bold;
+  width: 3rem;
+}
+
+.comment-submit-button:valid {
+  color: blue;
+}
+
+#form-comment-con {
+  display: flex;
+  justify-content: space-between;
+  height: 3rem;
+  padding: 1rem;
 }

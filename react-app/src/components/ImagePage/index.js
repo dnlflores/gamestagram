@@ -39,6 +39,8 @@ const ImagePage = (props) => {
       props.setTrigger(0)
     }
   };
+
+  
   useEffect(() => {
     document.body.addEventListener("click", handleClick);
   }, [handleClick]);

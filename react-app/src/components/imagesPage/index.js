@@ -43,15 +43,7 @@ function ImagesPage() {
   const body = document.body;
   const likedImages = likesArr.filter((like) => like.user_id === userId);
 
-
-  //for ImagePage file ***
-  // const props = null
-  // function setContentB(arg) {};
   const [editB, setEditB] = useState(false);
-  // function setEditB(arg) {};
-
-
-
 
   useEffect(() => {
     dispatch(getImages());
@@ -86,8 +78,8 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    if (content) {
-      await dispatch(createComment(e.target.className, content));
+    if (e.target.value) {
+      await dispatch(createComment(e.target.className, e.target.value));
       setContent("");
     } else {
       await dispatch(createComment(e.target.className, e.target['0'].value));
@@ -121,22 +113,26 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
-  const postCommentForm = (image_id, submitFn, content, setContent) => (
-    <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
+  const postCommentForm = (image_id, submitFn, content) => {
+    return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
+        required="true"
+        className={`input-comment`}
         autoFocus
         name="CommentAutoFocus"
         placeholder="Comment"
         value={content}
         onChange={(e) => {
-          setContent(e.target.value);
+          if(image_id === e.target.className.split('-')[2]) {
+            setContent(e.target.value);
+          }
         }}
       />
-      <button>comment</button>
+      <button className="comment-submit-button">Post</button>
     </form>
-  )
+  )}
 
-  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
+  const editCommentForm = (image_id, commentId, editFn, content) => (
     <form
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
@@ -220,11 +216,8 @@ function ImagesPage() {
                 )}
                 <ChatIcon
                   onClick={() => {
-                    if (commentShow === image.id) {
-                      setCommentShow(0);
-                    } else setCommentShow(image.id);
-                    setContent("");
-                    setEdit(false);
+                    setImageButtonPopup(image.id);
+                    body.style.overflow = "hidden";
                   }}
                   className="post-footer-icon"
                 />
@@ -235,16 +228,8 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              <p
-                className="games-view-comments"
-                onClick={() => {
-                  setImageButtonPopup(image.id);
-                  body.style.overflow = "hidden";
-                }}
-              >
-                View all comments...
-              </p>
-              {commentsArray.filter(comment => image.id === comment.image_id).slice(-3).map(comment => {
+                  
+              {commentsArray.filter(comment => image.id === comment.image_id).slice(-2).map(comment => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
@@ -278,11 +263,34 @@ function ImagesPage() {
                 }
                 return "";
               })}
-
-              {commentShow === image.id && edit === false &&
-                postCommentForm(image.id, onContentSubmit, content, setContent)}
-              {commentShow === image.id && edit === true &&
-                            editCommentForm(image.id, commentId, onEditComment, content, setContent)}
+              {commentsArray.filter(comment => image.id === comment.image_id).length > 2 &&
+                <p
+                className="games-view-comments"
+                onClick={() => {
+                  setImageButtonPopup(image.id);
+                  body.style.overflow = "hidden";
+                }}
+              >
+                View all comments...
+              </p>}
+              <div className="comment-container-div">
+              <form id="form-comment-con" className={image.id} onSubmit={onContentSubmit}>
+                <input
+                  required="true"
+                  className={`input-comment`}
+                  autoFocus
+                  name="CommentAutoFocus"
+                  placeholder="Comment"
+                  value={content}
+                  onChange={(e) => {
+                    setContent(e.target.value);
+                  }}
+                />
+                <button className="comment-submit-button">Post</button>
+              </form>
+                {commentShow === image.id && edit === true &&
+                              editCommentForm(image.id, commentId, onEditComment, content)}
+              </div>
               {userId === image.user_id && (
                 <div>
                   <DotsHorizontalIcon
