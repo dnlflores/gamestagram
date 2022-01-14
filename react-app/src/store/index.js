@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   images: imageReducer,
   likes: likeReducer,
   comments: commentReducer,
-  follows: followReducer
+  follows: followReducer,
 });
 
 

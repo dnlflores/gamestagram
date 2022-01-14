@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getImages, deleteOneImage } from "../../store/image";
-import SideBar from "../SideBar";
+import { getImages, deleteOneImage, getUserImages } from "../../store/image";
+import { getFollowers, getFollowings } from "../../store/follow";
 import {
   getComments,
   createComment,
@@ -13,6 +13,7 @@ import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
+import SideBar from "../SideBar";
 import {
   UserCircleIcon,
   HeartIcon,
@@ -20,14 +21,15 @@ import {
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
-import "./imagesPage.css";
-
-function ImagesPage() {
+function HomePage() {
   const userId = useSelector((state) => state.session.user.id);
   const history = useHistory();
   const dispatch = useDispatch();
   const images = useSelector((state) => state.images);
   const comments = useSelector((state) => state.comments);
+  const followings = useSelector((state) =>
+    Object.values(state.follows.followings || {})
+  );
   const imagesArr = Object.values(images);
   const likes = useSelector((state) => state.likes);
   const likesArr = Object.values(likes);
@@ -44,32 +46,34 @@ function ImagesPage() {
   const body = document.body;
   const likedImages = likesArr.filter((like) => like.user_id === userId);
   const [chosenKey, setChosenKey] = useState({});
-
   const [editB, setEditB] = useState(false);
-
-
-
+  const followedImages = [];
+  for (let i = 0; i < followings.length; i++) {
+    const user = followings[i];
+    for (let j = 0; j < imagesArr.length; j++) {
+      const image = imagesArr[j];
+      if (user.id === image.user_id) followedImages.push(image);
+    }
+  }
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
     dispatch(getComments());
+    dispatch(getFollowings(userId));
     async function fetchData() {
       const response = await fetch("/api/users/");
       const responseData = await response.json();
       setUsers(responseData.users);
     }
     fetchData();
-  }, [dispatch]);
-
+  }, [dispatch, userId]);
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(deleteOneImage(images[e.target.className.split(" ")[0]]));
   };
-
   const handleLike = (e) => {
     e.preventDefault();
     const image_id = e.target.className.split(" ")[1];
-
     if (
       keys.filter(
         (key) =>
@@ -79,7 +83,6 @@ function ImagesPage() {
       dispatch(unOneLike(image_id));
     } else dispatch(setOneLike(image_id));
   };
-
   const onContentSubmit = async (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -90,7 +93,6 @@ function ImagesPage() {
       e.target["0"].value = "";
     }
   };
-
   const onEditComment = async (e) => {
     e.preventDefault();
     setCommentShow(0);
@@ -108,36 +110,39 @@ function ImagesPage() {
       setEditB(false);
     }
   };
-
   const onDeleteComment = async (image_id, comment_id, setContentB = null) => {
     if (setContentB) setContentB("");
     await dispatch(deleteOneComment(image_id, comment_id));
   };
-
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
-
   const postCommentForm = (image_id, submitFn, content, setContent) => {
-    return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
-      <input
-        autoFocus
-        required="true"
-        id={`icId`}
-        className={`input-comment`}
-        name="CommentAutoFocus"
-        placeholder="Comment"
-        value={content}
-        onChange={(e) => {
+    return (
+      <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
+        <input
+          autoFocus
+          required="true"
+          className={`input-comment`}
+          name="CommentAutoFocus"
+          placeholder="Comment"
+          value={content}
+          onChange={(e) => {
             setContent(e.target.value);
-        }}
-      />
-      <button className="comment-submit-button">Post</button>
-    </form>
-  )}
-
-  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
+          }}
+        />
+        <button className="comment-submit-button">Post</button>
+      </form>
+    );
+  };
+  const editCommentForm = (
+    image_id,
+    commentId,
+    editFn,
+    content,
+    setContent
+  ) => (
     <form
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
@@ -151,51 +156,44 @@ function ImagesPage() {
       <button>submit edit</button>
     </form>
   );
-
   const getUser = (userId) => users.filter((user) => user.id === userId)[0];
-
   const checkIfLiked = (imageId) => {
     for (let i = 0; i < likedImages.length; i++) {
       if (+likedImages[i].image_id === +imageId) return true;
     }
     return false;
   };
-
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
-  const commentFunction = (e) => {
-    const submitButton = document.querySelector(".comment-submit-button")
-    if(e.target.value !== "") submitButton.style.opacity = ".9"
-    else submitButton.style.opacity = ".4"
-  }
-
-  const getImageComments = image_id => {
+  const getImageComments = (image_id) => {
     const comments = [];
     let counter = 0;
-    for(let i = commentsArray.length - 1; i >= 0; i--) {
+    for (let i = commentsArray.length - 1; i >= 0; i--) {
       const comment = commentsArray[i];
-      if(comment.image_id === image_id && counter < 3) {
+      if (comment.image_id === image_id && counter < 3) {
         comments.unshift(comment);
         counter++;
       }
     }
     return comments;
-  }
-
+  };
   return (
     <div>
       <NavBar />
       <div className="games-page-body">
         <ul className="game-post-container">
-          {imagesArr.map((image, i) => (
+          {followedImages.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
               <div className="game-post-header">
                 <div
                   className="game-post-ava-name"
                   onClick={(event) => history.push(`/users/${image.user_id}`)}
                 >
-                  <UserCircleIcon className="game-post-avatar" />
+                  <UserCircleIcon
+                    className="game-post-avatar"
+                    onClick={(event) => history.push(`/users/${image.user_id}`)}
+                  />
                   <li>{getUser(image.user_id)?.username}</li>
                 </div>
               </div>
@@ -249,34 +247,23 @@ function ImagesPage() {
                 />
               </div>
               <li className="caption-container">
-                <div
-                  className="caption-username"
-                  onClick={() => history.push(`/users/${image.user_id}`)}
-                >
+                <div className="caption-username">
                   {getUser(image.user_id)?.username}
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {getImageComments(image.id)?.map((comment, index) => {
-
+              {getImageComments(image.id)?.map((comment) => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
-                      <div
-                        className="games-username"
-                        onClick={() =>
-                          history.push(`/users/${comment.user_id}`)
-                        }
-                      >
+                      <div className="games-username">
                         {getUser(comment.user_id)?.username}
                       </div>
                       <div className="commentPDiv">
                         <p id={comment.id} className={canEditComment(comment)}>
                           {comment.content}
                         </p>
-                      </div>
-                      {/*
-                          <button
+                        {/* <button
                             onClick={() => {
                               setEdit(true);
                               setCommentShow(image.id);
@@ -293,14 +280,15 @@ function ImagesPage() {
                           >
                             Delete
                           </button>
-                        </p>
-                      </div> */}
+                        </p> */}
+                      </div>
                     </div>
                   );
                 }
                 return "";
               })}
-              {commentsArray.filter(comment => image.id === comment.image_id).length > 3 &&(
+              {commentsArray.filter((comment) => image.id === comment.image_id)
+                .length > 2 && (
                 <p
                   className="games-view-comments"
                   onClick={() => {
@@ -326,7 +314,6 @@ function ImagesPage() {
                     onChange={(e) => {
                       const imageId = image.id;
                       const eVal = e.target.value;
-                      commentFunction(e)
                       setChosenKey({ imageId: eVal });
                     }}
                   />
@@ -374,5 +361,4 @@ function ImagesPage() {
     </div>
   );
 }
-
-export default ImagesPage;
+export default HomePage;
