@@ -56,7 +56,7 @@ function HomePage() {
         }
     }
 
-    console.log("THIS IS THE FOLLOWED IMAGES => ", followedImages);
+    console.log("THESE ARE THE COMMENTS => ", commentsArray);
 
     useEffect(() => {
         dispatch(getImages());
