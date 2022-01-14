@@ -5,9 +5,9 @@ const SelectImagePage = (props) => {
     return (
         <div
             className="modal-header"
-            onClick={e => {
-                props.setTrigger(false);
-            }}
+            // onClick={e => {
+            //     props.setTrigger(false);
+            // }}
         >
             <p>
                 welcome.

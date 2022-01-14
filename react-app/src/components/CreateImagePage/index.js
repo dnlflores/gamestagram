@@ -52,23 +52,26 @@ const CreateImagePage = () => {
     <>
       <NavBar />
       <header className="new-image-header-container">
-        <div className="choose-image-label-area">
+        <div
+        className="near-top">
+          <div className="choose-image-label-area">
 
-        </div>
-        <div className="contains-modal-button">
-          <button
-            className="modal-button"
-            onClick={e => {
-              setImageSelectPopup(true)
-              // body.style.overflow = "hidden";
-            }}
-          >
-            +
-          </button>
-          <SelectImagePage
-            trigger={imageSelectPopup}
-            setTrigger={setImageSelectPopup}
-          />
+          </div>
+          <div className="contains-modal-button">
+            <button
+              className="modal-button"
+              onClick={e => {
+                setImageSelectPopup(true)
+                // body.style.overflow = "hidden";
+              }}
+            >
+              +
+            </button>
+            <SelectImagePage
+              trigger={imageSelectPopup}
+              setTrigger={setImageSelectPopup}
+            />
+          </div>
         </div>
       </header>
       {/* <form onSubmit={handleSubmit}>
@@ -85,7 +88,7 @@ const CreateImagePage = () => {
         <button type="submit">Submit</button>
         {imageLoading && <p>Loading...</p>}
       </form> */}
-      
+
     </ >
   );
 };
