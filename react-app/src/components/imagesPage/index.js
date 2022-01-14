@@ -115,25 +115,25 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
-  const postCommentForm = (image_id, submitFn, content) => {
+  const postCommentForm = (image_id, submitFn, content, setContent) => {
     return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
+        autoFocus
         required="true"
+        id={`icId`}
         className={`input-comment`}
         name="CommentAutoFocus"
         placeholder="Comment"
         value={content}
         onChange={(e) => {
-          if(image_id === e.target.className.split('-')[2]) {
             setContent(e.target.value);
-          }
         }}
       />
       <button className="comment-submit-button">Post</button>
     </form>
   )}
 
-  const editCommentForm = (image_id, commentId, editFn, content) => (
+  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
     <form
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
