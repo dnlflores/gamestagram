@@ -11,6 +11,7 @@ import ImagesPage from "./components/imagesPage";
 import CreateImagePage from "./components/CreateImagePage";
 import { authenticate } from "./store/session";
 import ProfilePage from "./components/ProfilePage";
+import HomePage from "./components/HomePage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -49,8 +50,7 @@ function App() {
           <ImagesPage />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true}>
-          <NavBar />
-          <h1>My Home Page</h1>
+          <HomePage />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
