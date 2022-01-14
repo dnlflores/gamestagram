@@ -66,9 +66,11 @@
   font-weight: bold;
   font-size: .9rem;
   padding-right: .6rem;
+  cursor: pointer;
 }
 .caption {
   font-size: .9rem;
+  cursor: default;
 }
 .games-view-comments {
   padding-left: .5rem;
@@ -86,6 +88,7 @@
   font-weight: bold;
   font-size: .9rem;
   padding-right: .6rem;
+  cursor: pointer;
 }
 
 .post-options-icon {
@@ -185,11 +188,12 @@
 	color: lightblue;
 	border: none;
 	padding: 0;
-	font: inherit;
 	cursor: pointer;
 	outline: inherit;
   font-weight: bold;
   width: 3rem;
+  font-size: .9rem;
+  opacity: .4;
 }
 
 .comment-submit-button:valid {
