@@ -184,7 +184,7 @@ function HomePage() {
                         <div className="ind-post-container" key={`${image.id}`}>
                             <div className="game-post-header" >
                                 <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)} />
-                                <li>{getUser(image.user_id)?.username}</li>
+                                <li id="username-li">{getUser(image.user_id)?.username}</li>
                             </div>
                             <li>
                                 <img
