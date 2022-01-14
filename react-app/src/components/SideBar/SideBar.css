@@ -14,10 +14,10 @@
   cursor: pointer;
 }
 .sb-username-email {
-  margin-left: .8rem;
+  margin-left: 0.8rem;
 }
 .sb-username-email > p {
-  margin: .25rem 0rem;
+  margin: 0.25rem 0rem;
 }
 .sidebar-username {
   font-weight: bold;
@@ -26,8 +26,44 @@
   color: rgba(53, 53, 53, 0.712);
 }
 .suggestions-text {
-  margin: 1rem .5rem;
-  font-size: .9rem;
+  margin: 1rem 0.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: rgba(58, 58, 58, 0.5);
+}
+.suggestion {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.suggestions-body {
+  margin-top: 1rem;
+  margin-left: .5rem;
+}
+.suggestion-follow {
+  position: absolute;
+  right: 0;
+  margin-right: 3.5rem;
+  cursor: pointer;
+  color: #2564ebd0;
+  font-size: 0.75rem;
+  font-weight: bold;
+  top: 0;
+  margin-top: .3rem;
+}
+.suggestion-username {
+  font-weight: bold;
+  font-size: .9rem;
+  margin-top: .1rem;
+}
+.suggestion-avatar {
+  width: 32px;
+  margin-right: .5rem;
+}
+.suggestion-link {
+  display: flex;
+  cursor: pointer;
+}
+.suggestion:not(:first-of-type) {
+  margin-top: .5rem;
 }
