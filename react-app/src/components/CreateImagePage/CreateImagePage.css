@@ -15,6 +15,7 @@
     /* height: 166px; */
 }
 
+
 .modal-button {
     font-size: 100px;
     width: 100px;
@@ -32,14 +33,37 @@
     to {background-color: green;}
 }
 
-.modal-inner {
-    position: fixed;
-    background-color: red;
+/* .modal-grid {
+    position: absolute;
+    display: grid;
+    grid-template-areas:
+        "A";
+    left:0;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
+} */
+
+.modal-outer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left:0;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
 }
 
-.modal-grid {
-    position: fixed;
-    width: 100vw;
-    height: 10px;
-    background-color: blue;
+/* .modal-inner {
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
+} */
+
+.ender {
+    grid-area: A;
+    background-color: darkgray;
 }
