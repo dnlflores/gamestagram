@@ -257,7 +257,12 @@ function HomePage() {
                   if (comment.image_id === image.id) {
                     return (
                       <div className="games-comment-container">
-                        <div className="games-username">
+                        <div
+                          className="games-username"
+                          onClick={() =>
+                            history.push(`/users/${comment.user_id}`)
+                          }
+                        >
                           {getUser(comment.user_id)?.username}
                         </div>
                         <div className="commentPDiv">
@@ -266,6 +271,9 @@ function HomePage() {
                             className={canEditComment(comment)}
                           >
                             {comment.content}
+                          </p>
+                        </div>
+                        {/*
                             <button
                               onClick={() => {
                                 setEdit(true);
@@ -284,7 +292,7 @@ function HomePage() {
                               Delete
                             </button>
                           </p>
-                        </div>
+                        </div> */}
                       </div>
                     );
                   }

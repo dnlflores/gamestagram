@@ -180,4 +180,5 @@
 .commentPDiv {
   width: 100%;
   font-size: .9rem;
+  cursor: default;
 }
