@@ -1,0 +1,33 @@
+.sidebar-container {
+  position: sticky;
+  top: 133px;
+  margin-left: 2.25rem;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-avatar {
+  width: 85px;
+}
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.sb-username-email {
+  margin-left: .8rem;
+}
+.sb-username-email > p {
+  margin: .25rem 0rem;
+}
+.sidebar-username {
+  font-weight: bold;
+}
+.sidebar-email {
+  color: rgba(53, 53, 53, 0.712);
+}
+.suggestions-text {
+  margin: 1rem .5rem;
+  font-size: .9rem;
+  font-weight: 600;
+  color: rgba(58, 58, 58, 0.5);
+}
