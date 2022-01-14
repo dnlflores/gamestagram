@@ -26,7 +26,7 @@ const ImagePage = (props) => {
 
   const [buttonPopup, setButtonPopup] = useState(0);
   const [showImageOptions, setShowImageOptions] = useState(false);
-  const [showEditDelete, setShowEditDelete] = useState(false);
+  const [showEditDelete, setShowEditDelete] = useState(0);
 
   const body = document.body;
 
@@ -143,7 +143,7 @@ const ImagePage = (props) => {
               {props.commentsArray?.map((comment) => {
                 if (comment.image_id === props.image.id) {
                   return (
-                    <div className="ind-comment">
+                    <div className={`ind-comment-${comment.id}`}>
                       <div className="image-page-comment-header">
                         <div
                           className="image-page-ava-un"
@@ -167,13 +167,17 @@ const ImagePage = (props) => {
                         <DotsHorizontalIcon
                           className="ind-comment-option-toggle"
                           id={`comment-options-${comment.id}`}
-                          onClick={() => setShowEditDelete(!showEditDelete)}
+                          onClick={() => setShowEditDelete(comment.id)}
                         />
                       )}
-                      {showEditDelete && userId === comment.user_id && (
+                      {showEditDelete === comment.id && userId === comment.user_id && (
                         <div className="image-post-options">
                           <button
                             onClick={(e) => {
+
+                              console.log("THIS IS THE PROPS IMAGE ID => ", props.image.id);
+                              console.log("THIS IS THE COMMENT ID => ", comment.id);
+                              
                               props.onDeleteComment(
                                 props.image.id,
                                 comment.id,
