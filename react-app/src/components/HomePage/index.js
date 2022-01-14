@@ -178,6 +178,12 @@ function HomePage() {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
 
+  const commentFunction = (e) => {
+    const submitButton = document.querySelector(".comment-submit-button")
+    if(e.target.value !== "") submitButton.style.opacity = ".9"
+    else submitButton.style.opacity = ".4"
+  }
+
   return (
     <div>
       <NavBar />
@@ -325,6 +331,7 @@ function HomePage() {
                     placeholder="Comment"
                     value={content}
                     onChange={(e) => {
+                      commentFunction(e)
                       setContent(e.target.value);
                     }}
                   />
