@@ -115,7 +115,7 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
-  const postCommentForm = (image_id, submitFn, content) => {
+  const postCommentForm = (image_id, submitFn, content, setContent) => {
     return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
         required="true"
@@ -124,9 +124,7 @@ function ImagesPage() {
         placeholder="Comment"
         value={content}
         onChange={(e) => {
-          if(image_id === e.target.className.split('-')[2]) {
             setContent(e.target.value);
-          }
         }}
       />
       <button className="comment-submit-button">Post</button>
