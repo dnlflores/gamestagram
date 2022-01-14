@@ -78,8 +78,8 @@ function ImagesPage() {
 
   const onContentSubmit = async (e) => {
     e.preventDefault();
-    if (content) {
-      await dispatch(createComment(e.target.className, content));
+    if (e.target.value) {
+      await dispatch(createComment(e.target.className, e.target.value));
       setContent("");
     } else {
       await dispatch(createComment(e.target.className, e.target['0'].value));
@@ -113,8 +113,8 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
-  const postCommentForm = (image_id, submitFn, content, setContent) => (
-    <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
+  const postCommentForm = (image_id, submitFn, content) => {
+    return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
       <input
         required="true"
         className={`input-comment`}
@@ -123,16 +123,16 @@ function ImagesPage() {
         placeholder="Comment"
         value={content}
         onChange={(e) => {
-          if(image_id ) {
+          if(image_id === e.target.className.split('-')[2]) {
             setContent(e.target.value);
           }
         }}
       />
       <button className="comment-submit-button">Post</button>
     </form>
-  )
+  )}
 
-  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
+  const editCommentForm = (image_id, commentId, editFn, content) => (
     <form
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
@@ -274,9 +274,22 @@ function ImagesPage() {
                 View all comments...
               </p>}
               <div className="comment-container-div">
-                {postCommentForm(image.id, onContentSubmit, content, setContent)}
+              <form id="form-comment-con" className={image.id} onSubmit={onContentSubmit}>
+                <input
+                  required="true"
+                  className={`input-comment`}
+                  autoFocus
+                  name="CommentAutoFocus"
+                  placeholder="Comment"
+                  value={content}
+                  onChange={(e) => {
+                    setContent(e.target.value);
+                  }}
+                />
+                <button className="comment-submit-button">Post</button>
+              </form>
                 {commentShow === image.id && edit === true &&
-                              editCommentForm(image.id, commentId, onEditComment, content, setContent)}
+                              editCommentForm(image.id, commentId, onEditComment, content)}
               </div>
               {userId === image.user_id && (
                 <div>
