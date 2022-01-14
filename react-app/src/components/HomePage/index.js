@@ -244,12 +244,14 @@ function HomePage() {
                 />
               </div>
               <li className="caption-container">
-                <div className="caption-username">
+                <div
+                  className="caption-username"
+                  onClick={() => history.push(`/users/${image.user_id}`)}
+                >
                   {getUser(image.user_id)?.username}
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-
               {commentsArray
                 .filter((comment) => image.id === comment.image_id)
                 .slice(-2)
