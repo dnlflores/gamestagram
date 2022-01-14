@@ -46,24 +46,22 @@ const SelectImagePage = (props) => {
     };
 
     return props.trigger && (
-        <div className="select-page-body">
-            <div className="modal-outer">
-                <div className="modal-inner">
-                    <form onSubmit={handleSubmit}>
-                        <input type="file" accept="image/*" onChange={updateImage} />
-                        <div className="upload">
-                            <label>Caption</label>
-                            <input
-                                type="text"
-                                name="caption"
-                                onChange={updateCaption}
-                                value={caption}
-                            ></input>
-                        </div>
-                        <button type="submit">Submit</button>
-                        {imageLoading && <p>Loading...</p>}
-                    </form>
-                </div>
+        <div className="select-image-page-body">
+            <div className="modal-container">
+                <form className="modal-form" onSubmit={handleSubmit}>
+                    <input type="file" accept="image/*" onChange={updateImage} />
+                    <div className="upload">
+                        <label>Caption</label>
+                        <input
+                            type="text"
+                            name="caption"
+                            onChange={updateCaption}
+                            value={caption}
+                        ></input>
+                    </div>
+                    <button type="submit">Submit</button>
+                    {imageLoading && <p>Loading...</p>}
+                </form>
             </div>
         </div>
     )
