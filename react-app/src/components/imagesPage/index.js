@@ -234,16 +234,7 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              <p
-                className="games-view-comments"
-                onClick={() => {
-                  setImageButtonPopup(image.id);
-                  body.style.overflow = "hidden";
-                }}
-              >
-                View all comments...
-              </p>
-              {commentsArray?.splice(-3, 3).map((comment, index) => {
+              {commentsArray?.slice(-3).map((comment, index) => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
@@ -292,7 +283,7 @@ function ImagesPage() {
                 <input
                   required="true"
                   className={`input-comment`}
-                  autoFocus
+                  
                   name="CommentAutoFocus"
                   placeholder="Comment"
                   value={chosenKey[image.id]}
