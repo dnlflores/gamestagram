@@ -119,27 +119,25 @@ function ImagesPage() {
     setShowOptions(false);
   };
 
-  const postCommentForm = (image_id, submitFn, content) => {
-    return (
-      <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
-        <input
-          required="true"
-          className={`input-comment`}
-          name="CommentAutoFocus"
-          placeholder="Comment"
-          value={content}
-          onChange={(e) => {
-            if (image_id === e.target.className.split("-")[2]) {
-              setContent(e.target.value);
-            }
-          }}
-        />
-        <button className="comment-submit-button">Post</button>
-      </form>
-    );
-  };
+  const postCommentForm = (image_id, submitFn, content, setContent) => {
+    return (<form id="form-comment-con" className={image_id} onSubmit={submitFn}>
+      <input
+        autoFocus
+        required="true"
+        id={`icId`}
+        className={`input-comment`}
+        name="CommentAutoFocus"
+        placeholder="Comment"
+        value={content}
+        onChange={(e) => {
+            setContent(e.target.value);
+        }}
+      />
+      <button className="comment-submit-button">Post</button>
+    </form>
+  )}
 
-  const editCommentForm = (image_id, commentId, editFn, content) => (
+  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
     <form
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
@@ -170,6 +168,19 @@ function ImagesPage() {
     const submitButton = document.querySelector(".comment-submit-button")
     if(e.target.value !== "") submitButton.style.opacity = ".9"
     else submitButton.style.opacity = ".4"
+  }
+
+  const getImageComments = image_id => {
+    const comments = [];
+    let counter = 0;
+    for(let i = commentsArray.length - 1; i >= 0; i--) {
+      const comment = commentsArray[i];
+      if(comment.image_id === image_id && counter < 3) {
+        comments.unshift(comment);
+        counter++;
+      }
+    }
+    return comments;
   }
 
   return (
@@ -246,7 +257,8 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-              {commentsArray?.slice(-3).map((comment, index) => {
+              {getImageComments(image.id)?.map((comment, index) => {
+
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
@@ -288,8 +300,7 @@ function ImagesPage() {
                 }
                 return "";
               })}
-              {commentsArray.filter((comment) => image.id === comment.image_id)
-                .length > 2 && (
+              {commentsArray.filter(comment => image.id === comment.image_id).length > 3 &&(
                 <p
                   className="games-view-comments"
                   onClick={() => {
