@@ -45,7 +45,7 @@
     background-color: lightblue;
 } */
 
-.modal-outer {
+/* .modal-outer {
     position: absolute;
     display: flex;
     align-items: center;
@@ -55,15 +55,10 @@
     height: 100%;
     width: 100%;
     background-color: lightblue;
-}
+} */
 
 /* .modal-inner {
     height: 100%;
     width: 100%;
     background-color: lightblue;
 } */
-
-.ender {
-    grid-area: A;
-    background-color: darkgray;
-}

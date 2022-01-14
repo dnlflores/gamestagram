@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import './SelectImagePage.css'
 
 const SelectImagePage = (props) => {
 
@@ -44,33 +45,26 @@ const SelectImagePage = (props) => {
         }
     };
 
-    return (
-        <div
-            className="modal-header"
-        // onClick={e => {
-        //     props.setTrigger(false);
-        // }}
-        >
-            {props.trigger && (
-                <div className="modal-outer">
-                    <div className="modal-inner">
-                        <form onSubmit={handleSubmit}>
-                            <input type="file" accept="image/*" onChange={updateImage} />
-                            <div className="upload">
-                                <label>Caption</label>
-                                <input
-                                    type="text"
-                                    name="caption"
-                                    onChange={updateCaption}
-                                    value={caption}
-                                ></input>
-                            </div>
-                            <button type="submit">Submit</button>
-                            {imageLoading && <p>Loading...</p>}
-                        </form>
-                    </div>
+    return props.trigger && (
+        <div className="select-page-body">
+            <div className="modal-outer">
+                <div className="modal-inner">
+                    <form onSubmit={handleSubmit}>
+                        <input type="file" accept="image/*" onChange={updateImage} />
+                        <div className="upload">
+                            <label>Caption</label>
+                            <input
+                                type="text"
+                                name="caption"
+                                onChange={updateCaption}
+                                value={caption}
+                            ></input>
+                        </div>
+                        <button type="submit">Submit</button>
+                        {imageLoading && <p>Loading...</p>}
+                    </form>
                 </div>
-            )}
+            </div>
         </div>
     )
 }

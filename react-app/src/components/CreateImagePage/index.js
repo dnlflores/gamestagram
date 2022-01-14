@@ -29,9 +29,6 @@ const CreateImagePage = () => {
           </button>
           <p>set caption</p>
         </div>
-        <div className="ender" onClick={e => setImageSelectPopup(false)}>
-          <p> click here to exit modal </p>
-        </div>
       </header>
      
 
