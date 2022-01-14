@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getImage, deleteOneImage } from "../../store/image";
 import { createComment } from "../../store/comment";
-import { getTheLikes, setOneLike, unOneLike } from "../../store/likes"
+import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import {
   XIcon,
   UserCircleIcon,
@@ -51,8 +51,12 @@ const ImagePage = (props) => {
 
   const handleLike = (e) => {
     e.preventDefault();
-    console.log("E TARGET => ", e.target.farthestViewportElement.className.baseVal.split(" ")[1]);
-    const image_id = e.target.farthestViewportElement.className.baseVal.split(" ")[1];
+    console.log(
+      "E TARGET => ",
+      e.target.farthestViewportElement.className.baseVal.split(" ")[1]
+    );
+    const image_id =
+      e.target.farthestViewportElement.className.baseVal.split(" ")[1];
 
     if (
       keys.filter(
@@ -64,25 +68,32 @@ const ImagePage = (props) => {
     } else dispatch(setOneLike(image_id));
   };
 
-  const newHandleLike = event => {
+  const newHandleLike = (event) => {
     event.preventDefault();
     console.log("THE LIKE GOT TRIGGERED");
     console.log("THE EVENT => ", event);
-    console.log("TRYING TO GET THE IMAGE ID => ", event.target.className.baseVal.split(" ")[1]);
+    console.log(
+      "TRYING TO GET THE IMAGE ID => ",
+      event.target.className.baseVal.split(" ")[1]
+    );
     const image_id = event.target.className.baseVal.split(" ")[1];
 
     dispatch(setOneLike(image_id));
-  }
+  };
 
-  const handleUnlike = event => {
+  const handleUnlike = (event) => {
     event.preventDefault();
     console.log("THE UNLIKE GOT TRIGGERED");
     console.log("THE EVENT => ", event);
-    console.log("TRYING TO GET IMAGE ID => ", event.target.farthestViewportElement.className.baseVal.split(" ")[1]);
-    const image_id = event.target.farthestViewportElement.className.baseVal.split(" ")[1];
+    console.log(
+      "TRYING TO GET IMAGE ID => ",
+      event.target.farthestViewportElement.className.baseVal.split(" ")[1]
+    );
+    const image_id =
+      event.target.farthestViewportElement.className.baseVal.split(" ")[1];
 
     dispatch(unOneLike(image_id));
-  }
+  };
 
   const checkIfLiked = (imageId) => {
     for (let i = 0; i < likedImages.length; i++) {
@@ -97,6 +108,12 @@ const ImagePage = (props) => {
 
   const getUser = (userId) =>
     props.users.filter((user) => user.id === userId)[0];
+
+  const commentFunction = (e) => {
+    const submitButton = document.querySelector(".comment-submit-button");
+    if (e.target.value !== "") submitButton.style.opacity = ".9";
+    else submitButton.style.opacity = ".4";
+  };
 
   return props.trigger === props.image.id ? (
     <div className="image-page-body">
@@ -138,8 +155,12 @@ const ImagePage = (props) => {
           {props.commentsArray && (
             <div className="image-page-comment-container">
               <UserCircleIcon className="image-page-avatar" />
-              <label className="image-page-username">{getUser(props.image.user_id)?.username}</label>
-              <label className="image-page-caption">{props.image.caption}</label>
+              <label className="image-page-username">
+                {getUser(props.image.user_id)?.username}
+              </label>
+              <label className="image-page-caption">
+                {props.image.caption}
+              </label>
               {props.commentsArray?.map((comment) => {
                 if (comment.image_id === props.image.id) {
                   return (
@@ -207,12 +228,19 @@ const ImagePage = (props) => {
           )}
           <div className="image-page-footer">
             <div className="image-page-options-container">
-            {checkIfLiked(props.image.id) ? (
-                <HeartIconFilled className={`post-footer-icon ${props.image.id} liked-icon`} onClick={handleUnlike} />
+              {checkIfLiked(props.image.id) ? (
+                <HeartIconFilled
+                  className={`post-footer-icon ${props.image.id} liked-icon`}
+                  onClick={handleUnlike}
+                />
               ) : (
-                <HeartIcon className={`post-footer-icon ${props.image.id}`} onClick={newHandleLike} />
+                <HeartIcon
+                  className={`post-footer-icon ${props.image.id}`}
+                  onClick={newHandleLike}
+                />
               )}
-              <ChatIcon className="image-page-options-icon"
+              <ChatIcon
+                className="image-page-options-icon"
                 onClick={() => {
                   if (commentShowB === props.image.id) {
                     setCommentShowB(0);
