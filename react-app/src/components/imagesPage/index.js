@@ -47,6 +47,8 @@ function ImagesPage() {
 
   const [editB, setEditB] = useState(false);
 
+
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -164,6 +166,11 @@ function ImagesPage() {
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
+  const commentFunction = (e) => {
+    const submitButton = document.querySelector(".comment-submit-button")
+    if(e.target.value !== "") submitButton.style.opacity = ".9"
+    else submitButton.style.opacity = ".4"
+  }
 
   return (
     <div>
@@ -308,6 +315,7 @@ function ImagesPage() {
                     onChange={(e) => {
                       const imageId = image.id;
                       const eVal = e.target.value;
+                      commentFunction(e)
                       setChosenKey({ imageId: eVal });
                     }}
                   />
