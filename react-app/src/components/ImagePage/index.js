@@ -20,6 +20,7 @@ const ImagePage = (props) => {
 
   const [buttonPopup, setButtonPopup] = useState(0);
   const [showImageOptions, setShowImageOptions] = useState(false);
+  const [showEditDelete, setShowEditDelete] = useState(false);
 
   const body = document.body;
 
@@ -56,7 +57,9 @@ const ImagePage = (props) => {
             Delete
           </button>
           <button onClick={() => setButtonPopup(props.image.id)}>Edit</button>
-          <button onClick={() => setShowImageOptions(!showImageOptions)}>Close</button>
+          <button onClick={() => setShowImageOptions(!showImageOptions)}>
+            Close
+          </button>
           <EditFormPage
             trigger={buttonPopup}
             setTrigger={setButtonPopup}
@@ -77,7 +80,10 @@ const ImagePage = (props) => {
             <UserCircleIcon className="image-page-avatar" />
             <p>{getUser(props.image.user_id)?.username}</p>
             {props.image.user_id === userId && (
-              <DotsHorizontalIcon className="image-options-icon" onClick={() => setShowImageOptions(!showImageOptions)} />
+              <DotsHorizontalIcon
+                className="image-options-icon"
+                onClick={() => setShowImageOptions(!showImageOptions)}
+              />
             )}
           </div>
           {props.commentsArray && (
@@ -85,22 +91,46 @@ const ImagePage = (props) => {
               {props.commentsArray?.map((comment) => {
                 if (comment.image_id === props.image.id) {
                   return (
-                    <div className="image-page-comment-header">
-                      <div
-                        className="image-page-ava-un"
-                        onClick={() => {
-                          history.push(`/users/${comment.user_id}`);
-                          document.body.style.overflow = "visible";
-                        }}
-                      >
-                        <UserCircleIcon className="image-page-comment-avatar" />
-                        <p className="image-page-username">
-                          {getUser(comment.user_id)?.username}
-                        </p>
+                    <div className="ind-comment">
+                      <div className="image-page-comment-header">
+                        <div
+                          className="image-page-ava-un"
+                          onClick={() => {
+                            history.push(`/users/${comment.user_id}`);
+                            document.body.style.overflow = "visible";
+                          }}
+                        >
+                          <UserCircleIcon className="image-page-comment-avatar" />
+                          <p className="image-page-username">
+                            {getUser(comment.user_id)?.username}
+                          </p>
+                        </div>
+                        <div className="commentPDiv">
+                          <p className={props.canEditComment(comment)}>
+                            {comment.content}
+                          </p>
+                        </div>
                       </div>
-                      <div className="commentPDiv">
-                        <p className={props.canEditComment(comment)}>
-                          {comment.content}
+                      {comment.user_id === userId && (
+                        <DotsHorizontalIcon
+                          className="ind-comment-option-toggle"
+                          id={`comment-options-${comment.id}`}
+                          onClick={() => setShowEditDelete(!showEditDelete)}
+                        />
+                      )}
+                      {showEditDelete && userId === comment.user_id && (
+                        <div className="image-post-options">
+                          <button
+                            onClick={(e) => {
+                              props.onDeleteComment(
+                                props.image.id,
+                                comment.id,
+                                setContentB
+                              );
+                            }}
+                          >
+                            Delete
+                          </button>
                           <button
                             onClick={() => {
                               setEditB(true);
@@ -114,19 +144,8 @@ const ImagePage = (props) => {
                           >
                             Edit
                           </button>
-                          <button
-                            onClick={(e) => {
-                              props.onDeleteComment(
-                                props.image.id,
-                                comment.id,
-                                setContentB
-                              );
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </p>
-                      </div>
+                        </div>
+                      )}
                     </div>
                   );
                 }
