@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage } from "../../store/image";
+import SideBar from "../SideBar";
 import {
   getComments,
   createComment,
@@ -282,6 +283,9 @@ function ImagesPage() {
             </div>
           ))}
         </ul>
+        <div>
+          <SideBar users={users} userId={userId}/>
+        </div>
       </div>
     </div>
   );
