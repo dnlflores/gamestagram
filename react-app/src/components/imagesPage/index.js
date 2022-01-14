@@ -131,7 +131,7 @@ function ImagesPage() {
     </form>
   )}
 
-  const editCommentForm = (image_id, commentId, editFn, content) => (
+  const editCommentForm = (image_id, commentId, editFn, content, setContent) => (
     <form
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
