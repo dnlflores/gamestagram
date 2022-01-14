@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getComments } from "../../store/comment";
-import { followUser, getFollowers, getFollowings } from "../../store/follow";
+import { followUser, getFollowers, getFollowings, addToFollowing } from "../../store/follow";
 import { getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import "./SideBar.css";
@@ -15,7 +15,9 @@ const SideBar = (props) => {
   const dispatch = useDispatch();
 
   const followProfileUser = (profileId) => {
+    const container = document.querySelector(`#suggestion-${profileId}`)
     dispatch(followUser(user.id, +profileId));
+    container.style.display = "none";
   };
 
   const followingArr = Object.values(following || {});
@@ -60,7 +62,7 @@ const SideBar = (props) => {
         {usersToFollow?.slice(0, 8).map((userToFollow) => (
           <>
             {userToFollow.username !== user.username && (
-              <div className="suggestion">
+              <div id={`suggestion-${userToFollow.id}`}className="suggestion">
                 <div
                   className="suggestion-link"
                   onClick={() => history.push(`/users/${userToFollow.id}`)}
@@ -75,6 +77,7 @@ const SideBar = (props) => {
                     className="suggestion-follow"
                     onClick={() => {
                       const utfId = +userToFollow.id;
+                      console.log('id', utfId)
                       followProfileUser(utfId);
                     }}
                   >
