@@ -178,6 +178,13 @@ function HomePage() {
     }
     return comments;
   };
+
+  const commentFunction = (e) => {
+    const submitButton = document.querySelector(".comment-submit-button")
+    if(e.target.value !== "") submitButton.style.opacity = ".9"
+    else submitButton.style.opacity = ".4"
+  }
+
   return (
     <div>
       <NavBar />
@@ -314,6 +321,7 @@ function HomePage() {
                     onChange={(e) => {
                       const imageId = image.id;
                       const eVal = e.target.value;
+                      commentFunction(e);
                       setChosenKey({ imageId: eVal });
                     }}
                   />

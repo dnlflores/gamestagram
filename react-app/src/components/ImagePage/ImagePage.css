@@ -111,7 +111,7 @@
   margin-right: 0.5rem;
 }
 .image-page-comment-container {
-  max-height: 450px;
+  max-height: 60%;
   overflow: scroll;
   padding: 1rem 0.5rem;
 }
