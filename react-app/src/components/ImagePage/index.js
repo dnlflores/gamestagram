@@ -191,38 +191,47 @@ const ImagePage = (props) => {
                           onClick={() => setShowEditDelete(comment.id)}
                         />
                       )}
-                      {showEditDelete === comment.id && userId === comment.user_id && (
-                        <div className="image-post-options">
-                          <button
-                            onClick={(e) => {
+                      {showEditDelete === comment.id &&
+                        userId === comment.user_id && (
+                          <div className="image-post-options">
+                            <button
+                              onClick={(e) => {
+                                console.log(
+                                  "THIS IS THE PROPS IMAGE ID => ",
+                                  props.image.id
+                                );
+                                console.log(
+                                  "THIS IS THE COMMENT ID => ",
+                                  comment.id
+                                );
 
-                              console.log("THIS IS THE PROPS IMAGE ID => ", props.image.id);
-                              console.log("THIS IS THE COMMENT ID => ", comment.id);
-                              
-                              props.onDeleteComment(
-                                props.image.id,
-                                comment.id,
-                                setContentB
-                              );
-                            }}
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => {
-                              setEditB(true);
-                              props.setEditB(true);
-                              setCommentShowB(props.image.id);
-                              setCommentIdB(comment.id);
-                              setContentB(
-                                `${props.comments[comment.id].content}`
-                              );
-                            }}
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      )}
+                                props.onDeleteComment(
+                                  props.image.id,
+                                  comment.id,
+                                  setContentB
+                                );
+                              }}
+                            >
+                              Delete
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEditB(true);
+                                props.setEditB(true);
+                                setCommentShowB(props.image.id);
+                                setCommentIdB(comment.id);
+                                setContentB(
+                                  `${props.comments[comment.id].content}`
+                                );
+                              }}
+                            >
+                              Edit
+                            </button>
+                            <button onClick={() => setShowEditDelete(0)}>
+                              Close
+                            </button>
+                          </div>
+                        )}
                     </div>
                   );
                 }

@@ -222,7 +222,7 @@
   border-radius: 1rem;
   background-color: white;
   height: fit-content;
-  z-index: inherit;
+  z-index: 1000;
 }
 .image-post-options > button {
   border: none;
