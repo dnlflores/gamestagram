@@ -283,7 +283,6 @@ function ImagesPage() {
                 <input
                   required="true"
                   className={`input-comment`}
-                  
                   name="CommentAutoFocus"
                   placeholder="Comment"
                   value={chosenKey[image.id]}
