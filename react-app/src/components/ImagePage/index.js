@@ -115,19 +115,6 @@ const ImagePage = (props) => {
                 }}
               />
             </div>
-            {/* <form
-              className={props.image.id}
-              id="form-comment-con"
-              onSubmit={props.onContentSubmit}
-            >
-              <input
-                className={props.image.id}
-                placeholder="Add a comment..."
-                value={contentB}
-                onChange={(e) => setContentB(e.target.value)}
-              />
-              <button className="image-page-comment-submit">Post</button>
-            </form> */}
             {editB === false
               && props.postCommentForm(props.image.id, props.onContentSubmit, contentB, setContentB)}
             {editB === true && props.editB

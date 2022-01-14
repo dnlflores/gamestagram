@@ -118,7 +118,6 @@ function ImagesPage() {
       <input
         required="true"
         className={`input-comment`}
-        autoFocus
         name="CommentAutoFocus"
         placeholder="Comment"
         value={content}
@@ -278,7 +277,6 @@ function ImagesPage() {
                 <input
                   required="true"
                   className={`input-comment`}
-                  autoFocus
                   name="CommentAutoFocus"
                   placeholder="Comment"
                   value={content}
