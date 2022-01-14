@@ -42,6 +42,7 @@ function ImagesPage() {
   const commentsArray = Object.values(comments);
   const body = document.body;
   const likedImages = likesArr.filter((like) => like.user_id === userId);
+  const [chosenKey, setChosenKey] = useState({})
 
   const [editB, setEditB] = useState(false);
 
@@ -281,9 +282,11 @@ function ImagesPage() {
                   autoFocus
                   name="CommentAutoFocus"
                   placeholder="Comment"
-                  value={content}
+                  value={chosenKey[image.id]}
                   onChange={(e) => {
-                    setContent(e.target.value);
+                    const imageId = image.id;
+                    const eVal = e.target.value
+                    setChosenKey({imageId: eVal});
                   }}
                 />
                 <button className="comment-submit-button">Post</button>
