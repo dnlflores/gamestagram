@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage } from "../../store/image";
+import SideBar from "../SideBar";
 import {
   getComments,
   createComment,
@@ -161,7 +162,6 @@ function ImagesPage() {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
 
-
   return (
     <div>
       <NavBar />
@@ -169,9 +169,14 @@ function ImagesPage() {
         <ul className="game-post-container">
           {imagesArr.map((image, i) => (
             <div className="ind-post-container" key={`${image.id}`}>
-              <div className="game-post-header" >
-                <UserCircleIcon className="game-post-avatar" onClick={event => history.push(`/users/${image.user_id}`)}/>
-                <li>{getUser(image.user_id)?.username}</li>
+              <div className="game-post-header">
+                <div
+                  className="game-post-ava-name"
+                  onClick={(event) => history.push(`/users/${image.user_id}`)}
+                >
+                  <UserCircleIcon className="game-post-avatar" />
+                  <li>{getUser(image.user_id)?.username}</li>
+                </div>
               </div>
               <li>
                 <img
@@ -229,8 +234,7 @@ function ImagesPage() {
                 </div>
                 <div className="caption">{image.caption}</div>
               </li>
-                  
-              {commentsArray.filter(comment => image.id === comment.image_id).slice(-2).map(comment => {
+              {commentsArray?.slice(-3).map((comment, index) => {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
@@ -279,7 +283,6 @@ function ImagesPage() {
                 <input
                   required="true"
                   className={`input-comment`}
-                  // autoFocus
                   name="CommentAutoFocus"
                   placeholder="Comment"
                   value={chosenKey[image.id]}
@@ -325,6 +328,9 @@ function ImagesPage() {
             </div>
           ))}
         </ul>
+        <div>
+          <SideBar users={users} userId={userId}/>
+        </div>
       </div>
     </div>
   );
