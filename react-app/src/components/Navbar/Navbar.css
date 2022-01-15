@@ -21,7 +21,7 @@
 .nav-bar-right > li > a {
   color: black;
   text-decoration: none;
-  padding: .15rem;
+  padding: 0.15rem;
 }
 .nav-icon {
   width: 32px;
@@ -33,6 +33,24 @@
   font-family: sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
+}
+.nav-logo {
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+.galaga-ship {
+  width: 24px;
+  z-index: 3;
+  margin-left: 0.5rem;
+  transform: rotate(90deg);
+  margin-top: 0.3rem;
+}
+.ship-container {
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .nav-avatar {
   width: 50px;
@@ -46,24 +64,112 @@
   position: absolute;
   right: 2rem;
   top: 4rem;
-  padding: .5rem 0rem;
+  padding: 0.5rem 0rem;
 }
 .user-info {
   display: flex;
   align-items: center;
-  padding: 0rem .5rem;
-  padding-bottom: .5rem;
+  padding: 0rem 0.5rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.253);
   cursor: pointer;
 }
 .user-info > div {
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .dropdown-email {
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: rgb(53, 53, 53);
 }
 
 #site-title {
-  font-family: 'Press Start 2P', cursive;
+  font-family: "Press Start 2P", cursive;
+}
+.galaga {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 200px;
+}
+.galaga-ship-container > img {
+  background-color: white;
+  width: 24px;
+  z-index: 2;
+}
+.galaga-missile-container > img {
+  position: absolute;
+  top: 11px;
+  left: 18px;
+  width: 7px;
+  transform: rotate(90deg);
+  z-index: 1;
+}
+.cover {
+  position: absolute;
+  background-color: white;
+  right: -1rem;
+  top: 0;
+  z-index: 999999999;
+  width: 35px;
+  height: 35px;
+  border-left: 1px solid rgba(177, 177, 177, 0.116);
+}
+.galaga-enemy-container > img {
+  width: 14px;
+  transform: rotate(270deg);
+  position: absolute;
+  right: 0;
+  top: 9px;
+}
+#galaga-boss {
+  width: 18px;
+  top: 7px;
+}
+.galaga-bug-1 {
+  animation: bug 4s;
+}
+.galaga-bug-2 {
+  animation: bug 6s;
+}
+.galaga-bug-3 {
+  animation: bug 8s;
+}
+#galaga-boss {
+  animation: bug 10s;
+}
+@keyframes bug {
+  28.9% {
+    opacity: 1;
+  }
+  29%{
+    opacity: 0;
+  }
+  100% {
+    right: 90%;
+    opacity: 0;
+  }
+}
+.galaga-missile-1 {
+  animation: missile 10s;
+}
+.galaga-missile-2 {
+  animation: missile 8s;
+}
+.galaga-missile-3 {
+  animation: missile 6s;
+}
+.galaga-missile-4 {
+  animation: missile 4s;
+}
+@keyframes missile {
+  28.9% {
+    opacity: 1;
+  }
+  29%{
+    opacity: 0;
+  }
+  100% {
+    left: 90%;
+    opacity: 0;
+  }
 }

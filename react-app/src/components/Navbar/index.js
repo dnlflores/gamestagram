@@ -15,59 +15,96 @@ const NavBar = () => {
   const user = useSelector((state) => state.session.user);
   const [userDrop, setUserDrop] = useState(false);
 
-  const goToProfile = userId => {
+  const goToProfile = (userId) => {
     history.push(`/users/${userId}`);
   };
 
   return (
-    <nav className="nav-bar">
-      <div className="nav-logo">
-        <NavLink to="/" id="site-title">Gamestagram</NavLink>
-      </div>
-      <ul className="nav-bar-right">
-        <li>
-          <NavLink to="/" exact={true} activeClassName="active">
-            <HomeIcon className="nav-icon" />
+    <>
+      <nav className="nav-bar">
+        <div className="nav-logo">
+          <NavLink to="/" id="site-title">
+            Gamestagram
           </NavLink>
-        </li>
-        <li>
-          <NavLink to="/games/new">
-            <PlusCircleIcon className="nav-icon" />
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/games">
-            <GlobeIcon className="nav-icon" />
-          </NavLink>
-        </li>
-        <li>
-          <UserCircleIcon
-            onClick={() => setUserDrop(!userDrop)}
-            className="nav-icon"
-          />
-        </li>
-        {userDrop && (
-          <li className="user-dropdown">
-            <div className="user-info">
-              {user && (
-                <>
-                  <UserCircleIcon className="nav-avatar" onClick={event => goToProfile(user.id)}/>
-                  <div onClick={event => goToProfile(user.id)}>
-                    <div className="dropdown-username">{user.username}</div>
-                    <div className="dropdown-email">{user.email}</div>
-                  </div>
-                </>
-              )}
+          <div className="galaga">
+            <div className="galaga-ship-container">
+              <img className="galaga-ship" src="galaga-ship.png" />
+              <div className="galaga-missiles"></div>
             </div>
-            <LogoutButton />
+            <div className="galaga-missile-container">
+              <img
+                className="galaga-missile galaga-missile-4"
+                src="galaga-missile.png"
+              ></img>
+              <img
+                className="galaga-missile galaga-missile-3"
+                src="galaga-missile.png"
+              ></img>
+              <img
+                className="galaga-missile galaga-missile-2"
+                src="galaga-missile.png"
+              ></img>
+              <img
+                className="galaga-missile galaga-missile-1"
+                src="galaga-missile.png"
+              ></img>
+            </div>
+            <div className="galaga-enemy-container">
+              <div className="cover"></div>
+              <img className="galaga-bug-3" src="galaga-bug.png" />
+              <img className="galaga-bug-2" src="galaga-bug.png" />
+              <img className="galaga-bug-1" src="galaga-bug.png" />
+              <img id="galaga-boss" src="galaga-boss.png" />
+            </div>
+          </div>
+        </div>
+        <ul className="nav-bar-right">
+          <li>
+            <NavLink to="/" exact={true} activeClassName="active">
+              <HomeIcon className="nav-icon" />
+            </NavLink>
           </li>
-        )}
-        {/* <li>
+          <li>
+            <NavLink to="/games/new">
+              <PlusCircleIcon className="nav-icon" />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/games">
+              <GlobeIcon className="nav-icon" />
+            </NavLink>
+          </li>
+          <li>
+            <UserCircleIcon
+              onClick={() => setUserDrop(!userDrop)}
+              className="nav-icon"
+            />
+          </li>
+          {userDrop && (
+            <li className="user-dropdown">
+              <div className="user-info">
+                {user && (
+                  <>
+                    <UserCircleIcon
+                      className="nav-avatar"
+                      onClick={(event) => goToProfile(user.id)}
+                    />
+                    <div onClick={(event) => goToProfile(user.id)}>
+                      <div className="dropdown-username">{user.username}</div>
+                      <div className="dropdown-email">{user.email}</div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <LogoutButton />
+            </li>
+          )}
+          {/* <li>
           <NavLink to="/users" exact={true} activeClassName="active">
           Users
           </NavLink>
         </li> */}
-        {/* <li>
+          {/* <li>
           <NavLink to="/login" exact={true} activeClassName="active">
             Login
           </NavLink>
@@ -77,8 +114,9 @@ const NavBar = () => {
             Sign Up
           </NavLink>
         </li> */}
-      </ul>
-    </nav>
+        </ul>
+      </nav>
+    </>
   );
 };
 
