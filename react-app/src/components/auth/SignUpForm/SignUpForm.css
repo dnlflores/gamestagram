@@ -64,3 +64,9 @@
   color: #396ddd;
   padding-left: .25rem;
 }
+
+#sign-up-title {
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  bottom: 25px;
+}

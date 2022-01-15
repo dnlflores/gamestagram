@@ -63,3 +63,7 @@
   font-size: .9rem;
   color: rgb(53, 53, 53);
 }
+
+#site-title {
+  font-family: 'Press Start 2P', cursive;
+}
