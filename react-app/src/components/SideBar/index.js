@@ -77,7 +77,7 @@ const SideBar = (props) => {
                     className="suggestion-follow"
                     onClick={() => {
                       const utfId = +userToFollow.id;
-                      console.log('id', utfId)
+                      
                       followProfileUser(utfId);
                     }}
                   >
