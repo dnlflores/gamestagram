@@ -154,17 +154,19 @@ const ImagePage = (props) => {
           </div>
           {props.commentsArray && (
             <div className="image-page-comment-container">
-              <UserCircleIcon className="image-page-avatar" />
-              <label className="image-page-username">
-                {getUser(props.image.user_id)?.username}
-              </label>
-              <label className="image-page-caption">
-                {props.image.caption}
-              </label>
+              <div className="image-page-user-caption-con">
+                <UserCircleIcon className="image-page-caption-avatar" />
+                <div className="image-page-username">
+                  {getUser(props.image.user_id)?.username}
+                </div>
+                <div className="image-page-caption">
+                  {props.image.caption}
+                </div>
+              </div>
               {props.commentsArray?.map((comment) => {
                 if (comment.image_id === props.image.id) {
                   return (
-                    <div className={`ind-comment-${comment.id}`}>
+                    <div className={`ind-comment-${comment.id}`} id="ind-comment">
                       <div className="image-page-comment-header">
                         <div
                           className="image-page-ava-un"
@@ -174,7 +176,7 @@ const ImagePage = (props) => {
                           }}
                         >
                           <UserCircleIcon className="image-page-comment-avatar" />
-                          <p className="image-page-username">
+                          <p className="image-page-comment-username">
                             {getUser(comment.user_id)?.username}
                           </p>
                         </div>
@@ -183,7 +185,6 @@ const ImagePage = (props) => {
                             {comment.content}
                           </p>
                         </div>
-                      </div>
                       {comment.user_id === userId && (
                         <DotsHorizontalIcon
                           className="ind-comment-option-toggle"
@@ -191,6 +192,7 @@ const ImagePage = (props) => {
                           onClick={() => setShowEditDelete(comment.id)}
                         />
                       )}
+                      </div>
                       {showEditDelete === comment.id &&
                         userId === comment.user_id && (
                           <div className="image-post-options">

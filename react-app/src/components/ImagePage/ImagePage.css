@@ -116,19 +116,23 @@
   overflow: scroll;
   padding: 1rem 0.5rem;
 }
+#ind-comment {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
 .image-page-comment-header {
   display: flex;
   align-items: flex-start;
   margin: 0.5rem 0rem;
 }
 .image-page-comment-username {
-  font-size: 1.11rem;
+  font-size: .9rem;
   font-weight: bold;
   padding-left: 0.5rem;
-  margin-top: 8px;
 }
 .image-page-comment-avatar {
-  width: 50px;
+  width: 35px;
 }
 .image-page-comment-header > p {
   font-size: 0.925rem;
@@ -174,44 +178,29 @@
   color: #3670eed2;
 }
 
-/* .editComFALSE > button {
-  display: none;
-}
-
-.editComTRUE > button {
-  display: none;
-}
-
-.editComTRUE:hover button {
-  display: inline;
-  margin-left: 10px;
-} */
-
-.commentPDivPage {
-  width: 100%;
-  font-size: .9rem;
-  position: relative;
-  left: 10px;
-  top: 11px;
-}
-
 .image-page-username {
     font-weight: bold;
-    position: relative;
-    bottom: 13px;
 }
-
+.image-page-caption-avatar {
+  width: 40px;
+}
+.image-page-user-caption-con {
+  display: flex;
+  align-items: flex-start;
+}
 .image-page-caption {
-    position: relative;
-    left: 10px;
-    bottom: 12px;
+    margin-left: .5rem;
     cursor: default;
 }
 
 .image-page-ava-un {
   display: flex;
   cursor: pointer;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-right: .5rem;
 }
+
 .image-post-options {
   position: absolute;
   top: 50%;
@@ -223,7 +212,7 @@
   border-radius: 1rem;
   background-color: white;
   height: fit-content;
-  z-index: 1000;
+  z-index: 10000;
 }
 .image-post-options > button {
   border: none;
@@ -249,14 +238,10 @@
 .image-post-option-delete {
   color: rgb(255, 71, 71);
 }
-/* .ind-comment {
-  display: flex;
-  position: relative;
-} */
 .ind-comment-option-toggle {
   width: 24px;
-  /* position: absolute; */
-  bottom: 50%;
-  right: 1rem;
+  position: absolute;
+  right: 0;
   cursor: pointer;
+  z-index: 1;
 }
