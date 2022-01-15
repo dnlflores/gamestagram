@@ -36,6 +36,8 @@ const ImagePage = (props) => {
   const [commentShowB, setCommentShowB] = useState(0);
   const [commentIdB, setCommentIdB] = useState(-6);
 
+  console.log("THIS IS THE SHOW EDIT DELETE", showEditDelete);
+
   useEffect(() => {
     dispatch(getImage(props.image.id));
     dispatch(getTheLikes());
@@ -70,12 +72,7 @@ const ImagePage = (props) => {
 
   const newHandleLike = (event) => {
     event.preventDefault();
-    console.log("THE LIKE GOT TRIGGERED");
-    console.log("THE EVENT => ", event);
-    console.log(
-      "TRYING TO GET THE IMAGE ID => ",
-      event.target.className.baseVal.split(" ")[1]
-    );
+
     const image_id = event.target.className.baseVal.split(" ")[1];
 
     dispatch(setOneLike(image_id));
@@ -83,12 +80,6 @@ const ImagePage = (props) => {
 
   const handleUnlike = (event) => {
     event.preventDefault();
-    console.log("THE UNLIKE GOT TRIGGERED");
-    console.log("THE EVENT => ", event);
-    console.log(
-      "TRYING TO GET IMAGE ID => ",
-      event.target.farthestViewportElement.className.baseVal.split(" ")[1]
-    );
     const image_id =
       event.target.farthestViewportElement.className.baseVal.split(" ")[1];
 
