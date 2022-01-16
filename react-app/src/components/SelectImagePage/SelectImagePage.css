@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
 
     animation: animate .2s;
     z-index: 1001;
@@ -20,7 +20,7 @@
     }
 
     to {
-        transform: scale(1);
+        transform: scale(1);    
         opacity: 100%;
     }
 }
@@ -30,9 +30,9 @@
     flex-direction: column;
     justify-content: space-between;
     width: 30%;
-    height: 550px;
+    height: 75%;
     background-color: white;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.226);
 
     z-index: 1002;
@@ -41,8 +41,10 @@
 .new-post-text {
     display: flex;
     justify-content: center;
-    padding-top: 10px;
+    padding-top: .75rem;
     font-size: 1.75rem;
+    padding-bottom: 5px;
+    border-bottom: 1px solid lightgray;
 }
 
 .modal-form {
@@ -62,4 +64,25 @@
 
 .submit-button {
     margin-top: 100px;
+    background-color: lightblue;
+    color: white;
+    border-radius: 1rem;
+    width: 10rem;
+    height: 2.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.X {
+    position: fixed;
+    top: 7.5%;
+    right: 32%;
+    width:2rem;
+    height:2rem;
+    color: white;
+    z-index: 1003;
+}
+
+.X:hover {
+    cursor: pointer;
 }

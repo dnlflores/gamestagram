@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import './SelectImagePage.css'
+import { XIcon } from "@heroicons/react/outline";
 
 const SelectImagePage = (props) => {
 
@@ -51,6 +52,10 @@ const SelectImagePage = (props) => {
             <div className="modal-container">
                 <div className="new-post-text">
                     <p>Create A New Post</p>
+                    <XIcon 
+                    className="X"
+                    onClick={e => props.setTrigger(false)}
+                    />
                 </div>
                 <form className="modal-form" onSubmit={handleSubmit}>
                     <input
