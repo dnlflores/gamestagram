@@ -48,22 +48,32 @@ const SelectImagePage = (props) => {
     return props.trigger && (
         <div className="select-image-page-body">
             <div className="modal-container">
-                <div></div>
-                <form className="modal-form" onSubmit={handleSubmit}>
+                <div className="new-post-text">
                     <p>Create A New Post</p>
-                    <input type="file" accept="image/*" onChange={updateImage} />
+                </div>
+                <form className="modal-form" onSubmit={handleSubmit}>
+                    <input
+                        className="file-thing"
+                        type="file"
+                        accept="image/*"
+                        onChange={updateImage}
+                        onClick={e => e.target.style.color="black"}
+                        />
                     <div className="upload">
                         <label>Caption</label>
                         <input
                             type="text"
                             name="caption"
+                            className="caption-input"
                             onChange={updateCaption}
                             value={caption}
                         ></input>
                     </div>
-                    <button type="submit">Submit</button>
+                    <button className="submit-button" type="submit">Submit</button>
                     {imageLoading && <p>Loading...</p>}
                 </form>
+                <div></div>
+                <div></div>
             </div>
         </div>
     )
