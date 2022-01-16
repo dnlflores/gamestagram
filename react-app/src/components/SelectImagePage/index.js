@@ -48,7 +48,9 @@ const SelectImagePage = (props) => {
     return props.trigger && (
         <div className="select-image-page-body">
             <div className="modal-container">
+                <div></div>
                 <form className="modal-form" onSubmit={handleSubmit}>
+                    <p>Create A New Post</p>
                     <input type="file" accept="image/*" onChange={updateImage} />
                     <div className="upload">
                         <label>Caption</label>
