@@ -10,13 +10,13 @@ const CreateImagePage = () => {
   return (
     <>
       <NavBar />
-      <header className="grid">
-        <div className="grid-mid">
+      {/* <header className="grid">
+        <div className="grid-mid"> */}
           <SelectImagePage
             trigger={imageSelectPopup}
             setTrigger={setImageSelectPopup}
           />
-          <p>choose an image to upload!</p>
+          {/* <p>choose an image to upload!</p> */}
           <button
             className="modal-button"
             onClick={e => {
@@ -27,9 +27,9 @@ const CreateImagePage = () => {
           >
             +
           </button>
-          <p>set caption</p>
-        </div>
-      </header>
+          {/* <p>set caption</p> */}
+        {/* </div>
+      </header> */}
      
 
     </ >

@@ -46,7 +46,8 @@ const SelectImagePage = (props) => {
     };
 
     return props.trigger && (
-        <div className="select-image-page-body">
+        <div className="select-image-page-body"
+            onClick={e => e.target.className === "select-image-page-body" && props.setTrigger(false) }>
             <div className="modal-container">
                 <div className="new-post-text">
                     <p>Create A New Post</p>
