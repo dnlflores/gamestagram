@@ -13,6 +13,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  top: 30px;
 }
 .sign-up-title {
   font-weight: 300;
@@ -21,8 +23,8 @@
 }
 .sign-up-image {
   margin: 1rem;
-  width: 450px;
-  height: 300px;
+  width: 750px;
+  height: 500px;
 }
 .sign-up-form {
   display: flex;
@@ -63,4 +65,10 @@
   font-weight: 200;
   color: #396ddd;
   padding-left: .25rem;
+}
+
+#sign-up-title {
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  bottom: 25px;
 }

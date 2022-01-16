@@ -22,7 +22,7 @@ const NavBar = () => {
   return (
     <nav className="nav-bar">
       <div className="nav-logo">
-        <NavLink to="/">Gamestagram</NavLink>
+        <NavLink to="/" id="site-title">Gamestagram</NavLink>
       </div>
       <ul className="nav-bar-right">
         <li>

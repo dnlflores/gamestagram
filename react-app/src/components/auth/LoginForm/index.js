@@ -34,7 +34,7 @@ const LoginForm = () => {
   return (
     <div className="login-body">
       <h1 className="login-title">Gamestagram</h1>
-      <img className="login-image" alt="" src=""></img>
+      <img className="login-image" alt="gaming" src="https://aa-gamestagram.s3.us-west-1.amazonaws.com/branden-skeli-0SB4gTfqANY-unsplash.jpg"></img>
       <form className="login-form" onSubmit={onLogin}>
         <div>
           {errors.map((error, ind) => (

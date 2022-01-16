@@ -47,6 +47,7 @@ function HomePage() {
   const likedImages = likesArr.filter((like) => like.user_id === userId);
   const [chosenKey, setChosenKey] = useState({});
   const [editB, setEditB] = useState(false);
+
   const followedImages = [];
   for (let i = 0; i < followings.length; i++) {
     const user = followings[i];
@@ -55,6 +56,7 @@ function HomePage() {
       if (user.id === image.user_id) followedImages.push(image);
     }
   }
+
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -67,10 +69,12 @@ function HomePage() {
     }
     fetchData();
   }, [dispatch, userId]);
+
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(deleteOneImage(images[e.target.className.split(" ")[0]]));
   };
+
   const handleLike = (e) => {
     e.preventDefault();
     const image_id = e.target.className.split(" ")[1];
@@ -83,6 +87,7 @@ function HomePage() {
       dispatch(unOneLike(image_id));
     } else dispatch(setOneLike(image_id));
   };
+
   const onContentSubmit = async (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -93,6 +98,7 @@ function HomePage() {
       e.target["0"].value = "";
     }
   };
+
   const onEditComment = async (e) => {
     e.preventDefault();
     setCommentShow(0);
@@ -110,14 +116,17 @@ function HomePage() {
       setEditB(false);
     }
   };
+
   const onDeleteComment = async (image_id, comment_id, setContentB = null) => {
     if (setContentB) setContentB("");
     await dispatch(deleteOneComment(image_id, comment_id));
   };
+
   const handleEdit = (imageId) => {
     setEditButtonPopup(imageId);
     setShowOptions(false);
   };
+
   const postCommentForm = (image_id, submitFn, content, setContent) => {
     return (
       <form id="form-comment-con" className={image_id} onSubmit={submitFn}>
@@ -136,6 +145,7 @@ function HomePage() {
       </form>
     );
   };
+
   const editCommentForm = (
     image_id,
     commentId,
@@ -156,19 +166,24 @@ function HomePage() {
       <button>submit edit</button>
     </form>
   );
+
   const getUser = (userId) => users.filter((user) => user.id === userId)[0];
+
   const checkIfLiked = (imageId) => {
     for (let i = 0; i < likedImages.length; i++) {
       if (+likedImages[i].image_id === +imageId) return true;
     }
     return false;
   };
+
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
+
   const getImageComments = (image_id) => {
     const comments = [];
     let counter = 0;
+
     for (let i = commentsArray.length - 1; i >= 0; i--) {
       const comment = commentsArray[i];
       if (comment.image_id === image_id && counter < 3) {
@@ -176,8 +191,25 @@ function HomePage() {
         counter++;
       }
     }
+
     return comments;
   };
+
+  const getImageLikes = image_id => {
+    const likesOnImage = [];
+    for(let i = 0; i < likesArr.length; i++) {
+      const like = likesArr[i];
+      if(+like.image_id === +image_id) likesOnImage.push(like);
+    }
+    return likesOnImage;
+  }
+
+  const commentFunction = (e) => {
+    const submitButton = document.querySelector(".comment-submit-button")
+    if(e.target.value !== "") submitButton.style.opacity = ".9"
+    else submitButton.style.opacity = ".4"
+  }
+
   return (
     <div>
       <NavBar />
@@ -246,6 +278,12 @@ function HomePage() {
                   className="post-footer-icon"
                 />
               </div>
+              {getImageLikes(image.id).length > 0 && (
+                <div className="num-of-likes-div">
+                  <label className="num-of-likes-label">{getImageLikes(image.id).length} </label>
+                  <p className="likes-text"> like(s)</p>
+                </div>
+              )}
               <li className="caption-container">
                 <div className="caption-username">
                   {getUser(image.user_id)?.username}
@@ -263,24 +301,6 @@ function HomePage() {
                         <p id={comment.id} className={canEditComment(comment)}>
                           {comment.content}
                         </p>
-                        {/* <button
-                            onClick={() => {
-                              setEdit(true);
-                              setCommentShow(image.id);
-                              setCommentId(comment.id);
-                              setContent(`${comments[comment.id].content}`);
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => {
-                              onDeleteComment(image.id, comment.id);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </p> */}
                       </div>
                     </div>
                   );
@@ -312,8 +332,8 @@ function HomePage() {
                     placeholder="Comment"
                     value={chosenKey[image.id]}
                     onChange={(e) => {
-                      const imageId = image.id;
                       const eVal = e.target.value;
+                      commentFunction(e);
                       setChosenKey({ imageId: eVal });
                     }}
                   />

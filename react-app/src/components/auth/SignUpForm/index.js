@@ -46,10 +46,10 @@ const SignUpForm = () => {
   return (
     <div className="sign-up-body">
       <div className="sign-up-left">
-        <img className="sign-up-image" alt="" src=""></img>
+        <img className="sign-up-image" alt="playing games" src="https://aa-gamestagram.s3.us-west-1.amazonaws.com/carl-raw-m3hn2Kn5Bns-unsplash.jpg"></img>
       </div>
       <div className="sign-up-right">
-        <h1 className="sign-up-title">Gamestagram</h1>
+        <h1 id="sign-up-title">Gamestagram</h1>
         <form className="sign-up-form" onSubmit={onSignUp}>
           <div>
             {errors.map((error, ind) => (

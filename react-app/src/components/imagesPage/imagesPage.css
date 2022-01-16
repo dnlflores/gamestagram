@@ -206,3 +206,16 @@
   height: 3rem;
   padding: 1rem;
 }
+
+.num-of-likes-div {
+  display: flex;
+  position: relative;
+  left: 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.likes-text {
+  font-weight: bold;
+  margin-left: 10px;
+}
