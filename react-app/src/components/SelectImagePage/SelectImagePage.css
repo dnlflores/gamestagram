@@ -54,6 +54,15 @@
     width:100%;
 }
 
+ul {
+    list-style-type: none;
+}
+
+.display-errors {
+    color: rgb(255, 0, 179);
+    font-size: 1.5rem;
+}
+
 .file-thing {
     color: white;
 }
@@ -64,13 +73,18 @@
 
 .submit-button {
     margin-top: 100px;
-    background-color: lightblue;
+    background-color: rgb(0, 150, 200);
     color: white;
-    border-radius: 1rem;
-    width: 10rem;
-    height: 2.5rem;
+    border-radius: .4rem;
+    width: 8rem;
+    height: 2rem;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.15rem;
+    border: none;
+}
+
+.submit-button:hover {
+    cursor: pointer;
 }
 
 .X {
