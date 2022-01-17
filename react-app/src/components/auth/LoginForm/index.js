@@ -27,6 +27,18 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
+  const demoLogin = async event => {
+    event.preventDefault();
+    const dEmail = "demo@gamestagram.com";
+    const dPassword = "password";
+
+    const data = await dispatch(login(dEmail, dPassword));
+
+    if(data) {
+      setErrors(data);
+    }
+  };
+
   if (user) {
     return <Redirect to="/" />;
   }
@@ -58,6 +70,7 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
         <button type="submit">Login</button>
+        <button className="demo-login-button" onClick={demoLogin}>Demo</button>
       </form>
       <div className="login-signup-con">
         Don't have an account? <NavLink to="/sign-up">Sign Up</NavLink>

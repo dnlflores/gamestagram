@@ -3,7 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  position: relative;
+  top: 2rem;
 }
 
 .login-title {
@@ -37,7 +38,7 @@
 }
 
 .login-form > button {
-  margin: 1rem;
+  margin: .5rem;
   border: none;
   padding: .6rem;
   border-radius: 3px;
@@ -69,3 +70,8 @@
   position: relative;
   top: 40px;
 }
+
+/* .demo-login-button {
+  position: relative;
+  bottom: 20px;
+} */
