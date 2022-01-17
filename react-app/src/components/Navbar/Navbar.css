@@ -84,6 +84,7 @@
 
 #site-title {
   font-family: "Press Start 2P", cursive;
+  z-index: 99;
 }
 .galaga {
   display: flex;
@@ -91,85 +92,176 @@
   position: relative;
   width: 200px;
 }
+.galaga-ship-container {
+  z-index: 99;
+}
+.galaga-ship-container:hover {
+  cursor: pointer;
+}
 .galaga-ship-container > img {
   background-color: white;
   width: 24px;
+}
+.test-cover {
+  position: absolute;
   z-index: 2;
+  background-color: white;
+  width: 100px;
+  height: 10px;
+  left: -4.3rem;
+}
+.galaga-missile-container {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: -3rem;
+  z-index: 1;
 }
 .galaga-missile-container > img {
-  position: absolute;
-  top: 11px;
-  left: 18px;
-  width: 7px;
-  transform: rotate(90deg);
-  z-index: 1;
+  width: 12px;
+  margin: 0rem .25rem;
 }
 .cover {
   position: absolute;
+  z-index: 99;
+  height: 30px;
+  width: 250px;
   background-color: white;
-  right: -1rem;
-  top: 0;
-  z-index: 999999999;
-  width: 35px;
-  height: 35px;
-  border-left: 1px solid rgba(177, 177, 177, 0.116);
+  border-left: 1px solid rgba(172, 172, 172, 0.253);
+  box-shadow: -2px 0px 0px 0px rgba(170, 170, 170, 0.171);
+}
+.galaga-enemy-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: -3rem;
 }
 .galaga-enemy-container > img {
   width: 14px;
-  transform: rotate(270deg);
-  position: absolute;
-  right: 0;
-  top: 9px;
-}
-#galaga-boss {
-  width: 18px;
-  top: 7px;
+  height: 14px;
+  margin: 0rem .5rem;
 }
 .galaga-bug-1 {
-  animation: bug 4s;
+  animation: bug3 4s;
 }
 .galaga-bug-2 {
-  animation: bug 6s;
+  animation: bug2 4s;
 }
 .galaga-bug-3 {
-  animation: bug 8s;
+  animation: bug1 4s;
 }
-#galaga-boss {
-  animation: bug 10s;
+#gb {
+  width: 18px;
+  height: 18px;
 }
-@keyframes bug {
-  28.9% {
+.galaga-boss {
+  animation: bug4 4s;
+}
+@keyframes bug1 {
+  20% {
     opacity: 1;
   }
-  29%{
+  20.1%{
     opacity: 0;
   }
   100% {
-    right: 90%;
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+}
+@keyframes bug2 {
+  24.9% {
+    opacity: 1;
+  }
+  25%{
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+}
+@keyframes bug3 {
+  31% {
+    opacity: 1;
+  }
+  31.1%{
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+}
+@keyframes bug4 {
+  37.9% {
+    opacity: 1;
+  }
+  38%{
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-200px);
     opacity: 0;
   }
 }
 .galaga-missile-1 {
-  animation: missile 10s;
+  animation: missile1 4s;
 }
 .galaga-missile-2 {
-  animation: missile 8s;
+  animation: missile2 4s;
 }
 .galaga-missile-3 {
-  animation: missile 6s;
+  animation: missile3 4s;
 }
 .galaga-missile-4 {
-  animation: missile 4s;
+  animation: missile4 4s;
 }
-@keyframes missile {
-  28.9% {
+@keyframes missile1 {
+  20% {
     opacity: 1;
   }
-  29%{
+  20.1%{
     opacity: 0;
   }
   100% {
-    left: 90%;
+    transform: translateX(200px);
+    opacity: 0;
+  }
+}
+@keyframes missile2 {
+  24.9% {
+    opacity: 1;
+  }
+  25%{
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+}
+@keyframes missile3 {
+  31% {
+    opacity: 1;
+  }
+  31.1%{
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+}
+@keyframes missile4 {
+  37.9% {
+    opacity: 1;
+  }
+  38%{
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(200px);
     opacity: 0;
   }
 }
