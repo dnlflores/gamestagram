@@ -50,13 +50,14 @@ const LoginForm = () => {
       <form className="login-form" onSubmit={onLogin}>
         <div>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div className="display-errors" key={ind}>* {error}</div>
           ))}
         </div>
         <input
           name="email"
           type="text"
           placeholder="Email"
+          required={true}
           value={email}
           onChange={updateEmail}
         />
@@ -64,6 +65,7 @@ const LoginForm = () => {
           name="password"
           type="password"
           placeholder="Password"
+          required={true}
           value={password}
           onChange={updatePassword}
         />
