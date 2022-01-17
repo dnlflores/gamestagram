@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import NavBar from "../Navbar";
 import { getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
 import { getComments } from "../../store/comment";
@@ -17,6 +16,7 @@ import {
 } from "@heroicons/react/outline";
 import { HeartIcon, UserIcon, ChatIcon } from "@heroicons/react/solid";
 import "./ProfilePage.css";
+import NavBar from "../Navbar";
 
 const ProfilePage = (props) => {
   const user = useSelector((state) => state.session.user);

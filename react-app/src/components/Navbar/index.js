@@ -61,33 +61,33 @@ const NavBar = () => {
         </NavLink>
         <div className="galaga">
           <div className="galaga-ship-container">
-            <img className="galaga-ship" src="galaga-ship.png" />
+            <img className="galaga-ship" src="/galaga-ship.png" />
           </div>
           <div className="test-cover"></div>
           <div className="galaga-missile-container">
             <img
               className="galaga-missile galaga-missile-4-pre"
-              src="galaga-missile.png"
+              src="/galaga-missile.png"
             ></img>
             <img
               className="galaga-missile galaga-missile-3-pre"
-              src="galaga-missile.png"
+              src="/galaga-missile.png"
             ></img>
             <img
               className="galaga-missile galaga-missile-2-pre"
-              src="galaga-missile.png"
+              src="/galaga-missile.png"
             ></img>
             <img
               className="galaga-missile galaga-missile-1-pre"
-              src="galaga-missile.png"
+              src="/galaga-missile.png"
             ></img>
           </div>
           <div className="galaga-enemy-container">
             <div className="cover"></div>
-            <img className="galaga-bug-3-pre" src="galaga-bug.png" />
-            <img className="galaga-bug-2-pre" src="galaga-bug.png" />
-            <img className="galaga-bug-1-pre" src="galaga-bug.png" />
-            <img className="galaga-boss-pre" id="gb" src="galaga-boss.png" />
+            <img className="galaga-bug-3-pre" src="/galaga-bug.png" />
+            <img className="galaga-bug-2-pre" src="/galaga-bug.png" />
+            <img className="galaga-bug-1-pre" src="/galaga-bug.png" />
+            <img className="galaga-boss-pre" id="gb" src="/galaga-boss.png" />
           </div>
         </div>
       </div>
