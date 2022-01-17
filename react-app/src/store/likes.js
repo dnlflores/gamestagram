@@ -39,10 +39,8 @@ export const unOneLike = image_id => async dispatch => {
     const response = await fetch(`/api/likes/${image_id}`, {
         method: 'DELETE'
     })
-    console.log('response ok', response.ok)
 
     if (response.ok) {
-        console.log('made it here')
         const unlike = await response.json();
         dispatch(unLike(unlike));
     }

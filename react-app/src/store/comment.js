@@ -52,7 +52,6 @@ export const editOneComment = (image_id, comment_id, content) => async dispatch 
     body: JSON.stringify({ content })
   })
   if (response.ok) {
-    console.log('response was ok')
     const newComment = await response.json();
     dispatch(editComment(newComment));
     return newComment;

@@ -5,6 +5,7 @@
   align-items: center;
   height: 100vh;
 }
+
 .login-title {
   font-weight: 300;
   font-size: 2.3rem;
@@ -13,15 +14,19 @@
 
 .login-image {
   margin: 1rem;
-  width: 405px;
-  height: 250px;
+  width: 525px;
+  height: 300px;
+  position: relative;
+  top: 20px;
 }
+
 .login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .login-form > input {
   margin: .5rem;
   height: 2.25rem;
@@ -30,6 +35,7 @@
   border: 1px solid rgba(105, 105, 105, 0.404);
   border-radius: 3px;
 }
+
 .login-form > button {
   margin: 1rem;
   border: none;
@@ -40,6 +46,7 @@
   width: 250px;
   cursor: pointer;
 }
+
 .login-signup-con {
   margin: 1rem;
   background-color: rgba(211, 211, 211, 0.171);
@@ -51,8 +58,14 @@
   display: flex;
   justify-content: center;
 }
+
 .login-signup-con > a {
   font-weight: 200;
   color: #396ddd;
   padding-left: .25rem;
+}
+
+.login-signup-con, .login-form {
+  position: relative;
+  top: 40px;
 }

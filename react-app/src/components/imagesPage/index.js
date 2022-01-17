@@ -47,8 +47,6 @@ function ImagesPage() {
 
   const [editB, setEditB] = useState(false);
 
-
-
   useEffect(() => {
     dispatch(getImages());
     dispatch(getTheLikes());
@@ -97,6 +95,7 @@ function ImagesPage() {
     const str = e.target.className.split(":");
     const image_id = str[0];
     const comment_id = str[1];
+
     if (content) {
       await dispatch(editOneComment(+image_id, +comment_id, content));
       setContent("");
@@ -164,6 +163,7 @@ function ImagesPage() {
   const canEditComment = (comment) => {
     return "editCom".concat(String(comment.user_id === userId).toUpperCase());
   };
+
   const commentFunction = (e) => {
     const submitButton = document.querySelector(".comment-submit-button")
     if(e.target.value !== "") submitButton.style.opacity = ".9"
@@ -181,6 +181,15 @@ function ImagesPage() {
       }
     }
     return comments;
+  }
+
+  const getImageLikes = image_id => {
+    const likesOnImage = [];
+    for(let i = 0; i < likesArr.length; i++) {
+      const like = likesArr[i];
+      if(+like.image_id === +image_id) likesOnImage.push(like);
+    }
+    return likesOnImage;
   }
 
   return (
@@ -248,6 +257,12 @@ function ImagesPage() {
                   className="post-footer-icon"
                 />
               </div>
+              {getImageLikes(image.id).length > 0 && (
+                <div className="num-of-likes-div">
+                  <label className="num-of-likes-label">{getImageLikes(image.id).length} </label>
+                  <p className="likes-text"> like(s)</p>
+                </div>
+              )}
               <li className="caption-container">
                 <div
                   className="caption-username"
@@ -275,26 +290,6 @@ function ImagesPage() {
                           {comment.content}
                         </p>
                       </div>
-                      {/*
-                          <button
-                            onClick={() => {
-                              setEdit(true);
-                              setCommentShow(image.id);
-                              setCommentId(comment.id);
-                              setContent(`${comments[comment.id].content}`);
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => {
-                              onDeleteComment(image.id, comment.id);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </p>
-                      </div> */}
                     </div>
                   );
                 }
@@ -324,7 +319,6 @@ function ImagesPage() {
                     placeholder="Comment"
                     value={chosenKey[image.id]}
                     onChange={(e) => {
-                      const imageId = image.id;
                       const eVal = e.target.value;
                       commentFunction(e)
                       setChosenKey({ imageId: eVal });

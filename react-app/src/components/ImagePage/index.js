@@ -36,8 +36,6 @@ const ImagePage = (props) => {
   const [commentShowB, setCommentShowB] = useState(0);
   const [commentIdB, setCommentIdB] = useState(-6);
 
-  console.log("THIS IS THE SHOW EDIT DELETE", showEditDelete);
-
   useEffect(() => {
     dispatch(getImage(props.image.id));
     dispatch(getTheLikes());
@@ -53,10 +51,7 @@ const ImagePage = (props) => {
 
   const handleLike = (e) => {
     e.preventDefault();
-    console.log(
-      "E TARGET => ",
-      e.target.farthestViewportElement.className.baseVal.split(" ")[1]
-    );
+
     const image_id =
       e.target.farthestViewportElement.className.baseVal.split(" ")[1];
 
@@ -189,15 +184,6 @@ const ImagePage = (props) => {
                           <div className="image-post-options">
                             <button
                               onClick={(e) => {
-                                console.log(
-                                  "THIS IS THE PROPS IMAGE ID => ",
-                                  props.image.id
-                                );
-                                console.log(
-                                  "THIS IS THE COMMENT ID => ",
-                                  comment.id
-                                );
-
                                 props.onDeleteComment(
                                   props.image.id,
                                   comment.id,
