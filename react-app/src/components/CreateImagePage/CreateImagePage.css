@@ -1,0 +1,64 @@
+.grid {
+    display: grid;
+    grid-template-areas: 'A B C';
+    height: 250px;
+}
+
+.grid-mid {
+    grid-area: B;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+    /* height: 166px; */
+}
+
+
+.modal-button {
+    font-size: 100px;
+    width: 100px;
+    background-color: lime;
+}
+
+.modal-button:hover {
+    animation-duration: .3s;
+    background-color: green;
+    animation-name: colorChange;
+}
+
+@keyframes colorChange {
+    from {background-color: lime;}
+    to {background-color: green;}
+}
+
+/* .modal-grid {
+    position: absolute;
+    display: grid;
+    grid-template-areas:
+        "A";
+    left:0;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
+} */
+
+/* .modal-outer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left:0;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
+} */
+
+/* .modal-inner {
+    height: 100%;
+    width: 100%;
+    background-color: lightblue;
+} */

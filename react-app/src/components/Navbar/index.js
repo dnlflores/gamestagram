@@ -7,6 +7,7 @@ import {
   PlusCircleIcon,
   GlobeIcon,
 } from "@heroicons/react/outline";
+import SelectImagePage from "../SelectImagePage";
 import "./Navbar.css";
 import { useSelector } from "react-redux";
 
@@ -14,6 +15,8 @@ const NavBar = () => {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const [userDrop, setUserDrop] = useState(false);
+
+  const [imageSelectPopup, setImageSelectPopup] = useState(false);
 
   const goToProfile = userId => {
     history.push(`/users/${userId}`);
@@ -31,9 +34,14 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/games/new">
-            <PlusCircleIcon className="nav-icon" />
-          </NavLink>
+          <PlusCircleIcon
+            className="nav-icon"
+            onClick={() => { setImageSelectPopup(true) }}
+          />
+          <SelectImagePage
+            trigger={imageSelectPopup}
+            setTrigger={setImageSelectPopup}
+          />
         </li>
         <li>
           <NavLink to="/games">
@@ -51,7 +59,7 @@ const NavBar = () => {
             <div className="user-info">
               {user && (
                 <>
-                  <UserCircleIcon className="nav-avatar" onClick={event => goToProfile(user.id)}/>
+                  <UserCircleIcon className="nav-avatar" onClick={event => goToProfile(user.id)} />
                   <div onClick={event => goToProfile(user.id)}>
                     <div className="dropdown-username">{user.username}</div>
                     <div className="dropdown-email">{user.email}</div>
