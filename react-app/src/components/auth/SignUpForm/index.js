@@ -15,11 +15,17 @@ const SignUpForm = () => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, email, password));
-      if (data) {
-        setErrors(data);
-      }
+
+    const errArr = [];
+    username || errArr.push("* Please enter a username.");
+    email || errArr.push("* Please enter an email.");
+    password || errArr.push("* Please enter a password.");
+    repeatPassword === password || errArr.push("* Passwords do not match.");
+    if (errArr.length) {
+        setErrors(errArr);
+    }
+    else {
+      await dispatch(signUp(username, email, password));
     }
   };
 
@@ -51,16 +57,17 @@ const SignUpForm = () => {
       <div className="sign-up-right">
         <h1 id="sign-up-title">Gamestagram</h1>
         <form className="sign-up-form" onSubmit={onSignUp}>
-          <div>
-            {errors.map((error, ind) => (
-              <div key={ind}>{error}</div>
+          <ul>
+            {errors.length > 0 && errors.map(err => (
+              <li className="display-errors" key={err}>{err}</li>
             ))}
-          </div>
+          </ul>
           <input
             type="text"
             name="username"
             onChange={updateUsername}
             value={username}
+            required={true}
             placeholder="Username"
           ></input>
           <input
@@ -68,6 +75,7 @@ const SignUpForm = () => {
             name="email"
             onChange={updateEmail}
             value={email}
+            required={true}
             placeholder="Email"
           ></input>
           <input
@@ -75,6 +83,7 @@ const SignUpForm = () => {
             name="password"
             onChange={updatePassword}
             value={password}
+            required={true}
             placeholder="Password"
           ></input>
           <input
