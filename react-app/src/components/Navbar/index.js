@@ -49,7 +49,7 @@ const NavBar = () => {
         missile2.classList.remove("galaga-missile-2");
         missile3.classList.remove("galaga-missile-3");
         missile4.classList.remove("galaga-missile-4");
-      }, 3000);
+      }, 2000);
     });
   }, []);
 
@@ -61,33 +61,33 @@ const NavBar = () => {
         </NavLink>
         <div className="galaga">
           <div className="galaga-ship-container">
-            <img className="galaga-ship" src="/galaga-ship.png" />
+            <img className="galaga-ship" src="https://i.ibb.co/S57VHsP/galaga-ship.png" />
           </div>
           <div className="test-cover"></div>
           <div className="galaga-missile-container">
             <img
               className="galaga-missile galaga-missile-4-pre"
-              src="/galaga-missile.png"
+              src="https://i.ibb.co/hFZhJPd/galaga-missile.png"
             ></img>
             <img
               className="galaga-missile galaga-missile-3-pre"
-              src="/galaga-missile.png"
+              src="https://i.ibb.co/hFZhJPd/galaga-missile.png"
             ></img>
             <img
               className="galaga-missile galaga-missile-2-pre"
-              src="/galaga-missile.png"
+              src="https://i.ibb.co/hFZhJPd/galaga-missile.png"
             ></img>
             <img
               className="galaga-missile galaga-missile-1-pre"
-              src="/galaga-missile.png"
+              src="https://i.ibb.co/hFZhJPd/galaga-missile.png"
             ></img>
           </div>
           <div className="galaga-enemy-container">
             <div className="cover"></div>
-            <img className="galaga-bug-3-pre" src="/galaga-bug.png" />
-            <img className="galaga-bug-2-pre" src="/galaga-bug.png" />
-            <img className="galaga-bug-1-pre" src="/galaga-bug.png" />
-            <img className="galaga-boss-pre" id="gb" src="/galaga-boss.png" />
+            <img className="galaga-bug-3-pre" src="https://i.ibb.co/Kxc6tpj/galaga-bug.png" />
+            <img className="galaga-bug-2-pre" src="https://i.ibb.co/Kxc6tpj/galaga-bug.png" />
+            <img className="galaga-bug-1-pre" src="https://i.ibb.co/Kxc6tpj/galaga-bug.png" />
+            <img className="galaga-boss-pre" id="gb" src="https://i.ibb.co/6wZq6Rd/galaga-boss.png" />
           </div>
         </div>
       </div>
