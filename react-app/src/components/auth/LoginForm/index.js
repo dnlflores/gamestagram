@@ -70,8 +70,8 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
         <button type="submit">Login</button>
+        <button className="demo-login-button" onClick={demoLogin}>Demo</button>
       </form>
-      <button className="demo-login-button">Demo</button>
       <div className="login-signup-con">
         Don't have an account? <NavLink to="/sign-up">Sign Up</NavLink>
       </div>
