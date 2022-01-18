@@ -40,7 +40,10 @@ def edit_image(id):
 def delete_image(id):
     image = Image.query.get(id)
     result = image.to_dict()
-    db.session.query(Image).filter(Image.id == id).delete()
+    imageToDelete = db.session.query(Image).filter(Image.id == id).first()
+
+    db.session.delete(imageToDelete)
+
     db.session.commit()
     return result
 
@@ -123,7 +126,8 @@ def edit_comment(image_id, comment_id):
 def delete_comment(image_id, comment_id):
     comment = Comment.query.get(comment_id)
     result = comment.to_dict()
-    db.session.query(Comment).filter(Comment.id == comment_id).delete()
+    comment = db.session.query(Comment).filter(Comment.id == comment_id).first()
+    db.session.delete(comment)
 
     db.session.commit()
     return result
