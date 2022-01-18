@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage, getUserImages } from "../../store/image";
 import { getFollowers, getFollowings } from "../../store/follow";
+import './HomePage.css'
 import {
   getComments,
   createComment,
@@ -154,16 +155,18 @@ function HomePage() {
     setContent
   ) => (
     <form
+    className="edit-cont"
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
     >
       <input
+      className="image-page-comment-input"
         autoFocus
         placeholder="Edit"
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button>submit edit</button>
+      <button className="submit-edit">Submit Edit</button>
     </form>
   );
 
