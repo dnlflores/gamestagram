@@ -285,7 +285,9 @@ function HomePage() {
                 </div>
               )}
               <li className="caption-container">
-                <div className="caption-username">
+                <div className="caption-username"
+                  onClick={() => history.push(`/users/${image.user_id}`)}
+                >
                   {getUser(image.user_id)?.username}
                 </div>
                 <div className="caption">{image.caption}</div>
@@ -294,7 +296,11 @@ function HomePage() {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
-                      <div className="games-username">
+                      <div className="games-username"
+                        onClick={() =>
+                          history.push(`/users/${comment.user_id}`)
+                        }
+                      >
                         {getUser(comment.user_id)?.username}
                       </div>
                       <div className="commentPDiv">
