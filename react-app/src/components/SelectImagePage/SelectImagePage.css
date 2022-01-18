@@ -64,7 +64,10 @@ ul {
 }
 
 .file-thing {
-    color: white;
+    /* color: white; */
+    position: relative;
+    top: 5rem;
+    left: 2.5rem;
 }
 
 .caption-input {
@@ -100,3 +103,4 @@ ul {
 .X:hover {
     cursor: pointer;
 }
+
