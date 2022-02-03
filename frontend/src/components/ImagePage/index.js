@@ -201,9 +201,9 @@ const ImagePage = (props) => {
                                 setCommentIdB(comment.id);
                                 setContentB(
                                   `${props.comments[comment.id].content}`
-                                );
-                              }}
-                            >
+                                  );
+                                }}
+                                >
                               Edit
                             </button>
                             <button onClick={() => setShowEditDelete(0)}>
@@ -222,15 +222,15 @@ const ImagePage = (props) => {
             <div className="image-page-options-container">
               {checkIfLiked(props.image.id) ? (
                 <HeartIconFilled
-                  className={`post-footer-icon ${props.image.id} liked-icon`}
-                  onClick={handleUnlike}
+                className={`post-footer-icon ${props.image.id} liked-icon`}
+                onClick={handleUnlike}
                 />
-              ) : (
-                <HeartIcon
+                ) : (
+                  <HeartIcon
                   className={`post-footer-icon ${props.image.id}`}
                   onClick={newHandleLike}
-                />
-              )}
+                  />
+                  )}
               <ChatIcon
                 className="image-page-options-icon"
                 onClick={() => {
@@ -243,7 +243,7 @@ const ImagePage = (props) => {
                   setContentB("");
                   setEditB(false);
                 }}
-              />
+                />
             </div>
             {editB === false &&
               props.postCommentForm(
@@ -251,7 +251,7 @@ const ImagePage = (props) => {
                 props.onContentSubmit,
                 contentB,
                 setContentB
-              )}
+                )}
             {editB === true &&
               props.editB &&
               props.editCommentForm(
@@ -260,7 +260,7 @@ const ImagePage = (props) => {
                 props.onEditComment,
                 contentB,
                 setContentB
-              )}
+                )}
           </div>
 
           <button className="x-button-wrap" onClick={() => props.setTrigger(0)}>
@@ -269,14 +269,14 @@ const ImagePage = (props) => {
                 body.style.overflow = "visible";
               }}
               className="image-page-close"
-            />
+              />
           </button>
         </div>
       </div>
     </div>
   ) : (
     ""
-  );
-};
+    );
+  };
 
-export default ImagePage;
+  export default ImagePage;
