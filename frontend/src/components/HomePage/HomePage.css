@@ -1,0 +1,15 @@
+.submit-edit {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    padding: .5rem;
+    margin-bottom: .5rem;
+    bottom: 0;
+    color: rgb(0, 89, 255);
+  }
+  .edit-cont {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
