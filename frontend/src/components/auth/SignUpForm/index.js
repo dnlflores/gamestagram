@@ -10,7 +10,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [image, setImage] = useState(null)
+  const [avatar, setAvatar] = useState(null)
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
@@ -26,7 +26,8 @@ const SignUpForm = () => {
         setErrors(errArr);
     }
     else {
-      await dispatch(signUp(username, email, password, image));
+      console.log('in sign up handle', avatar)
+      await dispatch(signUp(username, email, password, avatar));
     }
   };
 
@@ -48,7 +49,7 @@ const SignUpForm = () => {
 
   const updateImage = (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    setAvatar(file);
 }
 
   if (user) {

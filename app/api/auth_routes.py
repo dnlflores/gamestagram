@@ -59,18 +59,20 @@ def sign_up():
     """
     Creates a new user and logs them in
     """
+    print('request files', request.files)
 
     # if "image" not in request.files:
     #     return {"errors": "image required"}, 400
+    # print('this is the image', request.files["image"])
 
-    image = request.files["image"]
+    avatar = request.files["avatar"]
 
-    if not allowed_file(image.filename):
-        return {"errors": "file type not permitted"}, 400
+    # if not allowed_file(image.filename):
+    #     return {"errors": "file type not permitted"}, 400
 
-    image.filename = get_unique_filename(image.filename)
+    avatar.filename = get_unique_filename(avatar.filename)
 
-    upload = upload_file_to_s3(image)
+    upload = upload_file_to_s3(avatar)
 
     if "url" not in upload:
         # if the dictionary doesn't have a url key
@@ -78,7 +80,7 @@ def sign_up():
         # so we send back that error message
         return upload, 400
 
-    url = upload["url"]
+    avatar = upload["url"]
 
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -86,8 +88,8 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password']
-            url=url
+            password=form.data['password'],
+            avatar=avatar
         )
         db.session.add(user)
         db.session.commit()
