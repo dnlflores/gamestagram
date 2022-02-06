@@ -3,10 +3,10 @@ import { NavLink, useHistory } from "react-router-dom";
 import LogoutButton from "../auth/LogOutButton";
 import {
   HomeIcon,
-  UserCircleIcon,
   PlusCircleIcon,
   GlobeIcon,
 } from "@heroicons/react/outline";
+import Avatar from '@mui/material/Avatar';
 import SelectImagePage from "../SelectImagePage";
 import "./Navbar.css";
 import { useSelector } from "react-redux";
@@ -116,7 +116,8 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
-          <UserCircleIcon
+          <Avatar
+            srcSet={user.avatar}
             onClick={() => setUserDrop(!userDrop)}
             className="nav-icon"
           />
@@ -126,7 +127,8 @@ const NavBar = () => {
             <div className="user-info">
               {user && (
                 <>
-                  <UserCircleIcon
+                  <Avatar
+                    srcSet={user.avatar}
                     className="nav-avatar"
                     onClick={(event) => goToProfile(user.id)}
                   />

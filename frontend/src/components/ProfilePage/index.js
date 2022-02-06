@@ -11,10 +11,10 @@ import {
 } from "../../store/follow";
 import { useParams } from "react-router-dom";
 import {
-  UserCircleIcon,
   UserAddIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon, UserIcon, ChatIcon } from "@heroicons/react/solid";
+import Avatar from "@mui/material/Avatar";
 import "./ProfilePage.css";
 import NavBar from "../Navbar";
 
@@ -73,7 +73,7 @@ const ProfilePage = (props) => {
       <NavBar />
       <header className="profile-header-container">
         <div className="profile-avatar">
-          <UserCircleIcon width={150} />
+          <Avatar srcSet={getUser(profileId)?.avatar} sx={{ width: 150, height: 150 }}/>
         </div>
         <div className="column">
           <div className="profile-top-row">

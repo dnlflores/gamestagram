@@ -1,4 +1,3 @@
-import { UserCircleIcon } from "@heroicons/react/outline";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -6,6 +5,7 @@ import { getComments } from "../../store/comment";
 import { followUser, getFollowers, getFollowings, addToFollowing } from "../../store/follow";
 import { getUserImages } from "../../store/image";
 import { getTheLikes } from "../../store/likes";
+import Avatar from "@mui/material/Avatar";
 import "./SideBar.css";
 
 const SideBar = (props) => {
@@ -51,7 +51,7 @@ const SideBar = (props) => {
         className="sidebar-header"
         onClick={() => history.push(`/users/${user.id}`)}
       >
-        <UserCircleIcon className="sidebar-avatar" />
+        <Avatar srcSet={user.avatar} className="sidebar-avatar" sx={{ width: 84, height: 84 }}/>
         <div className="sb-username-email">
           <p className="sidebar-username">{user.username}</p>
           <p className="sidebar-email">{user.email}</p>
@@ -68,7 +68,7 @@ const SideBar = (props) => {
                   onClick={() => history.push(`/users/${userToFollow.id}`)}
                 >
                   <div className="suggestion-avatar">
-                    <UserCircleIcon />
+                    <Avatar srcSet={userToFollow.avatar} />
                   </div>
                   <p className="suggestion-username">{userToFollow.username}</p>
                 </div>
@@ -77,7 +77,7 @@ const SideBar = (props) => {
                     className="suggestion-follow"
                     onClick={() => {
                       const utfId = +userToFollow.id;
-                      
+
                       followProfileUser(utfId);
                     }}
                   >
