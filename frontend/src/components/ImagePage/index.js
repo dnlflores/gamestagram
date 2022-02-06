@@ -5,12 +5,12 @@ import { createComment } from "../../store/comment";
 import { getTheLikes, setOneLike, unOneLike } from "../../store/likes";
 import {
   XIcon,
-  UserCircleIcon,
   HeartIcon,
   ChatIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
+import Avatar from "@mui/material/Avatar";
 import EditFormPage from "../EditFormPage";
 import "./ImagePage.css";
 import { useHistory } from "react-router-dom";
@@ -129,7 +129,10 @@ const ImagePage = (props) => {
         </div>
         <div className="image-page-right">
           <div className="image-page-header">
-            <UserCircleIcon className="image-page-avatar" />
+            <Avatar
+              srcSet={getUser(props.image.user_id)?.avatar}
+              className="image-page-avatar"
+            />
             <p>{getUser(props.image.user_id)?.username}</p>
             {props.image.user_id === userId && (
               <DotsHorizontalIcon
@@ -141,18 +144,22 @@ const ImagePage = (props) => {
           {props.commentsArray && (
             <div className="image-page-comment-container">
               <div className="image-page-user-caption-con">
-                <UserCircleIcon className="image-page-caption-avatar" />
+                <Avatar
+                  srcSet={getUser(props.image.user_id)?.avatar}
+                  className="image-page-caption-avatar"
+                />
                 <div className="image-page-username">
                   {getUser(props.image.user_id)?.username}
                 </div>
-                <div className="image-page-caption">
-                  {props.image.caption}
-                </div>
+                <div className="image-page-caption">{props.image.caption}</div>
               </div>
               {props.commentsArray?.map((comment) => {
                 if (comment.image_id === props.image.id) {
                   return (
-                    <div className={`ind-comment-${comment.id}`} id="ind-comment">
+                    <div
+                      className={`ind-comment-${comment.id}`}
+                      id="ind-comment"
+                    >
                       <div className="image-page-comment-header">
                         <div
                           className="image-page-ava-un"
@@ -161,7 +168,10 @@ const ImagePage = (props) => {
                             document.body.style.overflow = "visible";
                           }}
                         >
-                          <UserCircleIcon className="image-page-comment-avatar" />
+                          <Avatar
+                            srcSet={getUser(comment.user_id)?.avatar}
+                            className="image-page-comment-avatar"
+                          />
                           <p className="image-page-comment-username">
                             {getUser(comment.user_id)?.username}
                           </p>
@@ -171,13 +181,13 @@ const ImagePage = (props) => {
                             {comment.content}
                           </p>
                         </div>
-                      {comment.user_id === userId && (
-                        <DotsHorizontalIcon
-                          className="ind-comment-option-toggle"
-                          id={`comment-options-${comment.id}`}
-                          onClick={() => setShowEditDelete(comment.id)}
-                        />
-                      )}
+                        {comment.user_id === userId && (
+                          <DotsHorizontalIcon
+                            className="ind-comment-option-toggle"
+                            id={`comment-options-${comment.id}`}
+                            onClick={() => setShowEditDelete(comment.id)}
+                          />
+                        )}
                       </div>
                       {showEditDelete === comment.id &&
                         userId === comment.user_id && (
@@ -201,9 +211,9 @@ const ImagePage = (props) => {
                                 setCommentIdB(comment.id);
                                 setContentB(
                                   `${props.comments[comment.id].content}`
-                                  );
-                                }}
-                                >
+                                );
+                              }}
+                            >
                               Edit
                             </button>
                             <button onClick={() => setShowEditDelete(0)}>
@@ -222,15 +232,15 @@ const ImagePage = (props) => {
             <div className="image-page-options-container">
               {checkIfLiked(props.image.id) ? (
                 <HeartIconFilled
-                className={`post-footer-icon ${props.image.id} liked-icon`}
-                onClick={handleUnlike}
+                  className={`post-footer-icon ${props.image.id} liked-icon`}
+                  onClick={handleUnlike}
                 />
-                ) : (
-                  <HeartIcon
+              ) : (
+                <HeartIcon
                   className={`post-footer-icon ${props.image.id}`}
                   onClick={newHandleLike}
-                  />
-                  )}
+                />
+              )}
               <ChatIcon
                 className="image-page-options-icon"
                 onClick={() => {
@@ -243,7 +253,7 @@ const ImagePage = (props) => {
                   setContentB("");
                   setEditB(false);
                 }}
-                />
+              />
             </div>
             {editB === false &&
               props.postCommentForm(
@@ -251,7 +261,7 @@ const ImagePage = (props) => {
                 props.onContentSubmit,
                 contentB,
                 setContentB
-                )}
+              )}
             {editB === true &&
               props.editB &&
               props.editCommentForm(
@@ -260,7 +270,7 @@ const ImagePage = (props) => {
                 props.onEditComment,
                 contentB,
                 setContentB
-                )}
+              )}
           </div>
 
           <button className="x-button-wrap" onClick={() => props.setTrigger(0)}>
@@ -269,14 +279,14 @@ const ImagePage = (props) => {
                 body.style.overflow = "visible";
               }}
               className="image-page-close"
-              />
+            />
           </button>
         </div>
       </div>
     </div>
   ) : (
     ""
-    );
-  };
+  );
+};
 
-  export default ImagePage;
+export default ImagePage;
