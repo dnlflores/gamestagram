@@ -10,6 +10,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [image, setImage] = useState(null)
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ const SignUpForm = () => {
         setErrors(errArr);
     }
     else {
-      await dispatch(signUp(username, email, password));
+      await dispatch(signUp(username, email, password, image));
     }
   };
 
@@ -44,6 +45,11 @@ const SignUpForm = () => {
   const updateRepeatPassword = (e) => {
     setRepeatPassword(e.target.value);
   };
+
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+}
 
   if (user) {
     return <Redirect to="/" />;
@@ -94,6 +100,11 @@ const SignUpForm = () => {
             required={true}
             placeholder="Confirm Password"
           ></input>
+          <input
+              type="file"
+              accept="image/*"
+              onChange={updateImage}
+            />
           <button type="submit">Sign Up</button>
         </form>
         <div className="sign-up-login-con">

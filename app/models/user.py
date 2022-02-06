@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 follows = db.Table(
-    "follows", 
+    "follows",
     db.Column("follower_id", db.Integer, db.ForeignKey("users.id")),
     db.Column("user_id", db.Integer, db.ForeignKey("users.id"))
 )
@@ -13,13 +13,14 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    url = db.Column(db.String(255), nullable=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
     images = db.relationship('Image', back_populates="user", cascade="all, delete")
     like = db.relationship('Like', back_populates="user", cascade="all, delete")
     comments = db.relationship('Comment', back_populates="user", cascade="all, delete")
     followers = db.relationship(
-        "User", 
+        "User",
         secondary=follows,
         primaryjoin=(follows.c.follower_id == id),
         secondaryjoin=(follows.c.user_id == id),
@@ -44,4 +45,5 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
             'images': [image.id for image in self.images],
+            'avatar': self.avatar
         }
