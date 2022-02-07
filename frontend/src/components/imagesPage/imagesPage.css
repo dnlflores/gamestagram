@@ -138,13 +138,14 @@
 }
 
 .liked-icon {
-  color: rgb(255, 67, 67);
+  color: rgba(255, 96, 96, 0.678);
   animation: liked .3s;
+  cursor: pointer;
 }
 
 @keyframes liked {
   from {
-    transform: scale(1.2);
+    transform: scale(1.6);
   }
 
   to {
@@ -209,13 +210,15 @@
 
 .num-of-likes-div {
   display: flex;
-  position: relative;
-  left: 20px;
+  margin-left: .5rem;
   margin-bottom: 10px;
   font-size: 14px;
 }
 
+.num-of-likes-label {
+  font-weight: bold;
+}
 .likes-text {
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 5px;
 }

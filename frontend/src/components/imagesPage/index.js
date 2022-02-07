@@ -247,7 +247,7 @@ function ImagesPage() {
                 {checkIfLiked(image.id) ? (
                   <HeartIconFilled className="post-footer-icon liked-icon" />
                 ) : (
-                  <HeartIcon className="post-footer-icon" />
+                  <HeartIcon className="post-footer-icon" id="heart-icon"/>
                 )}
                 <ChatIcon
                   onClick={() => {
@@ -260,7 +260,7 @@ function ImagesPage() {
               {getImageLikes(image.id).length > 0 && (
                 <div className="num-of-likes-div">
                   <label className="num-of-likes-label">{getImageLikes(image.id).length} </label>
-                  <p className="likes-text"> like(s)</p>
+                  <p className="likes-text">{getImageLikes(image.id).length > 1 ? "likes" : "like"}</p>
                 </div>
               )}
               <li className="caption-container">
