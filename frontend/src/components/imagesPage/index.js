@@ -205,7 +205,7 @@ function ImagesPage() {
                   onClick={(event) => history.push(`/users/${image.user_id}`)}
                 >
                   <Avatar className="game-post-avatar" srcSet={getUser(image.user_id)?.avatar}/>
-                  <li>{getUser(image.user_id)?.username}</li>
+                  <li color="red">{getUser(image.user_id)?.username}</li>
                 </div>
               </div>
               <li>

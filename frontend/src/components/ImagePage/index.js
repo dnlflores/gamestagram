@@ -169,6 +169,7 @@ const ImagePage = (props) => {
                           }}
                         >
                           <Avatar
+                          sx={{ width: 32, height: 32 }}
                             srcSet={getUser(comment.user_id)?.avatar}
                             className="image-page-comment-avatar"
                           />

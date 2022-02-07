@@ -24,7 +24,9 @@
   padding: 0.15rem;
 }
 .nav-icon {
-  width: 32px;
+  width: 28px;
+  height: 28px;
+  margin: 0 .25rem;
   cursor: pointer;
 }
 .nav-logo > a {
@@ -53,7 +55,7 @@
   align-items: center;
 }
 .nav-avatar {
-  width: 50px;
+  width: 28px;
 }
 .user-dropdown {
   border-radius: 1rem;
