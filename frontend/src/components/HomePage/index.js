@@ -288,7 +288,7 @@ function HomePage() {
                   <label className="num-of-likes-label">
                     {getImageLikes(image.id).length}{" "}
                   </label>
-                  <p className="likes-text"> like(s)</p>
+                  <p className="likes-text">{getImageLikes(image.id).length > 1 ? "likes" : "like"}</p>
                 </div>
               )}
               <li className="caption-container">
