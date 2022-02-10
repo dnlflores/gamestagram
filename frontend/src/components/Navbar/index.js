@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import LogoutButton from "../auth/LogOutButton";
 import {
-  HomeIcon,
-  UserCircleIcon,
-  PlusCircleIcon,
-  GlobeIcon,
+  // HomeIcon,
+  // PlusCircleIcon,
+  // GlobeIcon,
 } from "@heroicons/react/outline";
+import { IoHomeOutline, IoAddCircleOutline, IoEarthOutline } from "react-icons/io5";
+import Avatar from '@mui/material/Avatar';
 import SelectImagePage from "../SelectImagePage";
 import "./Navbar.css";
 import { useSelector } from "react-redux";
@@ -95,11 +96,12 @@ const NavBar = () => {
       <ul className="nav-bar-right">
         <li>
           <NavLink to="/" exact={true} activeClassName="active">
-            <HomeIcon className="nav-icon" />
+            <IoHomeOutline size={"28px"} className="nav-icon" width={64}/>
           </NavLink>
         </li>
         <li>
-          <PlusCircleIcon
+          <IoAddCircleOutline
+          size={"28px"}
             className="nav-icon"
             onClick={() => {
               setImageSelectPopup(true);
@@ -112,13 +114,15 @@ const NavBar = () => {
         </li>
         <li>
           <NavLink to="/games">
-            <GlobeIcon className="nav-icon" />
+            <IoEarthOutline className="nav-icon" size={"28px"}  />
           </NavLink>
         </li>
         <li>
-          <UserCircleIcon
+          <Avatar
+            srcSet={user.avatar}
             onClick={() => setUserDrop(!userDrop)}
             className="nav-icon"
+            sx={{ width: 28, height: 28 }}
           />
         </li>
         {userDrop && (
@@ -126,7 +130,8 @@ const NavBar = () => {
             <div className="user-info">
               {user && (
                 <>
-                  <UserCircleIcon
+                  <Avatar
+                    srcSet={user.avatar}
                     className="nav-avatar"
                     onClick={(event) => goToProfile(user.id)}
                   />

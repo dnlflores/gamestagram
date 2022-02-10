@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getImages, deleteOneImage, getUserImages } from "../../store/image";
 import { getFollowers, getFollowings } from "../../store/follow";
-import './HomePage.css'
+import "./HomePage.css";
 import {
   getComments,
   createComment,
@@ -16,12 +16,12 @@ import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
 import SideBar from "../SideBar";
 import {
-  UserCircleIcon,
   HeartIcon,
   ChatIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
+import Avatar from "@mui/material/Avatar";
 function HomePage() {
   const userId = useSelector((state) => state.session.user.id);
   const history = useHistory();
@@ -155,12 +155,12 @@ function HomePage() {
     setContent
   ) => (
     <form
-    className="edit-cont"
+      className="edit-cont"
       className={`${image_id}:${commentId}`}
       onSubmit={editFn} // onEditComment
     >
       <input
-      className="image-page-comment-input"
+        className="image-page-comment-input"
         autoFocus
         placeholder="Edit"
         value={content}
@@ -198,20 +198,21 @@ function HomePage() {
     return comments;
   };
 
-  const getImageLikes = image_id => {
+  const getImageLikes = (image_id) => {
     const likesOnImage = [];
-    for(let i = 0; i < likesArr.length; i++) {
+    for (let i = 0; i < likesArr.length; i++) {
       const like = likesArr[i];
-      if(+like.image_id === +image_id) likesOnImage.push(like);
+      if (+like.image_id === +image_id) likesOnImage.push(like);
     }
     return likesOnImage;
-  }
+  };
 
   const commentFunction = (e) => {
-    const submitButton = document.querySelector(".comment-submit-button")
-    if(e.target.value !== "") submitButton.style.opacity = ".9"
-    else submitButton.style.opacity = ".4"
-  }
+    const submitButton = document.querySelector(".comment-submit-button");
+    if (e.target.value !== "") submitButton.style.opacity = ".9";
+    else submitButton.style.opacity = ".4";
+  };
+  console.log(followedImages)
 
   return (
     <div>
@@ -225,7 +226,8 @@ function HomePage() {
                   className="game-post-ava-name"
                   onClick={(event) => history.push(`/users/${image.user_id}`)}
                 >
-                  <UserCircleIcon
+                  <Avatar
+                  srcSet={getUser(image.user_id)?.avatar}
                     className="game-post-avatar"
                     onClick={(event) => history.push(`/users/${image.user_id}`)}
                   />
@@ -283,12 +285,15 @@ function HomePage() {
               </div>
               {getImageLikes(image.id).length > 0 && (
                 <div className="num-of-likes-div">
-                  <label className="num-of-likes-label">{getImageLikes(image.id).length} </label>
-                  <p className="likes-text"> like(s)</p>
+                  <label className="num-of-likes-label">
+                    {getImageLikes(image.id).length}{" "}
+                  </label>
+                  <p className="likes-text">{getImageLikes(image.id).length > 1 ? "likes" : "like"}</p>
                 </div>
               )}
               <li className="caption-container">
-                <div className="caption-username"
+                <div
+                  className="caption-username"
                   onClick={() => history.push(`/users/${image.user_id}`)}
                 >
                   {getUser(image.user_id)?.username}
@@ -299,7 +304,8 @@ function HomePage() {
                 if (comment.image_id === image.id) {
                   return (
                     <div className="games-comment-container">
-                      <div className="games-username"
+                      <div
+                        className="games-username"
                         onClick={() =>
                           history.push(`/users/${comment.user_id}`)
                         }

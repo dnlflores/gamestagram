@@ -14,12 +14,12 @@ import EditFormPage from "../EditFormPage";
 import ImagePage from "../ImagePage";
 import NavBar from "../Navbar";
 import {
-  UserCircleIcon,
   HeartIcon,
   ChatIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
+import Avatar from "@mui/material/Avatar";
 import "./imagesPage.css";
 
 function ImagesPage() {
@@ -204,7 +204,7 @@ function ImagesPage() {
                   className="game-post-ava-name"
                   onClick={(event) => history.push(`/users/${image.user_id}`)}
                 >
-                  <UserCircleIcon className="game-post-avatar" />
+                  <Avatar className="game-post-avatar" srcSet={getUser(image.user_id)?.avatar}/>
                   <li>{getUser(image.user_id)?.username}</li>
                 </div>
               </div>
@@ -247,7 +247,7 @@ function ImagesPage() {
                 {checkIfLiked(image.id) ? (
                   <HeartIconFilled className="post-footer-icon liked-icon" />
                 ) : (
-                  <HeartIcon className="post-footer-icon" />
+                  <HeartIcon className="post-footer-icon" id="heart-icon"/>
                 )}
                 <ChatIcon
                   onClick={() => {
@@ -260,7 +260,7 @@ function ImagesPage() {
               {getImageLikes(image.id).length > 0 && (
                 <div className="num-of-likes-div">
                   <label className="num-of-likes-label">{getImageLikes(image.id).length} </label>
-                  <p className="likes-text"> like(s)</p>
+                  <p className="likes-text">{getImageLikes(image.id).length > 1 ? "likes" : "like"}</p>
                 </div>
               )}
               <li className="caption-container">
