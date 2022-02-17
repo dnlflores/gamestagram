@@ -26,7 +26,6 @@ const SignUpForm = () => {
         setErrors(errArr);
     }
     else {
-      console.log('in sign up handle', image)
       await dispatch(signUp(username, email, password, image));
     }
   };

@@ -212,7 +212,6 @@ function HomePage() {
     if (e.target.value !== "") submitButton.style.opacity = ".9";
     else submitButton.style.opacity = ".4";
   };
-  console.log(followedImages)
 
   return (
     <div>
