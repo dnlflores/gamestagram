@@ -61,6 +61,7 @@
   transform: translateY(-50%);
   transition: 0.2s all ease-out;
   color: gray;
+  pointer-events: none;
 }
 .input-wrapper > input:focus {
   border-bottom: 2px solid #2563eb;
