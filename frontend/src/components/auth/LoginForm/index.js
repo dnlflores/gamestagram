@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
 import { login } from "../../../store/session";
-import './LoginForm.css'
+import "./LoginForm.css";
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -27,14 +27,14 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const demoLogin = async event => {
+  const demoLogin = async (event) => {
     event.preventDefault();
     const dEmail = "demo@gamestagram.com";
     const dPassword = "password";
 
     const data = await dispatch(login(dEmail, dPassword));
 
-    if(data) {
+    if (data) {
       setErrors(data);
     }
   };
@@ -45,35 +45,55 @@ const LoginForm = () => {
 
   return (
     <div className="login-body">
-      <h1 className="login-title">Gamestagram</h1>
-      <img className="login-image" alt="gaming" src="https://aa-gamestagram.s3.us-west-1.amazonaws.com/branden-skeli-0SB4gTfqANY-unsplash.jpg"></img>
-      <form className="login-form" onSubmit={onLogin}>
-        <div>
-          {errors.map((error, ind) => (
-            <div className="display-errors" key={ind}>* {error}</div>
-          ))}
+      <div className="login-left">
+        <img
+          className="login-image"
+          alt="gaming"
+          src="https://aa-gamestagram.s3.us-west-1.amazonaws.com/branden-skeli-0SB4gTfqANY-unsplash.jpg"
+        ></img>
+      </div>
+      <div className="login-right">
+        <h1 className="login-title">Gamestagram</h1>
+        <form className="login-form" onSubmit={onLogin}>
+          <div>
+            {errors.map((error, ind) => (
+              <div className="display-errors" key={ind}>
+                * {error}
+              </div>
+            ))}
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="login-input"
+              name="email"
+              type="text"
+              required={true}
+              value={email}
+              onChange={updateEmail}
+            />
+            <label className="login-label">Email</label>
+          </div>
+          <div className="input-wrapper">
+            <input
+              className="login-input"
+              name="password"
+              type="password"
+              required={true}
+              value={password}
+              onChange={updatePassword}
+            />
+            <label className="login-label">Password</label>
+          </div>
+          <button type="submit" className="login-button">
+            Login
+          </button>
+          <button className="demo-login-button" onClick={demoLogin}>
+            Demo
+          </button>
+        </form>
+        <div className="login-signup-con">
+          Don't have an account? <NavLink to="/sign-up">Sign Up</NavLink>
         </div>
-        <input
-          name="email"
-          type="text"
-          placeholder="Email"
-          required={true}
-          value={email}
-          onChange={updateEmail}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required={true}
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type="submit">Login</button>
-        <button className="demo-login-button" onClick={demoLogin}>Demo</button>
-      </form>
-      <div className="login-signup-con">
-        Don't have an account? <NavLink to="/sign-up">Sign Up</NavLink>
       </div>
     </div>
   );
