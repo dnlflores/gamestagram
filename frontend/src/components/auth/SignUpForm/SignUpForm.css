@@ -118,6 +118,40 @@
   color: #396ddd;
   padding-left: .25rem;
 }
+.file-input-con {
+  width: 295px;
+}
+.avatar-upload-con {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: .5rem 0;
+}
+.file-button-con {
+  display: flex;
+  align-items: center;
+  width: 240px;
+  margin-right: .5rem;
+  height: 3rem;
+  padding: .8rem;
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(245, 245, 245);
+  border-bottom: 1.5px solid rgba(126, 126, 126, 0.274);
+  outline: none;
+  font-size: 1.15rem;
+  transition: .2s all ease;
+  font-weight: 100;
+  cursor: pointer;
+  color: gray;
+}
+.file-button-con > p {
+  font-size: .9rem;
+  margin-left: .5rem;
+}
+.hide-upload-button {
+  display: none;
+}
 
 #sign-up-title {
   font-family: 'Press Start 2P', cursive;
