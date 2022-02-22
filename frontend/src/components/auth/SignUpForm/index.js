@@ -90,6 +90,7 @@ const SignUpForm = () => {
           <div className="input-wrapper">
             <input
               type="text"
+              className="signup-input"
               name="email"
               onChange={updateEmail}
               value={email}
@@ -100,6 +101,7 @@ const SignUpForm = () => {
           <div className="input-wrapper">
             <input
               type="password"
+              className="signup-input"
               name="password"
               onChange={updatePassword}
               value={password}
@@ -110,6 +112,7 @@ const SignUpForm = () => {
           <div className="input-wrapper">
             <input
               type="password"
+              className="signup-input"
               name="repeat_password"
               onChange={updateRepeatPassword}
               value={repeatPassword}
