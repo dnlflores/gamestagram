@@ -1,3 +1,94 @@
+<div align="center">
+<img src="https://img.shields.io/github/commit-activity/y/dnlflores/aa_group_gamestagram?style=for-the-badge" />
+<img src="https://img.shields.io/github/last-commit/dnlflores/aa_group_gamestagram/main?style=for-the-badge" />
+<img src="https://img.shields.io/github/pipenv/locked/python-version/dnlflores/aa_group_gamestagram?style=for-the-badge" />
+<img src="https://img.shields.io/github/pipenv/locked/dependency-version/dnlflores/aa_group_gamestagram/flask?style=for-the-badge" />
+<img src="https://img.shields.io/github/languages/count/dnlflores/aa_group_gamestagram?style=for-the-badge" />
+<img src="https://img.shields.io/github/languages/code-size/dnlflores/aa_group_gamestagram?style=for-the-badge" />
+</div>
+   
+<br />
+<div align="center">
+  
+   # 👾
+   
+  <h2 align="center">Gamestagram</h2>
+
+  <p align="center">
+    Gamestagram is a social application that allows users to share their thoughts on the games they’re currently interested in. 
+    <br />
+    <a href="https://github.com/dnlflores/aa_group_gamestagram"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://aa-gamestagram.herokuapp.com/">View Demo</a>
+    ·
+    <a href="https://github.com/dnlflores/aa_group_gamestagram/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/dnlflores/aa_group_gamestagram/issues">Request Feature</a>
+  </p>
+</div>
+
+## About The Project
+<br />
+<div align="center">
+   <img src="https://jmb-s3-bucket.s3.amazonaws.com/gamestagram.gif" />
+</div>
+<br />
+
+### With Gamestagram, you can start sharing all things gaming with like minded gamers.
+
+#### Here's some of the key features:
+* Connected Flask backend to AWS S3, which provided media storage using an AWS Bucket, allowing for scalability and the selection of saved files on a user’s machine to upload and share across the application.
+* Configured CSS media queries to create a fully responsive design across multiple window sizes.
+* Developed a secure user authentication using Flask Login in order to store and access CSRF tokens protecting individuals from cross site attacks.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+
+## Built With
+
+* [React.js](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
+* [Javascript](https://www.javascript.com/)
+* [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+* [Python](https://www.python.org/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [NHL API](https://github.com/dword4/nhlapi)
+* [HTML]()
+* [CSS]()
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Contact
+
+Daniel
+--
+<a href="https://www.linkedin.com/in/jared-burnett-36a327225/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=jburnt17@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+<a href="https://github.com/jburnt17/jburnt17"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
+<a href=""><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" /></a>
+
+Chloe
+--
+<a href="https://www.linkedin.com/in/jared-burnett-36a327225/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=jburnt17@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+<a href="https://github.com/jburnt17/jburnt17"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
+<a href=""><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" /></a>
+
+Jared
+--
+<a href="https://www.linkedin.com/in/jared-burnett-36a327225/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=jburnt17@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+<a href="https://github.com/jburnt17/jburnt17"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
+<a href=""><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" /></a>
+
+---
+
 # Flask React Project
 
 This is the starter for the Flask React project.
