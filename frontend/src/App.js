@@ -12,6 +12,7 @@ import CreateImagePage from "./components/CreateImagePage";
 import { authenticate } from "./store/session";
 import ProfilePage from "./components/ProfilePage";
 import HomePage from "./components/HomePage";
+import MessagesPage from "./components/MessagesPage/MessagesPage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <ProtectedRoute path="/games/new" exact={true}>
           <CreateImagePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/messages" exact={true}>
+          <MessagesPage />
         </ProtectedRoute>
         <ProtectedRoute path="/users" exact={true}>
           <UsersList />

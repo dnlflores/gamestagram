@@ -7,7 +7,7 @@ class Message(db.Model):
 
     content = db.Column(db.String(255), nullable=False)
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    receiver_id = db.Column(db.Integer, db.ForeignKey('images.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     user = db.relationship('User', back_populates="messages")
 
