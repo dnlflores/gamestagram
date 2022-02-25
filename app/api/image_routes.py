@@ -14,8 +14,8 @@ def images():
     return {'images': [image.to_dict() for image in images]}
 
 
-@image_routes.route('/<int:id>')
-def get_image(id):
+@image_routes.route('/<int:senderId>/<int:receiverId>')
+def get_image(senderId, receiverId):
     image = Image.query.get(id)
     return {'image': image.to_dict()}
 
