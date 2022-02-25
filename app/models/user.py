@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     images = db.relationship('Image', back_populates="user", cascade="all, delete")
     like = db.relationship('Like', back_populates="user", cascade="all, delete")
     comments = db.relationship('Comment', back_populates="user", cascade="all, delete")
+    messages = db.relationship('Message', back_populates="user", cascade="all, delete")
     followers = db.relationship(
         "User",
         secondary=follows,
